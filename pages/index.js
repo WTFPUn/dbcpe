@@ -4,49 +4,33 @@ import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import { useEffect, useState } from 'react'
 
-import { useSession, signIn, signOut } from "next-auth/react"
-
-const inter = Inter({ subsets: ['latin'] })
-
-// export default function Home() {
-//   const [message, setMessage] = useState(0)
-
-//   const updateMessage = async () => {
-//     const res = await fetch('/api/updateRoom', { method: 'POST', body: JSON.stringify({ value: message }) })
-//     const data = await res.json()
-//     setMessage(data.value)
-//   }
-//   return (
-//     <>
-//       <h1 className="text-3xl font-bold underline">
-//       {message}
-//     </h1>
-//     <button
-//       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-//       onClick={updateMessage}
-//     >
-//       Update Message
-//     </button>
-//     </>
-//   )
-// }
 
 
+export default function Home() {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [message, setMessage] = useState('')
 
-export default function Component() {
-  const { data: session } = useSession()
-  if (session) {
-    return (
-      <>
-        Signed in as {session.user.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
-    )
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const res = await fetch('/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username, password })
+    })
+    const data = await res.json()
+    if (data.message) {
+      setMessage(data.message)
+    } else {
+      setMessage('Login successful')
+    }
   }
+
   return (
-    <>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
-    </>
+    <div>
+      
+    </div>
   )
 }
