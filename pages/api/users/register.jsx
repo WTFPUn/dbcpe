@@ -1,16 +1,21 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, ServerApiVersion  } from 'mongodb';
 import dotenv from 'dotenv';
-import { v6 as uuidv6 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
+import sha256 from 'crypto-js/sha256'
 
 dotenv.config();
 
 export default async function register(req, res) {
-  const uri = process.env.MONGODB_URI;
-  const client = new MongoClient(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-
+  const uri = "mongodb+srv://adminCPE:ctFzCfc2qAlVBnQD@cluster0.lufvjrz.mongodb.net/?retryWrites=true&w=majority";
+  const client = new MongoClient(uri,  {
+    serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+    }
+}
+);
+  console.log(req.body)
   const { 
     address,
     date_of_birth,
@@ -27,7 +32,7 @@ export default async function register(req, res) {
     sub_role,
     user_name,
     last_name,
-    } = req.body; 
+    } = req.body;
 
   // check method
   if (req.method !== 'POST') {
@@ -35,22 +40,24 @@ export default async function register(req, res) {
   }
   
   // check if username and password are empty
-  if (!username || !password) {
+  if (!user_name || !password) {
     return res.status(400).json({ message: 'Username and password required' });
   }
 
   // check if username is already taken in the database, if so, return error
   try {
     await client.connect();
-    const collection = client.db.collection('personal_information');
+    console.log('Connected to database');
+    const collection = client.db('HotelManage').collection('personal_information');
 
     const existingAccount = await collection.findOne({email: email});
-
+  
     if (existingAccount) {
       return res.status(400).json({ message: 'Email already taken' });
     }
+    console.log('Email is available', existingAccount);
 
-    const account_id = uuidv6();
+    const account_id = uuidv4();
     // hash password with sha256 with account_id as salt
     const hashedPassword = sha256(password + account_id);
 
@@ -82,6 +89,7 @@ export default async function register(req, res) {
     }
 
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ message: error.message });
   } finally {
     await client.close();

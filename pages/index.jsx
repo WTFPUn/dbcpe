@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import { useEffect, useState } from 'react'
+import Signup from '@/components/accountmanage/Signup'
 
 
 
@@ -29,7 +30,7 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <div className='font-oxygen'>
       
     </div>
   )
