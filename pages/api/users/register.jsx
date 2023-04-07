@@ -6,7 +6,7 @@ import sha256 from 'crypto-js/sha256'
 dotenv.config();
 
 export default async function register(req, res) {
-  const uri = "mongodb+srv://adminCPE:ctFzCfc2qAlVBnQD@cluster0.lufvjrz.mongodb.net/?retryWrites=true&w=majority";
+  const uri = process.env.MONGODB_URI;
   const client = new MongoClient(uri,  {
     serverApi: {
         version: ServerApiVersion.v1,
