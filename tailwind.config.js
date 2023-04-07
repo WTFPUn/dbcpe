@@ -9,7 +9,7 @@ module.exports = {
     extend: {
       fontFamily: {
         'oxygen': ['Oxygen', 'sans-serif'],
-        'dmsans': ['DM Serif Display', 'sans-serif'],
+        'dmserif': ['DM Serif Display', 'serif'],
       }
     },
   },

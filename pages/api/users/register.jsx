@@ -24,24 +24,28 @@ export default async function register(req, res) {
     first_name,
     gender,
     password,
+    re_password,
     phone_no,
     postcode,
     province,
-    role,
     sub_district,
-    sub_role,
-    user_name,
     last_name,
     } = req.body;
 
   // check method
   if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method not allowed' });
+    return res.status(405).json({ message: 'Method not allowed', success: false });
   }
   
-  // check if username and password are empty
-  if (!user_name || !password) {
-    return res.status(400).json({ message: 'Username and password required' });
+  // check every field is filled
+  if (!address | !date_of_birth | !district | !email | !first_name | !gender | !password | !re_password | !phone_no | !postcode | !province | !sub_district | !last_name) 
+  {
+    return res.status(400).json({ message: 'Please fill all fields', success: false });
+  }
+
+  // check password and re_password is same
+  if (password !== re_password) {
+    return res.status(400).json({ message: 'Password and re-password is not same', success: false });
   }
 
   // check if username is already taken in the database, if so, return error
@@ -53,9 +57,12 @@ export default async function register(req, res) {
     const existingAccount = await collection.findOne({email: email});
   
     if (existingAccount) {
-      return res.status(400).json({ message: 'Email already taken' });
+      return res.status(400).json({ message: 'Email already taken', success: false });
     }
     console.log('Email is available', existingAccount);
+
+    // username is value of email before @
+    const user_name = email.split('@')[0];
 
     const account_id = uuidv4();
     // hash password with sha256 with account_id as salt
@@ -72,9 +79,9 @@ export default async function register(req, res) {
       phone_no: phone_no,
       postcode: postcode,
       province: province,
-      role: role,
+      role: 0,
       sub_district: sub_district,
-      sub_role: sub_role,
+      sub_role: 0,
       user_name: user_name,
       last_name: last_name,
       password: hashedPassword,
@@ -82,15 +89,15 @@ export default async function register(req, res) {
     });
 
     if (result) {
-      return res.status(200).json({ message: 'Register success' });
+      return res.status(200).json({ message: 'Register success', success: true});
     }
     else {
-      return res.status(400).json({ message: 'Register failed' });
+      return res.status(400).json({ message: 'Register failed', success: false });
     }
 
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message, success: false });
   } finally {
     await client.close();
   }
