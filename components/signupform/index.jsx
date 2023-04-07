@@ -40,9 +40,9 @@ export default function SignupForm() {
         if (data.success) {
           setMessage(data.message);
           setMessagestatus(true)
-          // wait 2 seconds and redirect to home page
+          // wait 2 seconds and redirect to l
           setTimeout(() => {
-            router.push("/");
+            router.push("/users/login");
           }, 2000);
 
         } else {
