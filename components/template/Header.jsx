@@ -2,30 +2,35 @@ import Link from "next/link";
 import jwt from "jsonwebtoken";
 // localstorage
 import { useEffect, useState } from "react";
+import dotenv from "dotenv";
+import { jwtdecode } from "@/utils/verify";
+import Logout from "../icons/Logout";
 
+dotenv.config();
 
 export default function Header() {
-  // get token from localstorage
-  const [token, setToken] = useState(undefined);
+  // get token from localstorage and client side
+  const [token, setToken] = useState("");
   useEffect(() => {
-    const usetoken = localStorage.getItem("token");
-    console.log("token is ", usetoken);
-    setToken(usetoken ? usetoken : undefined);
+    const token = localStorage.getItem("token");
+    setToken(token);
   }, []);
-
-  // decode token
-  const jwt_key = process.env.JWT_KEY;
-  let user_id = "";
-  token && jwt.verify(token, jwt_key, (err, decoded) => {
-    console.log("token is ", token);
-    if (err) {
-      console.log(err);
-    } else {
-      user_id = decoded.user_id;
-    }
-  });
   
-  const LinkValue = user_id ? { href: `/users/profile/${user_id}`, text: "Profile" } : { href: "/users/Signup", text: "Sign up Now" };
+   
+  let user_id = "";
+  // console.log("token is first:  ", token);
+  const decoded = jwtdecode(token);
+  console.log("decoded is: ", decoded);
+  const { account_id, email, role, sub_role, user_name } = decoded || {};  
+  
+  const LinkValue = token ? { href: `/users/profile/${user_id}`, text: user_name } : { href: "/users/Signup", text: "Sign up Now" };
+
+  // logout by remove token from localstorage
+  const logout = () => {
+    localStorage.removeItem("token");
+    window.location.reload();
+  };
+
   // console.log(LinkValue);
   const pageList = [
     {
@@ -66,12 +71,19 @@ export default function Header() {
         ))}
         
     </div>
-    <Link
-        href={LinkValue.href}
-        className=" bg-[#6C6EF2] px-6 py-1 rounded-md"
-      >
-        {LinkValue.text}
+    <div className="flex place-items-center gap-2">
+      <Link
+          href={LinkValue.href}
+          className=" bg-[#6C6EF2] px-6 py-1 rounded-md"
+        >
+          {LinkValue.text}
       </Link>
+      {token && (
+        <div onClick={logout}>
+          <Logout/>
+        </div>
+      )}
+    </div>
     </div>
   )
 }

@@ -66,7 +66,7 @@ export default async function register(req, res) {
 
     const account_id = uuidv4();
     // hash password with sha256 with account_id as salt
-    const hashedPassword = sha256(password + account_id);
+    const hashedPassword = sha256(password + account_id).toString();
 
     const result = await collection.insertOne({
       account_id: account_id,

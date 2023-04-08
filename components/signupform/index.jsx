@@ -42,7 +42,7 @@ export default function SignupForm() {
           setMessagestatus(true)
           // wait 2 seconds and redirect to l
           setTimeout(() => {
-            router.push("/users/login");
+            router.push("/users/Signin");
           }, 2000);
 
         } else {
