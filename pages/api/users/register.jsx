@@ -137,6 +137,7 @@ export default async function register(req, res) {
       password: hashedPassword,
       status: 'active',
     });
+    
 
     if (result) {
       return res.status(200).json({ message: 'Register success', success: true});
