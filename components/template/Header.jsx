@@ -34,19 +34,19 @@ export default function Header() {
   // console.log(LinkValue);
   const pageList = [
     {
-      name: "The Hotel",
+      name: "THE HOTEL",
       link: "/",
     },
     {
-      name: "accomodation",
+      name: "ACCOMODATION",
       link: "/accomodation",
     },
     {
-      name: "meeting",
+      name: "MEETING",
       link: "/meeting",
     },
     {
-      name: "booking",
+      name: "BOOKING",
       link: "/booking",
     },
   ]
@@ -55,9 +55,9 @@ export default function Header() {
     <div className="w-full bg-[#4A4A68] text-white px-[15%] py-3 flex justify-between place-items-center">
       <Link
         href="/"
-        className="text-[#F2F2F2] font-bold text-2xl font-dmserif uppercase"
+        className="text-[#F2F2F2] font-bold text-2xl font-dmserif "
       >
-       mish hotel
+       MISH Hotel 
       </Link>
       <div className="text-white">
         {pageList.map((page, index) => (
