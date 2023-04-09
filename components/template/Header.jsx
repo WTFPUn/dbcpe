@@ -16,8 +16,6 @@ export default function Header() {
     setToken(token);
   }, []);
   
-   
-  let user_id = "";
   // console.log("token is first:  ", token);
   const decoded = jwtdecode(token);
   console.log("decoded is: ", decoded);
