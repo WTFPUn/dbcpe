@@ -38,9 +38,14 @@ export default async function login(req, res) {
 
     console.log("email: ",inpemail)
     const result = await collection.findOne({email: inpemail});
+    
     if (!result) {
       return res.status(400).json({ message: 'Email is not registered', success: false });
     }
+    // update current time_stamp
+    const currentDate = new Date() ; 
+    await collection.updateOne({"email" : inpemail },{ $set :{"time_stamp" : currentDate}})
+
     const { account_id, email, password, role, sub_role, user_name } = result || {};
 
     const cryptinput = SHA256(inppassword+account_id).toString();
