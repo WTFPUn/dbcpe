@@ -13,21 +13,14 @@ export default async function login(req, res) {
     }
     );
 
-    const {
-        token, 
-        } = req.body;
+    const token = req.headers['auth-token'];
+    const decoded = jwtdecode(token);
+    const { account_id } = decoded || {};
 
-        const decoded = jwtdecode(token);
-        const { account_id } = decoded || {};
-
-        if (req.method !== 'POST') {
-            return res.status(405).json({ message: 'Method not allowed', success: false });
-          }
+    if (req.method !== 'GET') {
+        return res.status(405).json({ message: 'Method not allowed', success: false });
+        }
          
-
-       
-
-
     try {
         await client.connect();
         console.log('Connected to database');
