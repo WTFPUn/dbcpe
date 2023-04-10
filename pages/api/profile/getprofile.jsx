@@ -27,11 +27,8 @@ export default async function login(req, res) {
         const collection = client.db('HotelManage').collection('personal_information');
     
         const  profile = await collection.findOne({account_id: account_id});
-        
-
-        return( res.status(200).json({ profile ,message: 'Get profile success', success: true}))
-
-
+        console.log(profile);
+        return( res.status(200).json({ profile: profile ,message: 'Get profile success', success: true}))
 
     }catch (error) {
         console.log(error);
@@ -39,13 +36,5 @@ export default async function login(req, res) {
       } finally {
         await client.close();
       }
-
-
-
-
-
-
-
-
 
 }
