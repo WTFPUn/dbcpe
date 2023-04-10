@@ -20,13 +20,14 @@ export default function Header() {
   const decoded = jwtdecode(token);
   const { account_id, email, role, sub_role, user_name } = decoded || {};  
   
-  const LinkValue = token ? { href: `/users/profile/${account_id}`, text: user_name } : { href: "/users/Signup", text: "Sign up Now" };
+  const LinkValue = token ? { href: `/profile/`, text: user_name } : { href: "/users/Signup", text: "Sign up Now" };
 
   // logout by remove token from localstorage
   const logout = () => {
     localStorage.removeItem("token");
     window.location.reload();
   };
+  
 
   // console.log(LinkValue);
   const pageList = [
