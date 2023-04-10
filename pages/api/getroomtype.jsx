@@ -11,6 +11,11 @@ export default async function login(req, res) {
         }
     }
     );
+
+    if (req.method !== 'GET') {
+        return res.status(405).json({ message: 'Method not allowed', success: false });
+      }
+
     try {
         await client.connect();
         console.log('Connected to database');
