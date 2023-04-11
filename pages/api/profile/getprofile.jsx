@@ -40,7 +40,7 @@ export default async function login(req, res) {
 
     
         const  profile = await collection.findOne({account_id: account_id}, {projection});
-        console.log(profile);
+
         return( res.status(200).json({ profile: profile ,message: 'Get profile success', success: true}))
 
     }catch (error) {

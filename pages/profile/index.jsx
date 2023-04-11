@@ -20,13 +20,12 @@ export default function profile() {
 });
 
   const [edit, setEdit] = useState(false);
-  console.log(Object.keys(profile))
   useEffect(() => {
     const token = localStorage.getItem("token");
     setToken(token);
   }, []);
 
-  // Get Profile
+
   useEffect(() => {
     if (token) {
       const decoded = jwtdecode(token);
@@ -44,8 +43,6 @@ export default function profile() {
           // remove _id from profile
           delete data.profile._id;
           setProfile(data.profile);
-          console.log(data.profile);
-          console.log(profile);
         });
     }
   }, [token]);
@@ -62,13 +59,13 @@ export default function profile() {
           <form className="flex flex-col w-full items-center">
             {Object.keys(profile).map((key, index) => {
               return (
-                <div className="flex flex-col w-10/12 my-4">
-                <label className="text-[#8C8CA1]">{key}</label>
+                <div className="flex flex-col w-10/12 my-4" key={index+key+"frame"}>
+                <label className="text-[#8C8CA1]" key={index+key+"label"}>{key}</label>
                 <input
                   type="text"
                   name={key}
                   id={key}
-                  key={index+key}
+                  key={index+key+"input"}
                   value={profile[key]}
                   onChange={handleEdit}
                   className="border border-[#8C8CA1] rounded-md text-base font-light py-1 px-2"
