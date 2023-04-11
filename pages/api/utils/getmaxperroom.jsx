@@ -28,7 +28,8 @@ export default async function getmaxperroom(req, res) {
         console.log('Connected to database');
         const collection = client.db('HotelManage').collection('type_of_room');
     if(adult){
-        const adultOfRoom = await collection.find({ num_people_stay: { $gt: adult-1 } }, { roomtype_id: 1, num_people_stay: 1 }).toArray();
+        const adultOfRoom = await collection.find({ "num_people_stay": { $gt: adult-1 } }, {projection:{"roomtype_id": 1,"num_people_stay": 1}}).toArray();
+        console.log(adultOfRoom)
         return( res.status(200).json({ adultOfRoom ,message: 'Get adult of room success', success: true}))
     }
     else{
