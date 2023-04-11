@@ -41,6 +41,8 @@ export default function profile() {
       })
         .then((res) => res.json())
         .then((data) => {
+          // remove _id from profile
+          delete data.profile._id;
           setProfile(data.profile);
           console.log(data.profile);
           console.log(profile);
