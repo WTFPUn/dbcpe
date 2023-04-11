@@ -47,10 +47,7 @@ export default async function login(req, res) {
         const collection = client.db('HotelManage').collection('personal_information');
     
         const person = await collection.findOne({account_id: account_id})
-       
-       
       
-
         const cleanObject = (obj)=>   {
           for (var propName in obj) {
             if (obj[propName] === null || obj[propName] === undefined) {
@@ -59,8 +56,6 @@ export default async function login(req, res) {
           }
           return obj
         }
-
-        
         const result = await collection.updateOne(
           
           { "account_id" : account_id },
