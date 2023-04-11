@@ -5,22 +5,22 @@ import { jwtdecode } from "@/utils/verify";
 export default function profile() {
   const [token, setToken] = useState("");
   const [profile, setProfile] = useState({
-    "address": "sample",
-    "date_of_birth": "sample",
-    "district": "sample",
-    "email": "sample",
-    "first_name": "sample",
-    "gender": "sample",
-    "phone_no": "sample",
-    "postcode": "sample",
-    "province": "sample",
-    "sub_district": "sample",
-    "user_name": "sample",
-    "last_name": "sample",
+    "address": "",
+    "date_of_birth": "",
+    "district": "",
+    "email": "",
+    "first_name": "",
+    "gender": "",
+    "phone_no": "",
+    "postcode": "",
+    "province": "",
+    "sub_district": "",
+    "user_name": "",
+    "last_name": "",
 });
 
   const [edit, setEdit] = useState(false);
-
+  console.log(Object.keys(profile))
   useEffect(() => {
     const token = localStorage.getItem("token");
     setToken(token);
@@ -31,15 +31,13 @@ export default function profile() {
     if (token) {
       const decoded = jwtdecode(token);
       const { account_id } = decoded;
-      fetch(`http://localhost:3000/api/profile/getprofile`, {
+      fetch(`http://localhost:3000/api/profile/getprofile?${new URLSearchParams({ qArray: Object.keys(profile) })}`
+        , {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           "auth-token": token,
         },
-        query: {
-          qArray: Object.keys(profile),
-        }
       })
         .then((res) => res.json())
         .then((data) => {
@@ -68,10 +66,11 @@ export default function profile() {
                   type="text"
                   name={key}
                   id={key}
+                  key={index+key}
                   value={profile[key]}
                   onChange={handleEdit}
                   className="border border-[#8C8CA1] rounded-md text-base font-light py-1 px-2"
-                  contentEditable={edit}
+                  readOnly={!edit}
                 />
               </div>
               )

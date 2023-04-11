@@ -14,6 +14,8 @@ export default async function login(req, res) {
     );
 
     const token = req.headers['auth-token'];
+    const { qArray } = req.query;
+    console.log("qArray: ", req.query);
     const decoded = jwtdecode(token);
     const { account_id } = decoded || {};
 
