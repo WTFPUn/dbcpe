@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { jwtdecode } from "@/utils/verify";
 
 
-export default async function login(req, res) {
+export default async function updateProfile(req, res) {
     const uri = process.env.MONGO_URI;
     const client = new MongoClient(uri, {
         serverApi: {
