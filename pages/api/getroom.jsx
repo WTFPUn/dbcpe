@@ -20,21 +20,26 @@ export default async function getroom(req, res) {
     try {
         await client.connect();
         console.log('Connected to database');
-        const collection = client.db('HotelManage').collection('room');
-        // const allroomtype = await collection.find().toArray();
+        const room = client.db('HotelManage').collection('room');
+        const type = client.db('HotelManage').collection('type_of_room')
 
-        const allroom = await collection.aggregate([
-            { $lookup:
-               {
-                 from: 'type_of_room',
-                 localField: 'roomtype_id',
-                 foreignField: 'roomtype_id',
-                 as: 'roomtype'
-               }
-             }
-            ])  
+  
+        
+        const allroom = await room.aggregate( [
+          {
+            $lookup:
+              {
+                from: "type_of_room",
+                localField: "roomtype_id",
+                foreignField: "roomtype_id",
+                as: "roomtype"
+              }
+         }
+       ] ).toArray();
+       console.log("allroom ",allroom)
+        
 
-        return( res.status(200).json({ allroomtype ,message: 'Register success', success: true}))
+        return( res.status(200).json({  allroom ,message: 'Register success', success: true}))
 
 
 
