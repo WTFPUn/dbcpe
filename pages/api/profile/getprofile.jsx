@@ -40,8 +40,19 @@ export default async function login(req, res) {
 
     
         const  profile = await collection.findOne({account_id: account_id}, {projection});
+        
 
-        return( res.status(200).json({ profile: profile ,message: 'Get profile success', success: true}))
+        let profileSort = {}
+
+        splitArray.forEach((val) => {
+            
+            profileSort[val] = profile[val];
+        })
+        console.log(profileSort)
+    
+
+        
+        return( res.status(200).json({ profile: profileSort ,message: 'Get profile success', success: true}))
 
     }catch (error) {
         console.log(error);
