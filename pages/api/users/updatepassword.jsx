@@ -16,13 +16,13 @@ export default async function updatePassword(req, res) {
   });
 
   const token = req.headers["auth-token"];
-  const { clientPassword, clientNewPassword } = req.body;
+  const { current_password, new_password, confirm_password } = req.body;
   const decoded = jwtdecode(token);
   const { account_id } = decoded || {};
-
+  
   console.log("decode: ", decoded);
-  console.log("clientpass : ", clientPassword);
-  console.log("clientNew :  ", clientNewPassword);
+  console.log("clientpass : ", current_password);
+  console.log("clientNew :  ", new_password);
 
   if (req.method !== "PUT") {
     return res
@@ -31,11 +31,15 @@ export default async function updatePassword(req, res) {
   }
    
    
-  if(!validatePassword(clientNewPassword)){
+  if(!validatePassword(new_password)){
     return res.status(400).json({ message: 'password foramt  is invalid .', success: false })
   }
 
-  const cryptClientPassword = SHA256(clientPassword + account_id).toString();
+  if(!(new_password === confirm_password)){
+    return res.status(400).json({ message: 'new password and confirm password  is not same  .', success: false })
+  }
+
+  const cryptClientPassword = SHA256(current_password + account_id).toString();
 
   try {
     await client.connect();
@@ -54,7 +58,7 @@ export default async function updatePassword(req, res) {
 
     if (profile.password === cryptClientPassword) {
       const cryptClientNewPassword = SHA256(
-        clientNewPassword + account_id
+        new_password + account_id
       ).toString();
 
       const statusUpdatePass = await collection.updateOne(
