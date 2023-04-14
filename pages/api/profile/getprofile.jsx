@@ -15,19 +15,15 @@ export default async function login(req, res) {
 
     const token = req.headers['auth-token'];
     const { qArray } = req.query;
-    console.log("qArray: ", req.query);
     const decoded = jwtdecode(token);
     const { account_id } = decoded || {};
      
     const splitArray = qArray.split(',')
-    console.log(splitArray[0]);
     let projection = {}
 
     splitArray.forEach((val) => {
         projection[val] = 1;
     })
-
-    console.log(projection);
     
     if (req.method !== 'GET') {
         return res.status(405).json({ message: 'Method not allowed', success: false });
@@ -48,7 +44,6 @@ export default async function login(req, res) {
             
             profileSort[val] = profile[val];
         })
-        console.log(profileSort)
     
 
         

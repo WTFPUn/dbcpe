@@ -21,14 +21,18 @@ export default function profile() {
     "postcode": "",
 });
 
+  const[staticname, setStaticname] = useState({
+    "first_name": "",
+    "last_name": "",
+  });
+
   const [edit, setEdit] = useState(false);
+
+
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     setToken(token);
-  }, []);
-
-
-  useEffect(() => {
     if (token) {
       const decoded = jwtdecode(token);
       const { account_id } = decoded; 
@@ -46,8 +50,21 @@ export default function profile() {
           delete data.profile._id;
           setProfile(data.profile);
         });
+      
+      fetch(`http://localhost:3000/api/profile/getprofile?${new URLSearchParams({ qArray: Object.keys(staticname) })}`
+        , {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": token,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setStaticname(data.profile);
+        });
     }
-  }, [token]);
+  }, []);
 
 
   const handleEdit = (e) => {
@@ -93,7 +110,9 @@ export default function profile() {
         current: false
       }
     ]
-    const Name = profile.first_name + " " + profile.last_name;
+    console.log(staticname);
+    const Name = staticname.first_name + " " + staticname.last_name;
+    
   return(
     <Template title={"Edit Profile"} hscreen>
       <div className="w-[80%] bg-white self-center rounded-md my-4 place-items-center flex flex-row overflow-y-auto font-oxygen">
@@ -173,7 +192,7 @@ export default function profile() {
           </form>
           <div className="flex flex-col place-content-start w-full">
             <p className="text-black">Password</p>
-            <p className="text-[#6C6EF2]">Change my password</p>
+            <Link href="/profile/changepassword" className="text-[#6C6EF2]">Change my password</Link>
           </div>
           <div onClick={() => onClick()} className="bg-[#6C6EF2] text-white rounded-md py-2 px-4 my-4 w-full text-center items-center"> {edit ? "Update Info" : "Edit Info"} </div>
         </div>
