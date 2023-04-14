@@ -50,8 +50,8 @@ export default function changepassword() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
-    fetch(`http://localhost:3000/api/user/updatepassword`, {
-      method: "POST",
+    fetch(`http://localhost:3000/api/users/updatepassword`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         "auth-token": token,
