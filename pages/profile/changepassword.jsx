@@ -17,6 +17,7 @@ export default function changepassword() {
   });
 
   const [message, setMessage] = useState("");
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -61,6 +62,7 @@ export default function changepassword() {
       .then((res) => res.json())
       .then((data) => {
         setMessage(data.message);
+        setSuccess(data.success);
       })
   }
 
@@ -99,7 +101,8 @@ export default function changepassword() {
         <div className="w-8/12 flex flex-col bg-white h-full place-items-center place-content-center">
           <div className="w-[80%] flex flex-col px-32">
             <p className="text-[#4A4A68] text-lg font-bold">Change Password</p>
-            <p className="text-[#8C8CA1] text-sm">{message ? message : "Enter your current password and new password to change your password"}</p>
+            <p className="text-[#8C8CA1] text-sm">{ "Enter your current password and new password to change your password"}</p>
+            <p className={` text-sm ${message ? " text-green-500" : "text-red-600"} h-4`}>{message}</p>
             <form>
               <div className="flex flex-col mt-4">
                 <label className="text-[#8C8CA1]">Current Password</label>
