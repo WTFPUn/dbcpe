@@ -2,6 +2,8 @@ import { MongoClient, ServerApiVersion } from "mongodb";
 import { jwtdecode } from "@/utils/verify";
 import SHA256 from "crypto-js/sha256";
 import { decode } from "jsonwebtoken";
+import { validatePassword } from "@/utils/passwordverify";
+
 
 export default async function updatePassword(req, res) {
   const uri = process.env.MONGO_URI;
@@ -26,6 +28,11 @@ export default async function updatePassword(req, res) {
     return res
       .status(405)
       .json({ message: "Method not allowed", success: false });
+  }
+   
+   
+  if(!validatePassword(clientNewPassword)){
+    return res.status(400).json({ message: 'password foramt  is invalid .', success: false })
   }
 
   const cryptClientPassword = SHA256(clientPassword + account_id).toString();
