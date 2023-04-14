@@ -7,18 +7,18 @@ import Link from "next/link";
 export default function profile() {
   const [token, setToken] = useState("");
   const [profile, setProfile] = useState({
-    "address": "",
-    "date_of_birth": "",
-    "district": "",
-    "email": "",
+    "user_name": "",
     "first_name": "",
+    "last_name": "",
+    "email": "",
+    "date_of_birth": "",
     "gender": "",
     "phone_no": "",
-    "postcode": "",
-    "province": "",
+    "address": "",
+    "district": "",
     "sub_district": "",
-    "user_name": "",
-    "last_name": "",
+    "province": "",
+    "postcode": "",
 });
 
   const [edit, setEdit] = useState(false);
