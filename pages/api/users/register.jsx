@@ -2,6 +2,7 @@ import { MongoClient, ServerApiVersion  } from 'mongodb';
 import dotenv from 'dotenv';
 import { v4 as uuidv4 } from 'uuid';
 import sha256 from 'crypto-js/sha256'
+import { validatePassword,validateDateOfBirth,validateEmail,validateGender,validatePhone,validatePostcode } from '@/utils/verify';
 
 dotenv.config();
 
@@ -44,58 +45,40 @@ export default async function register(req, res) {
   }
 
   
-
-  
   // check password and re_password is same
   if (password !== re_password) {
     return res.status(400).json({ message: 'Password and re-password is not same', success: false });
   }
   
-  const regexPassword =   /^(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
-
-  if(!regexPassword.test(password)){
+  
+  //validate password
+  if(!validatePassword(password)){
     return res.status(400).json({ message: 'Password format is invalid', success: false });
   }
 
   //validate phoneNumber
-  const regexPhone = /^\d{10}$/;
+  if(!validatePhone(phone_no)){
+    return res.status(400).json({ message: 'Phone Number format is invalid', success: false })
+ }
 
-  if(!regexPhone.test(phone_no)){
-     return res.status(400).json({ message: 'Phone Number format is invalid', success: false })
-  }
-
-  //validate phoneNumber
-  const regexPostcode = /^\d{5}$/;
-  if(!regexPostcode.test(postcode)){
+  //validate postcode
+  if(!validatePostcode(postcode)){
     return res.status(400).json({ message: 'Postcode format is invalid', success: false })
   }
 
   //validate date_of_birth
-  const [year, month, day] = date_of_birth.split("-");
-  // Create a new Date object using the year, month, and day components
-  const dateObj = new Date(year, month - 1, day);
-  // Check that the Date object's year, month, and day components match the input string
-  const isDateValid =
-    dateObj.getFullYear() == year &&
-    dateObj.getMonth() == month - 1 &&
-    dateObj.getDate() == day;
-  
-  const currentdate = new Date ;
-  console.log(`check current = ${currentdate.getFullYear()}  dateobj = ${dateObj.getFullYear()}  dateObj > currentdate  = ${dateObj.getFullYear()  > currentdate.getFullYear()}`)
-  
-  if(!isDateValid || dateObj.getFullYear()  > currentdate.getFullYear()){
+  if(!validateDateOfBirth(date_of_birth)){
     return res.status(400).json({ message: 'Date of Birth  is invalid cause format etc.', success: false })
   }
 
   // validate email
-  const regexmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if(!regexmail.test(email)){
+  if(!validateEmail(email)){
     return res.status(400).json({ message: 'Email foramt  is invalid .', success: false })
   }
 
   //validate gender
-  if(!(gender === "Male" || gender === "Female" || gender === "Other")){
-    return res.status(400).json({ message: 'gender  is invalid .', success: false })
+  if(!validateGender(gender)){
+  return res.status(400).json({ message: 'gender  is invalid .', success: false })
   }
   
   // check if username is already taken in the database, if so, return error
@@ -119,6 +102,7 @@ export default async function register(req, res) {
     const hashedPassword = sha256(password + account_id).toString();
 
     const result = await collection.insertOne({
+
       account_id: account_id,
       address: address,
       date_of_birth: date_of_birth,
@@ -136,6 +120,8 @@ export default async function register(req, res) {
       last_name: last_name,
       password: hashedPassword,
       status: 'active',
+
+
     });
     
 

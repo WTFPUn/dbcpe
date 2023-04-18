@@ -2,7 +2,7 @@ import { MongoClient, ServerApiVersion } from "mongodb";
 import { jwtdecode } from "@/utils/verify";
 import SHA256 from "crypto-js/sha256";
 import { decode } from "jsonwebtoken";
-import { validatePassword } from "@/utils/passwordverify";
+import { validatePassword } from "@/utils/verify";
 
 
 export default async function updatePassword(req, res) {

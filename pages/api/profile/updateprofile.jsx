@@ -1,6 +1,6 @@
 import { MongoClient, ServerApiVersion  } from 'mongodb';
 import React, { useState, useEffect } from 'react';
-import { jwtdecode } from "@/utils/verify";
+import { jwtdecode,validateDateOfBirth,validateEmail,validateGender,validatePhone,validatePostcode } from "@/utils/verify";
 
 
 export default async function updateProfile(req, res) {
@@ -39,7 +39,34 @@ export default async function updateProfile(req, res) {
     if (req.method !== 'PUT') {
       return res.status(405).json({ message: 'Method not allowed', success: false });
     }
-   
+
+
+    //validate phoneNumber
+  if(!validatePhone(phone_no)){
+    return res.status(400).json({ message: 'Phone Number format is invalid', success: false })
+ }
+
+  //validate postcode
+  if(!validatePostcode(postcode)){
+    return res.status(400).json({ message: 'Postcode format is invalid', success: false })
+  }
+
+  //validate date_of_birth
+  if(!validateDateOfBirth(date_of_birth)){
+    return res.status(400).json({ message: 'Date of Birth  is invalid cause format etc.', success: false })
+  }
+
+  // validate email
+  if(!validateEmail(email)){
+    return res.status(400).json({ message: 'Email foramt  is invalid .', success: false })
+  }
+
+//validate gender
+if(!validateGender(gender)){
+  return res.status(400).json({ message: 'gender  is invalid .', success: false })
+  }
+
+  
      
     try {
         await client.connect();
