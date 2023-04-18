@@ -94,7 +94,7 @@ export default async function getRoomQuery(req, res) {
         }
       ]).toArray();
 
-        return( res.status(200).json({ successRoom ,message: 'Register success', success: true}))
+        return( res.status(200).json({ successRoom ,message: 'Get room query success', success: true}))
 
 
     }catch (error) {
