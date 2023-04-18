@@ -12,14 +12,17 @@ export default async function getRoomQuery(req, res) {
         }
     }
     );
-    const { 
-        
-        checkIn,
-        checkOut,
-        } = req.body;
+    const checkIn = req.body?.checkIn;
+    const checkOut = req.body?.checkOut;
+    const minPerson = req.body?.minPerson;
+    const roomType = req.body?.roomType;
 
     if (req.method !== 'POST') {
         return res.status(405).json({ message: 'Method not allowed', success: false });
+      }
+
+    if (!checkIn || !checkOut) {
+        return res.status(400).json({ message: "Missing fields, both field if one was selected annother one must select too", success: false });
       }
 
       try {
@@ -28,74 +31,36 @@ export default async function getRoomQuery(req, res) {
         const room = client.db('HotelManage').collection('room_booking');
         const roomquery =  client.db('HotelManage').collection('room');
         
-        // const startDate = new Date(checkIn);
-        // const endDate = new Date(checkOut);
-        
-        // const allroom = await room.aggregate([
-
-          
-        //   {
-        //     '$match': {
-        //       'checkin_date': {
-        //         '$gte': checkIn, 
-        //         '$lte': checkOut
-        //       }
-        //     }
-        //   }, {
-        //     '$match': {
-        //       'checkout_date': {
-        //         '$gte': checkIn, 
-        //         '$lte': checkOut
-        //       }
-        //     }
-        //   },
-        //   {
-        //     $lookup: {
-        //       from: "room",
-        //       localField: "room_id",
-        //       foreignField: "room_id",
-        //       as: "room"
-        //     }
-        //   },
-          
-
-        // ]).toArray();
-
-        const allroom = await room.aggregate([
-          {
-            '$match': {
-              '$or': [
-                {
-                  'checkin_date': {
-                    $gte: checkIn,
-                    $lte: checkOut
-                  }
-                },
-                {
-                  'checkout_date': {
-                    $gte: checkIn,
-                    $lte: checkOut
-                  }
+        let aggregate = []
+        if(checkIn && checkOut){
+            aggregate.push({
+                '$match': {
+                  '$or': [
+                    {
+                      'checkin_date': {
+                        $gte: checkIn,
+                        $lte: checkOut
+                      }
+                    },
+                    {
+                      'checkout_date': {
+                        $gte: checkIn,
+                        $lte: checkOut
+                      }
+                    }
+                  ]
                 }
-              ]
-            }
-          },
-          {
+              })
+        }
+        aggregate.push({
             '$lookup': {
               from: "room",
               localField: "room_id",
               foreignField: "room_id",
               as: "room"
             }
-          }
-        ]).toArray();
-
-
-
-       
-
-       
-        
+          })
+        const allroom = await room.aggregate(aggregate).toArray();
 
         let idRoom = []
 
