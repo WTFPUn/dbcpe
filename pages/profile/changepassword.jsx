@@ -48,8 +48,8 @@ export default function changepassword() {
     })
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
+   
     const token = localStorage.getItem("token");
     fetch(`http://localhost:3000/api/users/updatepassword`, {
       method: "PUT",
