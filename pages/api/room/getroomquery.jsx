@@ -17,6 +17,8 @@ export default async function getRoomQuery(req, res) {
     const minPerson = req.query?.minPerson;
     const roomType = req.query?.roomType;
 
+
+  
     
 
     if (req.method !== 'GET') {
@@ -83,7 +85,13 @@ export default async function getRoomQuery(req, res) {
 
           if(roomType){
             query.push({$match: {
-              'roomtype_id': roomType }})
+              '$expr': {
+                '$in': [
+                  '$roomtype_id', roomType 
+                ]
+              }
+            }
+            })
           }
 
           query.push({
@@ -108,7 +116,12 @@ export default async function getRoomQuery(req, res) {
         
           if(roomType){
             query.push({$match: {
-              'roomtype_id': roomType }})
+              '$expr': {
+                '$in': [
+                  '$roomtype_id', roomType 
+                ]
+              }
+            }})
           }
 
             query.push({
