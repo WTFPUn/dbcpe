@@ -12,18 +12,20 @@ export default async function getRoomQuery(req, res) {
         }
     }
     );
-    const checkIn = req.body?.checkIn;
-    const checkOut = req.body?.checkOut;
-    const minPerson = req.body?.minPerson;
-    const roomType = req.body?.roomType;
+    const checkIn = req.query?.checkIn;
+    const checkOut = req.query?.checkOut;
+    const minPerson = req.query?.minPerson;
+    const roomType = req.query?.roomType;
+
+    
 
     if (req.method !== 'POST') {
         return res.status(405).json({ message: 'Method not allowed', success: false });
       }
 
-    // if (!checkIn || !checkOut) {
-    //     return res.status(400).json({ message: "Missing fields, both field if one was selected annother one must select too", success: false });
-    //   }
+    if ((!checkIn && checkOut) || (checkIn && !checkOut)) {
+        return res.status(400).json({ message: "fill missing error date fillter ", success: false });
+      }
 
       try {
         await client.connect();
