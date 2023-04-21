@@ -21,9 +21,9 @@ export default async function getRoomQuery(req, res) {
         return res.status(405).json({ message: 'Method not allowed', success: false });
       }
 
-    if (!checkIn || !checkOut) {
-        return res.status(400).json({ message: "Missing fields, both field if one was selected annother one must select too", success: false });
-      }
+    // if (!checkIn || !checkOut) {
+    //     return res.status(400).json({ message: "Missing fields, both field if one was selected annother one must select too", success: false });
+    //   }
 
       try {
         await client.connect();
@@ -60,21 +60,78 @@ export default async function getRoomQuery(req, res) {
               as: "room"
             }
           })
-        const allroom = await room.aggregate(aggregate).toArray();
-
+        let allroom ;
         let idRoom = []
 
+    if(checkIn && checkOut){
+      allroom = await room.aggregate(aggregate).toArray();
+          
         allroom.forEach((val) => {
-            
             idRoom.push(val.room_id)
         })
-
         console.log("idRoom",idRoom)
+      }
         // idRoom is array
-      const  successRoom = await roomquery.find({ 'room_id': { $nin: idRoom } }).toArray()
+        let query = [] ;
 
-        return( res.status(200).json({ allroom ,message: 'Register success', success: true}))
+       if(checkIn && checkOut){
 
+          query.push({$match: {
+                'room_id': { $nin: idRoom }}})
+
+          if(roomType){
+            query.push({$match: {
+              'roomtype_id': roomType }})
+          }
+
+          query.push({
+                   $lookup: {
+                from: "type_of_room",
+                localField: "roomtype_id",
+                foreignField: "roomtype_id",
+                as: "roomtype"
+              }
+          })
+
+          if(minPerson){
+            query.push({
+              $match: {
+                    'roomtype.num_people_stay': { $gte: minPerson }
+                  }
+            })
+          }
+       }
+
+       else{
+        
+          if(roomType){
+            query.push({$match: {
+              'roomtype_id': roomType }})
+          }
+
+            query.push({
+              $lookup: {
+                  from: "type_of_room",
+                  localField: "roomtype_id",
+                  foreignField: "roomtype_id",
+                  as: "roomtype"
+                }
+            })
+
+          if(minPerson){
+            query.push({
+              $match: {
+                    'roomtype.num_people_stay': { $gte: minPerson }
+                  }
+
+            })
+          }
+
+        }
+
+      const successRoom = await roomquery.aggregate(query).toArray();
+
+        return( res.status(200).json({ successRoom ,message: 'Get room query success', success: true}))
 
     }catch (error) {
         console.log(error);
@@ -82,8 +139,6 @@ export default async function getRoomQuery(req, res) {
       } finally {
         await client.close();
       }
-
-
 }
 
 
