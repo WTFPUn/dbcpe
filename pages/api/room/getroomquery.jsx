@@ -19,7 +19,7 @@ export default async function getRoomQuery(req, res) {
 
     
 
-    if (req.method !== 'POST') {
+    if (req.method !== 'GET') {
         return res.status(405).json({ message: 'Method not allowed', success: false });
       }
 
