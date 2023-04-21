@@ -39,7 +39,7 @@ export default async function getroom(req, res) {
        console.log("allroom ",allroom)
         
 
-        return( res.status(200).json({  allroom ,message: 'Register success', success: true}))
+        return( res.status(200).json({  allroom ,message: 'get room success', success: true}))
 
 
 
