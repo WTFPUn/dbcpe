@@ -17,8 +17,6 @@ export default async function getRoomQuery(req, res) {
     const minPerson = req.query?.minPerson;
     const roomType = req.query?.roomType;
 
-
-  
     
 
     if (req.method !== 'GET') {
@@ -28,6 +26,27 @@ export default async function getRoomQuery(req, res) {
     if ((!checkIn && checkOut) || (checkIn && !checkOut)) {
         return res.status(400).json({ message: "fill missing error date fillter ", success: false });
       }
+
+      let arrayRoomType = []
+      let tmp = 0
+      let index = 0
+
+      if(roomType){
+      
+
+      roomType.forEach((val) => {
+        
+        if(val){
+          arrayRoomType[index] = tmp
+          index ++;
+        }    
+        tmp ++ ;
+        
+    })
+    }
+
+    console.log("arrayRoomtype ",arrayRoomType)
+
 
       try {
         await client.connect();
@@ -83,11 +102,11 @@ export default async function getRoomQuery(req, res) {
           query.push({$match: {
                 'room_id': { $nin: idRoom }}})
 
-          if(roomType){
+          if(arrayRoomType.length != 0){
             query.push({$match: {
               '$expr': {
                 '$in': [
-                  '$roomtype_id', roomType 
+                  '$roomtype_id', arrayRoomType
                 ]
               }
             }
@@ -113,12 +132,12 @@ export default async function getRoomQuery(req, res) {
        }
 
        else{
-        
-          if(roomType){
+        console.log("roomtype",roomType)
+          if(arrayRoomType.length != 0){
             query.push({$match: {
               '$expr': {
                 '$in': [
-                  '$roomtype_id', roomType 
+                  '$roomtype_id', arrayRoomType
                 ]
               }
             }})
