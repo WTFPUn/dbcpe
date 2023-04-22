@@ -12,8 +12,8 @@ export default async function getRoomQuery(req, res) {
         }
     }
     );
-    const checkIn = req.query?.checkIn;
-    const checkOut = req.query?.checkOut;
+    let checkIn = req.query?.checkIn;
+    let checkOut = req.query?.checkOut;
     let minPerson = req.query?.minPerson;
     let roomType = req.query?.roomType;
     let arrayRoomType = [];
@@ -33,8 +33,10 @@ export default async function getRoomQuery(req, res) {
     if(minPerson){
       minPerson = parseInt(minPerson);
     }
-
-    console.log("carrayRoomTypeheckIn",arrayRoomType)
+    
+    console.log("checkIn",checkIn)
+    console.log("checkOut",checkOut)
+    
 
     if (req.method !== 'GET') {
         return res.status(405).json({ message: 'Method not allowed', success: false });
@@ -43,6 +45,13 @@ export default async function getRoomQuery(req, res) {
     if ((!checkIn && checkOut) || (checkIn && !checkOut)) {
         return res.status(400).json({ message: "fill missing error date fillter ", success: false });
       }
+
+    checkIn = new Date(checkIn).toISOString().split("T")[0];
+    checkOut = new Date(checkOut).toISOString().split("T")[0];
+
+    console.log("checkIn",checkIn)
+    console.log("checkOut",checkOut)
+
 
       try {
         await client.connect();
