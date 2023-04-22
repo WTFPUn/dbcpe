@@ -14,7 +14,7 @@ export default async function getRoomQuery(req, res) {
     );
     const checkIn = req.query?.checkIn;
     const checkOut = req.query?.checkOut;
-    const minPerson = req.query?.minPerson;
+    let minPerson = req.query?.minPerson;
     let roomType = req.query?.roomType;
     let arrayRoomType = [];
     // roomType change [Object Object] to array
@@ -28,6 +28,10 @@ export default async function getRoomQuery(req, res) {
           arrayRoomType.push(index);
         }
       })
+    }
+
+    if(minPerson){
+      minPerson = parseInt(minPerson);
     }
 
     console.log("carrayRoomTypeheckIn",arrayRoomType)
@@ -145,6 +149,7 @@ export default async function getRoomQuery(req, res) {
             })
 
           if(minPerson){
+            console.log("minPerson",minPerson)
             query.push({
               $match: {
                     'roomtype.num_people_stay': { $gte: minPerson }
