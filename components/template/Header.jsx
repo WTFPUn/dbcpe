@@ -37,7 +37,7 @@ export default function Header() {
     },
     {
       name: "ACCOMODATION",
-      link: "/accomodation",
+      link: "/accommodation",
     },
     {
       name: "MEETING",
