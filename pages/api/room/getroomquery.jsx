@@ -15,9 +15,22 @@ export default async function getRoomQuery(req, res) {
     const checkIn = req.query?.checkIn;
     const checkOut = req.query?.checkOut;
     const minPerson = req.query?.minPerson;
-    const roomType = req.query?.roomType;
+    let roomType = req.query?.roomType;
+    let arrayRoomType = [];
+    // roomType change [Object Object] to array
+    if(roomType){
+      let roomTypeArr = roomType.split(",");
+      roomTypeArr = roomTypeArr.map((val) => parseInt(val));
+      roomType = roomTypeArr;
+      // on arrayRoomType push index of roomType that is selected
+      roomType.forEach((val, index) => {
+        if(val != 0){
+          arrayRoomType.push(index);
+        }
+      })
+    }
 
-    
+    console.log("carrayRoomTypeheckIn",arrayRoomType)
 
     if (req.method !== 'GET') {
         return res.status(405).json({ message: 'Method not allowed', success: false });
@@ -26,27 +39,6 @@ export default async function getRoomQuery(req, res) {
     if ((!checkIn && checkOut) || (checkIn && !checkOut)) {
         return res.status(400).json({ message: "fill missing error date fillter ", success: false });
       }
-
-      let arrayRoomType = []
-      let tmp = 0
-      let index = 0
-
-      if(roomType){
-      
-
-      roomType.forEach((val) => {
-        
-        if(val){
-          arrayRoomType[index] = tmp
-          index ++;
-        }    
-        tmp ++ ;
-        
-    })
-    }
-
-    console.log("arrayRoomtype ",arrayRoomType)
-
 
       try {
         await client.connect();
