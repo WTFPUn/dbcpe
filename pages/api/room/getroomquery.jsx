@@ -49,8 +49,10 @@ export default async function getRoomQuery(req, res) {
     checkIn = new Date(checkIn).toISOString().split("T")[0];
     checkOut = new Date(checkOut).toISOString().split("T")[0];
 
+    if(checkIn > checkOut){
+      return res.status(400).json({ message: "Date pattern is invalid  ", success: false });
+    }
    
-
 
       try {
         await client.connect();
