@@ -49,8 +49,7 @@ export default async function getRoomQuery(req, res) {
     checkIn = new Date(checkIn).toISOString().split("T")[0];
     checkOut = new Date(checkOut).toISOString().split("T")[0];
 
-    console.log("checkIn",checkIn)
-    console.log("checkOut",checkOut)
+   
 
 
       try {
