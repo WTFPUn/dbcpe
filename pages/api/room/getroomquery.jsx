@@ -18,6 +18,7 @@ export default async function getRoomQuery(req, res) {
     let roomType = req.query?.roomType;
     let arrayRoomType = [];
     // roomType change [Object Object] to array
+    
     if(roomType){
       let roomTypeArr = roomType.split(",");
       roomTypeArr = roomTypeArr.map((val) => parseInt(val));
@@ -30,12 +31,10 @@ export default async function getRoomQuery(req, res) {
       })
     }
 
-    if(minPerson){
+    if(minPerson){   
       minPerson = parseInt(minPerson);
     }
     
-    console.log("checkIn",checkIn)
-    console.log("checkOut",checkOut)
     
 
     if (req.method !== 'GET') {
@@ -46,11 +45,14 @@ export default async function getRoomQuery(req, res) {
         return res.status(400).json({ message: "fill missing error date fillter ", success: false });
       }
 
-    checkIn = new Date(checkIn).toISOString().split("T")[0];
-    checkOut = new Date(checkOut).toISOString().split("T")[0];
+   
+    if(checkIn && checkOut){
+        if(checkIn > checkOut){
+          return res.status(400).json({ message: "Date pattern is invalid  ", success: false });
+        }
 
-    if(checkIn > checkOut){
-      return res.status(400).json({ message: "Date pattern is invalid  ", success: false });
+        checkIn = new Date(checkIn).toISOString().split("T")[0];
+        checkOut = new Date(checkOut).toISOString().split("T")[0];
     }
    
 
