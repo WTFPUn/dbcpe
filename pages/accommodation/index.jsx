@@ -1,4 +1,5 @@
 import Template from "@/components/Template";
+import RoomList from "@/components/accommodation/RoomList";
 import { sampleRoomQuery } from "@/utils/sample";
 import { useRouter } from "next/router";
 import { useEffect, useState, useCallback } from "react";
@@ -57,7 +58,6 @@ export default function accommodation() {
   });
 
   const handleSearch = async () => {
-    console.log(accommodationList)
     fetch(`/api/room/getroomquery?${new URLSearchParams(
       accommodationList)})`,
       {
@@ -72,11 +72,10 @@ export default function accommodation() {
     }
     );
   }
-
-  console.log(roomType);
   return (
     <Template title="Accommodation">
       <FilterBar setAccommodationList={setAccommodationList} accommodationList={accommodationList} roomType={roomType} handleSearch={handleSearch}/>
+      <RoomList roomList={queriedRoom} />
     </Template>
   )
 }
@@ -84,7 +83,7 @@ export default function accommodation() {
 function FilterBar({setAccommodationList, accommodationList, roomType, handleSearch}) {
 
   return (
-    <div className="w-2/5 bg-white rounded-md flex flex-col px-16 ">
+    <div className="w-2/5 bg-white rounded-md flex flex-col px-16 pb-8 ">
       <div className="flex px-4 mt-8 gap-4">
         <CheckInOutFilter setAccommodationList={setAccommodationList} accommodationList={accommodationList} />
         <MinPersonFilter setAccommodationList={setAccommodationList} accommodationList={accommodationList} />
@@ -168,7 +167,6 @@ function MinPersonFilter({setAccommodationList, accommodationList}) {
 }
 
 function RoomTypeFilter({setAccommodationList, accommodationList, roomType}) {
-  console.log("roomType",roomType);
   const sendAccommodationList = useCallback((key, value) => {
     setAccommodationList({
       ...accommodationList,
@@ -192,8 +190,6 @@ function RoomTypeFilter({setAccommodationList, accommodationList, roomType}) {
               return roomtype.selected ? 1 : 0;
             })
             
-            
-            console.log("selectedRoomType", selectedRoomType);
             sendAccommodationList("roomType", selectedRoomType);
           }}
         >
