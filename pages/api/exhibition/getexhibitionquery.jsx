@@ -13,11 +13,11 @@ export default async function getExhibitionQuery(req, res) {
     }
     );
 
-    const checkIn = req.query?.checkIn;
-    const checkOut = req.query?.checkOut;
-    const minPerson = req.query?.minPerson;
-    const roomType = req.query?.roomType;
-
+    let checkIn = req.query?.checkIn;
+    let checkOut = req.query?.checkOut;
+    let minPerson = req.query?.minPerson;
+    let roomType = req.query?.roomType;
+    
 
     
 
@@ -30,26 +30,48 @@ export default async function getExhibitionQuery(req, res) {
         return res.status(400).json({ message: "fill missing error date fillter ", success: false });
       }
 
-    
       let arrayRoomType = []
-      let tmp = 0
-      let index = 0
 
-      if(roomType){
-      
-
-      roomType.forEach((val) => {
-        
-        if(val){
-          arrayRoomType[index] = tmp
-          index ++;
-        }    
-        tmp ++ ;
-        
-    })
+     if(roomType){
+      let roomTypeArr = roomType.split(",");
+      roomTypeArr = roomTypeArr.map((val) => parseInt(val));
+      roomType = roomTypeArr;
+      // on arrayRoomType push index of roomType that is selected
+      roomType.forEach((val, index) => {
+        if(val != 0){
+          arrayRoomType.push(index);
+        }
+      })
     }
 
     console.log("arrayRoomtype ",arrayRoomType)
+
+    if(minPerson){   
+      minPerson = parseInt(minPerson);
+    }
+
+    if (req.method !== 'GET') {
+      return res.status(405).json({ message: 'Method not allowed', success: false });
+    }
+
+  if ((!checkIn && checkOut) || (checkIn && !checkOut)) {
+      return res.status(400).json({ message: "fill missing error date fillter ", success: false });
+    }
+
+ 
+  if(checkIn && checkOut){
+
+      checkIn = new Date(checkIn).toISOString().split("T")[0];
+      checkOut = new Date(checkOut).toISOString().split("T")[0];
+
+      if(checkIn > checkOut){
+        return res.status(400).json({ message: "Date pattern is invalid  ", success: false });
+      }
+
+      
+  }
+ 
+
 
 
       try {
@@ -96,7 +118,7 @@ export default async function getExhibitionQuery(req, res) {
         allroom.forEach((val) => {
             idRoom.push(val.exhibition_id)
         })
-        console.log("idRoom",idRoom)
+        console.log("exhibition idRoom",idRoom)
       }
         // idRoom is array
         let query = [] ;
