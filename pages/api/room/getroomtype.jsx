@@ -22,7 +22,11 @@ export default async function login(req, res) {
         const collection = client.db('HotelManage').collection('type_of_room');
     
         // const existingAccount = await collection.findOne({email: email});
-        const allroomtype = await collection.find( {},{projection:{"_id": 0,"roomtype_id": 1,"roomtype_name": 1}}).toArray();
+        const allroomtype = await collection.find( {},{projection:{"_id": 0,"roomtype_id": 1,"roomtype_name": 1}}).sort({ "roomtype_id": 1 }).toArray();
+        
+        //  allroomtype.sort(allroomtype)
+         console.log("before sort = ",allroomtype)
+         console.log("after sort ",allroomtype)
 
         return( res.status(200).json({ allroomtype ,message: 'Register success', success: true}))
 
