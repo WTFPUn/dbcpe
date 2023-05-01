@@ -15,7 +15,6 @@ export default function Room({room}) {
   
   const rounter = useRouter()
 
-  console.log(room_bed_num)
   return (
     <div className="w-full flex py-4 px-8">
       <div className="w-[40%] rounded-md object-cover flex place-content-center ">

@@ -40,6 +40,7 @@ export default function accommodation() {
         roomtype.selected = false;
       })
       setRoomType(roomtyperes);
+      console.log(roomtyperes);
       setAccommodationList({
         ...accommodationList,
           roomType: Array(roomtyperes.length).fill(0)
