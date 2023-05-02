@@ -25,13 +25,12 @@ export default async function addBookingRoom(req, res) {
     let checkout_date = req.body?.checkout_date;
     let laundry_date = req.body?.laundry_date
     let Guest = req.body?.Guest;
-    let numberOfRoom = req.body?.numberOfRoom;
     const room_id = req.body?.room_id;
     const extra_bed = req.body?.extra_bed;
     const breakfast = req.body?.breakfast;
     const halal = req.body?.halal;
     const cleaning = req.body?.cleaning;
-    const laundry = req.body?.laundryStatus;
+    const laundry = req.body?.laundry;
     
    
 
@@ -61,6 +60,10 @@ export default async function addBookingRoom(req, res) {
 
     if(laundry && laundry_date){
       laundry_date = new Date(laundry_date).toISOString().split("T")[0];
+        
+      if( !(laundry_date >=  checkin_date || laundry_date <= checkout_date)  ){
+        return res.status(400).json({ message: "laundry date is not in the booking period ", success: false });
+      }
 
     }
 
@@ -94,7 +97,7 @@ export default async function addBookingRoom(req, res) {
         const numberRoom =  await room.aggregate( [
           {
               $match: {
-                  'room_no': numberOfRoom
+                  'room_id': room_id
                  }
           }
         
@@ -107,9 +110,6 @@ export default async function addBookingRoom(req, res) {
       }
 
       
-
-      
-
 
       //set time  right now 
 
