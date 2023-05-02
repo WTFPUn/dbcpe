@@ -30,7 +30,7 @@ export default function Room({room}) {
         <div className="text-lg font-bold">Description</div>
         <div className="text-lg">{description}</div>
         <div className="w-full text-right flex flex-row gap-2 place-content-between">
-          <Link href={`/accommodation/room/${room_id}`} className=" underline text-[#6C6EF2]">Book now</Link>
+          <Link href={`/booking/${room_id}`} className=" underline text-[#6C6EF2]">Book now</Link>
           <div className="flex flex-row">
             <p className=" text-xl font-[#550]">$ {price}</p>
             per night
