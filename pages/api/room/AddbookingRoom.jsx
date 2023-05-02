@@ -14,54 +14,60 @@ export default async function addBookingRoom(req, res) {
     );
 
     
-    // const checkIn = req.query?.checkIn;
-    // const checkOut = req.query?.checkOut;
-    // const numberOfRoom = req.query?.numberOfRoom;
-    // const guests = req.query?.guests;
-    // const halalStatus = req.query?.halalStatus;
-    // const extrabedStatus = req.query?.extrabedStatus;
-    // const cleanStatus = req.query?.cleanStatus;
-    // const laundryStaus = req.query?.laundryStaus;
+
 
     const token = req.headers["auth-token"];
     const decoded = jwtdecode(token);
     const { account_id } = decoded || {};
 
-
-    let checkIn = req.body?.checkIn;
-    let checkOut = req.body?.checkOut;
-    let guests = req.body?.guests;
+  
+    let checkin_date = req.body?.checkin_date;
+    let checkout_date = req.body?.checkout_date;
+    let laundry_date = req.body?.laundry_date
+    let Guest = req.body?.Guest;
     let numberOfRoom = req.body?.numberOfRoom;
-    const extrabedStatus = req.body?.extrabedStatus;
-    const breakfastStatus = req.body?.breakfastStatus;
-    const halalStatus = req.body?.halalStatus;
-    const cleanStatus = req.body?.cleanStatus;
-    const laundryStatus = req.body?.laundryStatus;
+    const room_id = req.body?.room_id;
+    const extra_bed = req.body?.extra_bed;
+    const breakfast = req.body?.breakfast;
+    const halal = req.body?.halal;
+    const cleaning = req.body?.cleaning;
+    const laundry = req.body?.laundryStatus;
     
    
 
-    if(guests){   
-      guests = parseInt(guests);
+    if(Guest){   
+      Guest = parseInt(Guest);
     }
 
     if (req.method !== 'POST') {
         return res.status(405).json({ message: 'Method not allowed', success: false });
       }
 
-    if ((!checkIn && checkOut) || (checkIn && !checkOut)) {
+    if ((!checkin_date && checkout_date) || (checkin_date && !checkout_date)) {
       return res.status(400).json({ message: "fill missing error date fillter ", success: false });
     }
   
-    if(checkIn && checkOut){
+    if(checkin_date && checkout_date){
 
-      checkIn = new Date(checkIn).toISOString().split("T")[0];
-      checkOut = new Date(checkOut).toISOString().split("T")[0];
+      checkin_date = new Date(checkin_date).toISOString().split("T")[0];
+      checkout_date = new Date(checkout_date).toISOString().split("T")[0];
+      
 
-      if(checkIn > checkOut){
+      if(checkin_date > checkout_date){
         return res.status(400).json({ message: "Date pattern is invalid  ", success: false });
       }
   
   }
+
+    if(laundry && laundry_date){
+      laundry_date = new Date(laundry_date).toISOString().split("T")[0];
+
+    }
+
+    else if(!laundry && laundry_date){
+      return res.status(400).json({ message: "laundry date pattern is invalid ", success: false });
+    }
+
 
     
     try {
@@ -102,7 +108,7 @@ export default async function addBookingRoom(req, res) {
 
       
 
-      console.log("id = ",numberRoom[0].room_id)
+      
 
 
       //set time  right now 
@@ -110,14 +116,13 @@ export default async function addBookingRoom(req, res) {
       const tzOffset = 7; // Offset for Indochina Time (GMT+7)
       const bookDate = new Date(Date.now() + tzOffset * 3600000).toISOString().split('T')[0];
 
-      checkIn = "2023-05-01"
-      checkOut = "2023-05-30"
+     
 
 
     const checkroomid =  await book.aggregate( [
       {
           $match: {
-              'room_id': numberRoom[0].room_id
+              'room_id': room_id
             }
       },
       {
@@ -125,14 +130,14 @@ export default async function addBookingRoom(req, res) {
           '$or': [
             {
               'checkin_date': {
-                $gte: checkIn,
-                $lte: checkOut
+                $gte: checkin_date,
+                $lte: checkout_date
               }
             },
             {
               'checkout_date': {
-                $gte: checkIn,
-                $lte: checkOut
+                $gte: checkin_date,
+                $lte: checkout_date
               }
             }
           ]
@@ -150,29 +155,27 @@ export default async function addBookingRoom(req, res) {
       
       console.log("bookdate  ",bookDate)
 
-      console.log("checkIn : ",checkIn)
-      console.log("checkout : ",checkOut)
-
-      
-     
+      console.log("checkIn : ",checkin_date)
+      console.log("checkout : ",checkout_date)
 
       
        const result = await book.insertOne({
 
             book_id: count,
             account_id: account_id,
-            room_id: numberRoom[0].room_id,
+            room_id: room_id,
             book_date: bookDate,
             bookstatus_id: 1,
-            checkin_date: checkIn,
-            checkout_date:  checkOut,
-            breakfast_status: breakfastStatus,
-            clean_need: cleanStatus,
-            laundry_need: laundryStatus,
-            extrabed_need: extrabedStatus,
-            halal_need: halalStatus,
-            guests: guests,
+            checkin_date: checkin_date,
+            checkout_date:  checkout_date,
+            breakfast_status: breakfast,
+            clean_need: cleaning,
+            laundry_need: laundry,
+            extrabed_need: extra_bed,
+            halal_need: halal,
+            guests: Guest,
             bill_id: -1,
+            laundry_date: laundry_date,
       
        });
 
