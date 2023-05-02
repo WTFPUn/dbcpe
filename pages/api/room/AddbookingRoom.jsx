@@ -61,14 +61,17 @@ export default async function addBookingRoom(req, res) {
     if(laundry && laundry_date){
       laundry_date = new Date(laundry_date).toISOString().split("T")[0];
         
-      if( !(laundry_date >=  checkin_date || laundry_date <= checkout_date)  ){
+      if( !(laundry_date >=  checkin_date && laundry_date <= checkout_date)  ){
         return res.status(400).json({ message: "laundry date is not in the booking period ", success: false });
       }
 
     }
 
     else if(!laundry && laundry_date){
-      return res.status(400).json({ message: "laundry date pattern is invalid ", success: false });
+      return res.status(400).json({ message: "Do not select laundry service", success: false });
+    }
+    else if(laundry && !laundry_date){
+      return res.status(400).json({ message: "Do not select laundry date", success: false });
     }
 
 
