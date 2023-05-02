@@ -25,7 +25,7 @@ export default async function addBookingRoom(req, res) {
     let checkout_date = req.body?.checkout_date;
     let laundry_date = req.body?.laundry_date
     let Guest = req.body?.Guest;
-    const room_id = req.body?.room_id;
+    const room_id = parseInt(req.body?.room_id);
     const extra_bed = req.body?.extra_bed;
     const breakfast = req.body?.breakfast;
     const halal = req.body?.halal;
