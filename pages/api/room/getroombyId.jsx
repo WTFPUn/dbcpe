@@ -15,10 +15,10 @@ export default async function addBookingRoom(req, res) {
     // const roomId =  req.query?.roomId;
 
 
-    const roomId =  parseInt(req.body?.roomId);
+    const roomId =  parseInt(req.query?.roomId);
 
     
-    if (req.method !== 'POST') {
+    if (req.method !== 'GET') {
         return res.status(405).json({ message: 'Method not allowed', success: false });
       }
     
