@@ -63,8 +63,11 @@ export default async function addBookingRoom(req, res) {
           
         ] ).toArray();
 
-
-
+        
+        for (let i=0 ; i< getbook.length; i++){
+            getbook[i].room = getbook[i].room[0]
+            getbook[i].roomtype = getbook[i].roomtype[0]
+        }
 
 
 
