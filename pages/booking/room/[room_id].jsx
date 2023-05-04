@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useRouter } from "next/router";
-import Template from "../../components/Template";
+import Template from "../../../components/Template";
 import { useEffect, useState } from "react";
 import Section from "@/components/booking/Section";
 import BookForm from "@/components/booking/BookForm";
@@ -15,7 +17,7 @@ export default function booking() {
   const [room, setRoom] = useState({});
 
   const asyncFetch = async () => {
-    const res = await fetch(`http://localhost:3000/api/room/getroombyId?roomId=${room_id}`);
+    const res = await fetch(`/api/room/getroombyId?roomId=${room_id}`);
     const data = await res.json();
     if (data.roomByID.length > 0) {
       setRoom(data.roomByID[0]);
