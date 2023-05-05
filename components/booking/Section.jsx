@@ -15,7 +15,7 @@ export default function Section() {
     'bill': path.includes('bill'),
   }
   return(
-    <div className='flex w-[85%] border-b border-[#8C8CA1] place-content-center gap-32 py-8'>
+    <div className='flex w-[85%] border-b border-[#8C8CA1] place-content-center gap-32 py-4'>
       <div className='flex flex-col w-max place-items-center gap-2'>
         <HomeModern isIn={pathList.room}/>
         <div className='text-[0.75rem] font-bold'>
