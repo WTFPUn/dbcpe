@@ -28,7 +28,7 @@ export default async function login(req, res) {
          console.log("before sort = ",allroomtype)
          console.log("after sort ",allroomtype)
 
-        return( res.status(200).json({ allroomtype ,message: 'Register success', success: true}))
+        return( res.status(200).json({ allroomtype ,message: 'Get room type success', success: true}))
 
 
 
