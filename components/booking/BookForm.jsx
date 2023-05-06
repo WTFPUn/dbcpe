@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 
-export default function({room_id, guestInRoom, room_number}) {
+export default function BookForm({room_id, guestInRoom, room_number}) {
   const router = useRouter()
 
   // get token from local storage
