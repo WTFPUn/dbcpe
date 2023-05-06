@@ -13,12 +13,12 @@ export default async function addBookingRoom(req, res) {
     );
 
     
-    // const exhibitionId =  parseInt(req.query?.exhibitionId);
+    const exhibitionId =  parseInt(req.query?.exhibitionId);
 
-    const exhibitionId =  parseInt(req.body?.exhibitionId);
+    // const exhibitionId =  parseInt(req.body?.exhibitionId);
 
     
-    if (req.method !== 'POST') {
+    if (req.method !== 'GET') {
         return res.status(405).json({ message: 'Method not allowed', success: false });
       }
     
