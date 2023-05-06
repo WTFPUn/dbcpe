@@ -73,7 +73,6 @@ export default async function getExhibitionQuery(req, res) {
  
 
 
-
       try {
         await client.connect();
         console.log('Connected to database');
@@ -139,13 +138,7 @@ export default async function getExhibitionQuery(req, res) {
             })
           }
 
-          if(minPerson){
-            query.push({
-              $match: {
-                    'max_people': { $gte: minPerson }
-                  }
-            })
-          }
+          
 
           query.push({
                    $lookup: {
@@ -155,6 +148,15 @@ export default async function getExhibitionQuery(req, res) {
                 as: "exhibition_type"
               }
           })
+
+
+          if(minPerson){
+            query.push({
+              $match: {
+                    'exhibition_type.num_people_stay': { $gte: minPerson }
+                  }
+            })
+          }
 
          
        }
@@ -172,15 +174,6 @@ export default async function getExhibitionQuery(req, res) {
           }
 
 
-          if(minPerson){
-            query.push({
-              $match: {
-                'max_people': { $gte: minPerson }
-                  }
-
-            })
-          }
-
             query.push({
               $lookup: {
                   from: "type_of_exhibition",
@@ -189,6 +182,15 @@ export default async function getExhibitionQuery(req, res) {
                   as: "exhibition_type"
                 }
             })
+
+            if(minPerson){
+              query.push({
+                $match: {
+                  'exhibition_type.num_people_stay': { $gte: minPerson }
+                    }
+  
+              })
+            }
 
         }
 
