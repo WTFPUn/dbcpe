@@ -28,9 +28,47 @@ export default async function addBookingRoom(req, res) {
         await client.connect();
         console.log('Connected to database');
         const book = client.db('HotelManage').collection('room_booking');
+        const tier = client.db('HotelManage').collection('guess_tier');
+        const role = client.db('HotelManage').collection('role');
        
-        
 
+        //check tier 
+        let count
+        const countBook = await book.aggregate( [
+            {$match:{
+                'account_id': account_id
+            } }
+            ,{ $count: "myCount" }
+         ] ).toArray();
+
+
+
+         if(countBook.length === 0){
+            count = 0
+         }else {
+            count =   countBook[0].myCount
+         }
+         console.log("count = ",count )
+         
+        
+         let tierId = -1
+         if(count>= 0 && count< 10){
+            tierId = 0
+         }
+         else if(count>= 10 && count< 15){
+            tierId = 1
+         }
+         else if(count>= 15 && count< 20){
+            tierId = 2
+         }
+         else if(count>= 20){
+            tierId = 3
+         }
+
+         const getRole = await role.findOne( {"role":0,"sub_role": tierId},{projection:{"_id": 0}});
+         console.log("getRole = ", getRole)
+        
+        
         const getbook  =  await book.aggregate( [
             {
                 $match: {
@@ -43,6 +81,9 @@ export default async function addBookingRoom(req, res) {
 
                    }
             },
+
+            
+
             {
                 $lookup: {
              from: "room",
@@ -51,6 +92,7 @@ export default async function addBookingRoom(req, res) {
              as: "room"
            }
             },
+            
         {
                 $lookup: {
             from: "type_of_room",
@@ -58,21 +100,58 @@ export default async function addBookingRoom(req, res) {
             foreignField: "roomtype_id",
             as: "roomtype"
             }
-        }
+        },{$project:{"_id":0,"book_id":1,"account_id":1,"room_id":1,"book_date":1,"bookstatus_id":1,"checkin_date":1,"checkout_date":1,
+        "breakfast_status":1, "clean_need":1, "laundry_need":1, "extrabed_need":1, "halal_need":1, "guests":1, "room.room_no":1, 
+        "roomtype.roomtype_id":1, "roomtype.roomtype_name":1, "roomtype.image":1 }}
+        
 
           
         ] ).toArray();
 
         
+   
+        const  loop = async () => {
+
         for (let i=0 ; i< getbook.length; i++){
+
+        await  fetch("http://localhost:3000/api/book/getpricebookroom", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                 "auth-token": token,
+                 },
+              
+               body: JSON.stringify({bookid: getbook[i].book_id}),
+            })
+            .then((res) => res.json())
+            .then((data) => {
+              getbook[i]["price_summary"] = data;
+             
+
+            })
+
             getbook[i].room = getbook[i].room[0]
             getbook[i].roomtype = getbook[i].roomtype[0]
+            // console.log("summary = ", getbook[i].price_summary)
+            
         }
 
+     }
+     
+      await loop();
+
+     console.log("out loop summary = ", getbook[0].price_summary)
+
+   
+     
+     
+        
+
+        //add user role in message
 
 
         if (getbook) {
-            return res.status(200).json({getbook,message: 'get book success', success: true});
+            return res.status(200).json({book:{getRole,getbook},message: 'get book success', success: true});
           }
           else {
             return res.status(400).json({ message: 'get book failed', success: false });
