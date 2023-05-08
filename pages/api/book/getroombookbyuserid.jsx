@@ -32,41 +32,6 @@ export default async function getRoomBookById(req, res) {
         const role = client.db('HotelManage').collection('role');
        
 
-        //check tier 
-        let count
-        const countBook = await book.aggregate( [
-            {$match:{
-                'account_id': account_id
-            } }
-            ,{ $count: "myCount" }
-         ] ).toArray();
-
-
-
-         if(countBook.length === 0){
-            count = 0
-         }else {
-            count =   countBook[0].myCount
-         }
-         console.log("count = ",count )
-         
-        
-         let tierId = -1
-         if(count>= 0 && count< 10){
-            tierId = 0
-         }
-         else if(count>= 10 && count< 15){
-            tierId = 1
-         }
-         else if(count>= 15 && count< 20){
-            tierId = 2
-         }
-         else if(count>= 20){
-            tierId = 3
-         }
-
-         const getRole = await role.findOne( {"role":0,"sub_role": tierId},{projection:{"_id": 0}});
-         console.log("getRole = ", getRole)
         
         
         const getbook  =  await book.aggregate( [
@@ -109,7 +74,7 @@ export default async function getRoomBookById(req, res) {
         ] ).toArray();
 
         
-   
+        let count;
         const  loop = async () => {
 
         for (let i=0 ; i< getbook.length; i++){
@@ -126,7 +91,7 @@ export default async function getRoomBookById(req, res) {
             .then((res) => res.json())
             .then((data) => {
               getbook[i]["price_summary"] = data;
-             
+              count = data.book_count
 
             })
 
@@ -140,7 +105,26 @@ export default async function getRoomBookById(req, res) {
      
       await loop();
 
-     console.log("out loop summary = ", getbook[0].price_summary)
+    
+     //check tier 
+
+     let tierId = -1
+         if(count>= 5 && count< 10){
+            tierId = 0
+         }
+         else if(count>= 10 && count< 15){
+            tierId = 1
+         }
+         else if(count>= 15 && count< 20){
+            tierId = 2
+         }
+         else if(count>= 20){
+            tierId = 3
+         }
+       
+     const getRole = await role.findOne( {"role":0,"sub_role": tierId},{projection:{"_id": 0}});
+     console.log("getRole = ", getRole)
+    
 
    
      

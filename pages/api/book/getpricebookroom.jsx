@@ -30,7 +30,8 @@ export default async function getpricebookroom(req, res) {
 try {
         await client.connect();
         console.log('Connected to database');
-        const book = client.db('HotelManage').collection('room_booking');
+        const bookRoom = client.db('HotelManage').collection('room_booking');
+        const bookExhibition = client.db('HotelManage').collection('exhibition_booking');
         const tier = client.db('HotelManage').collection('guess_tier');
         const  room = client.db('HotelManage').collection('room')
         const  typeRooom = client.db('HotelManage').collection('type_of_room')
@@ -56,8 +57,8 @@ try {
 
 
         //check tier 
-        let count
-        const countBook = await book.aggregate( [
+        let countexhibition
+        const countBookEx = await bookExhibition.aggregate( [
             {$match:{
                 'account_id': account_id
             } }
@@ -66,12 +67,35 @@ try {
 
 
 
-         if(countBook.length === 0){
-            count = 0
+         if(countBookEx.length === 0){
+            countexhibition = 0
          }else {
-            count =   countBook[0].myCount
+            countexhibition =   countBookEx[0].myCount
          }
-         console.log("count = ",count )
+         console.log("countEx = ",countexhibition )
+
+
+
+         let countroom
+         const countBookRoom = await bookRoom.aggregate( [
+            {$match:{
+                'account_id': account_id
+            } }
+            ,{ $count: "myCount" }
+         ] ).toArray();
+
+
+
+         if(countBookRoom.length === 0){
+            countroom = 0
+         }else {
+            countroom =   countBookRoom[0].myCount
+         }
+         console.log("countRoom = ",countroom )
+
+
+         let count = countexhibition + countroom
+         console.log("sum count : ",count)
          
         
          let tierId = -1
@@ -91,7 +115,7 @@ try {
          const getTier = await tier.findOne( {"guess_tier_id": tierId},{projection:{"_id": 0,"guess_tier_id": 1,"room_discount_factor": 1,
          "breakfast_discount_factor": 1,"laundry_discount_factor": 1 }});
 
-         const getBook = await book.findOne({"book_id": bookid});
+         const getBook = await bookRoom.findOne({"book_id": bookid});
          const getRoom = await room.findOne({"room_id": getBook.room_id});
          const getRoomType = await typeRooom.findOne({"roomtype_id": getRoom.roomtype_id})
 
@@ -136,11 +160,11 @@ try {
                     
                 }
                 if(getTier){
-                    return res.status(200).json({ total_price:Totalpricebegin ,discounted_total_price: total_price ,discounted_breakfast:(300*(1 - getTier.breakfast_discount_factor)*servicefac),discounted_laundry:(laundry*50*(1 - getTier.laundry_discount_factor)*servicefac)
+                    return res.status(200).json({ book_count: count ,total_price:Totalpricebegin ,discounted_total_price: total_price ,discounted_breakfast:(300*(1 - getTier.breakfast_discount_factor)*servicefac),discounted_laundry:(laundry*50*(1 - getTier.laundry_discount_factor)*servicefac)
                         ,discounted_priceroom:((1 - getTier.room_discount_factor)*getRoomType.room_price*diffOutIn*roomfac), priceRoom:(getRoomType.room_price*roomfac), laundry : (servicefac*laundry*50), breakfast:(servicefac *300), extraBed : (extraBed*100*servicefac)    ,message: 'get price have tier success', success: true});
                 }
                 else if(!getTier){
-                    return res.status(200).json({ total_price,discounted_total_price : 0,discounted_breakfast: 0,discounted_laundry: 0,discounted_priceroom: 0,  
+                    return res.status(200).json({ book_count: count ,total_price,discounted_total_price : 0,discounted_breakfast: 0,discounted_laundry: 0,discounted_priceroom: 0,  
                          priceRoom:(getRoomType.room_price*roomfac), laundry : (servicefac*laundry*50) ,breakfast:(servicefac*300),extraBed:(servicefac*100*extraBed)    ,message: 'get price no tier success', success: true});
                 }
 
@@ -163,11 +187,11 @@ try {
             }
 
             if(getTier){
-                return res.status(200).json({ total_price:Totalpricebegin ,discounted_total_price: total_price ,discounted_breakfast:(300*(1 - getTier.breakfast_discount_factor)),discounted_laundry:(laundry*50*(1 - getTier.laundry_discount_factor))
+                return res.status(200).json({ book_count: count ,total_price:Totalpricebegin ,discounted_total_price: total_price ,discounted_breakfast:(300*(1 - getTier.breakfast_discount_factor)),discounted_laundry:(laundry*50*(1 - getTier.laundry_discount_factor))
                     ,discounted_priceroom:((1 - getTier.room_discount_factor)*getRoomType.room_price*diffOutIn), priceRoom:getRoomType.room_price, laundry : laundry*50, breakfast: 300, extraBed : extraBed*100    ,message: 'get price have tier success', success: true});
             }
             else if(!getTier){
-                return res.status(200).json({ total_price,discounted_total_price: 0,discounted_breakfast: 0,discounted_laundry:0,discounted_priceroom:0,
+                return res.status(200).json({ book_count: count ,total_price,discounted_total_price: 0,discounted_breakfast: 0,discounted_laundry:0,discounted_priceroom:0,
                      priceRoom:getRoomType.room_price, laundry : laundry*50,breakfast: 300,extraBed:100*extraBed    ,message: 'get price no tier success', success: true});
             }
 
