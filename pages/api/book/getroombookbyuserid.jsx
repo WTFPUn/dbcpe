@@ -123,11 +123,6 @@ export default async function getRoomBookById(req, res) {
          }
        
      const getRole = await role.findOne( {"role":0,"sub_role": tierId},{projection:{"_id": 0}});
-     console.log("getRole = ", getRole)
-    
-
-   
-     
      
         
 

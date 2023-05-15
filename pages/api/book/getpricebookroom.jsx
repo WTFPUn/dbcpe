@@ -45,15 +45,12 @@ try {
         })
         .then((res) => res.json())
         .then((data) => {
-          console.log("seson eiei : ",data);
-        //   console.log("ans : ",data.seasonFactor.room_price_factor)
+         
           
             seasonfac = data.seasonFactor
           
         })
-        if(seasonfac){
-            console.log("Hello eiei : ",seasonfac)
-        }
+       
 
 
         //check tier 
@@ -72,7 +69,7 @@ try {
          }else {
             countexhibition =   countBookEx[0].myCount
          }
-         console.log("countEx = ",countexhibition )
+         
 
 
 
@@ -91,11 +88,11 @@ try {
          }else {
             countroom =   countBookRoom[0].myCount
          }
-         console.log("countRoom = ",countroom )
+         
 
 
          let count = countexhibition + countroom
-         console.log("sum count : ",count)
+         
          
         
          let tierId = -1
@@ -119,7 +116,7 @@ try {
          const getRoom = await room.findOne({"room_id": getBook.room_id});
          const getRoomType = await typeRooom.findOne({"roomtype_id": getRoom.roomtype_id})
 
-         console.log("roomPrice = ",getRoomType.room_price)
+         
          
          let diffOutIn = (new Date(getBook.checkout_date) - new Date(getBook.checkin_date))/ (1000 * 60 * 60 * 24)
          let laundry = 0
@@ -141,12 +138,10 @@ try {
             roomfac = seasonfac.room_price_factor
             servicefac = seasonfac.service_factor
 
-            console.log("roomfac",roomfac)
-            console.log("servicefac",servicefac)
 
             roomfac = roomfac-1
             servicefac = servicefac -1
-            console.log("roomfac",roomfac)
+            
 
                 if(getTier){
                     // sumPrice = (breakfast*300*(1 - getTier.breakfast_discount_factor)) + (laundry*50*(1 - getTier.laundry_discount_factor)) + ((1 - getBook.room_discount_factor)*getRoomType.room_price*diffOutIn)
@@ -172,10 +167,10 @@ try {
 
 
          else if(!seasonfac){
-            console.log("wowww")
+            
 
             if(getTier){
-                // sumPrice = (breakfast*300*(1 - getTier.breakfast_discount_factor)) + (laundry*50*(1 - getTier.laundry_discount_factor)) + ((1 - getBook.room_discount_factor)*getRoomType.room_price*diffOutIn)
+                
                 total_price = (300*(1 - getTier.breakfast_discount_factor)) + (laundry*50*(1 - getTier.laundry_discount_factor)) + ((1 - getTier.room_discount_factor)*getRoomType.room_price*diffOutIn) + (extraBed*100)
                 
                 Totalpricebegin = (300)  + (laundry*50) + (getRoomType.room_price*diffOutIn) + (extraBed*100)

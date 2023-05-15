@@ -45,16 +45,12 @@ try {
         })
         .then((res) => res.json())
         .then((data) => {
-          console.log("seson eiei : ",data);
-        //   console.log("ans : ",data.seasonFactor.room_price_factor)
+          
           
             seasonfac = data.seasonFactor
           
         })
-        if(seasonfac){
-            console.log("Hello eiei : ",seasonfac)
-        }
-
+       
 
         //check tier 
         let countexhibition
@@ -91,11 +87,11 @@ try {
          }else {
             countroom =   countBookRoom[0].myCount
          }
-         console.log("countRoom = ",countroom )
+        
 
 
          let count = countexhibition + countroom
-         console.log("count = ", count)
+         
         
          let tierId = -1
          if(count>= 0 && count< 10){
@@ -132,12 +128,11 @@ try {
             roomfac = seasonfac.room_price_factor
             servicefac = seasonfac.service_factor
 
-            console.log("roomfac",roomfac)
-            console.log("servicefac",servicefac)
+            
 
             roomfac = roomfac-1
             servicefac = servicefac -1
-            console.log("roomfac",roomfac)
+           
 
                 if(getTier){
                     // sumPrice = (breakfast*300*(1 - getTier.breakfast_discount_factor)) + (laundry*50*(1 - getTier.laundry_discount_factor)) + ((1 - getBook.room_discount_factor)*getRoomType.room_price*diffOutIn)
@@ -160,7 +155,7 @@ try {
 
 
          else if(!seasonfac){
-            console.log("wowww")
+            
 
             if(getTier){
                 // sumPrice = (breakfast*300*(1 - getTier.breakfast_discount_factor)) + (laundry*50*(1 - getTier.laundry_discount_factor)) + ((1 - getBook.room_discount_factor)*getRoomType.room_price*diffOutIn)

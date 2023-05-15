@@ -97,7 +97,6 @@ export default async function getExhibitionBookById(req, res) {
 
             getbook[i].exhibition_room = getbook[i].exhibition_room[0]
             getbook[i].type_of_exhibition = getbook[i].type_of_exhibition[0]
-            // console.log("summary = ", getbook[i].price_summary)
             
         }
 
@@ -123,10 +122,6 @@ export default async function getExhibitionBookById(req, res) {
          }
        
      const getRole = await role.findOne( {"role":0,"sub_role": tierId},{projection:{"_id": 0}});
-     console.log("getRole = ", getRole)
-    
-
-   
 
         //add user role in message
 
