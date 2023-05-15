@@ -1,7 +1,7 @@
 import { MongoClient, ServerApiVersion  } from 'mongodb';
 import { jwtdecode } from "@/utils/verify";
 
-export default async function getRoomBookById(req, res) {
+export default async function getExhibitionBookById(req, res) {
 
     const uri = process.env.MONGO_URI;
     const client = new MongoClient(uri, {
@@ -12,7 +12,6 @@ export default async function getRoomBookById(req, res) {
         }
     }
     );
-
 
     const token = req.headers["auth-token"];
     const decoded = jwtdecode(token);
@@ -27,7 +26,7 @@ export default async function getRoomBookById(req, res) {
  try {
         await client.connect();
         console.log('Connected to database');
-        const book = client.db('HotelManage').collection('room_booking');
+        const book = client.db('HotelManage').collection('exhibition_booking');
         const tier = client.db('HotelManage').collection('guess_tier');
         const role = client.db('HotelManage').collection('role');
        
@@ -51,23 +50,24 @@ export default async function getRoomBookById(req, res) {
 
             {
                 $lookup: {
-             from: "room",
-             localField: "room_id",
-             foreignField: "room_id",
-             as: "room"
+             from: "exhibition_room",
+             localField: "exhibition_id",
+             foreignField: "exhibition_id",
+             as: "exhibition_room"
            }
             },
             
         {
                 $lookup: {
-            from: "type_of_room",
-            localField: "room.roomtype_id",
-            foreignField: "roomtype_id",
-            as: "roomtype"
+            from: "type_of_exhibition",
+            localField: "exhibition_room.exhibition_type_id",
+            foreignField: "exhibition_type_id",
+            as: "type_of_exhibition"
             }
-        },{$project:{"_id":0,"book_id":1,"account_id":1,"room_id":1,"book_date":1,"bookstatus_id":1,"checkin_date":1,"checkout_date":1,
-        "breakfast_status":1, "clean_need":1, "laundry_need":1, "extrabed_need":1, "halal_need":1, "guests":1, "room.room_no":1, 
-        "roomtype.roomtype_id":1, "roomtype.roomtype_name":1, "roomtype.image":1 }}
+        },{$project:{"_id":0,"exhibition_booking_id":1,"account_id":1,"exhibition_id":1,"book_date":1,"bookstatus_id":1,"checkin_date":1,"checkout_date":1,
+        "exhibition_room.name":1, "type_of_exhibition.type_name":1, "type_of_exhibition.have_microphone":1, "type_of_exhibition.have_projector":1,
+        "type_of_exhibition.have_wifi":1, "type_of_exhibition.have_wifi":1,  "type_of_exhibition.have_whiteboard":1,  "type_of_exhibition.sound_system":1, 
+        "type_of_exhibition.catering_service":1,  "type_of_exhibition.Seating_arrangements":1, "type_of_exhibition.image":1,  }}
         
 
           
@@ -79,14 +79,14 @@ export default async function getRoomBookById(req, res) {
 
         for (let i=0 ; i< getbook.length; i++){
 
-        await  fetch("http://localhost:3000/api/book/getpricebookroom", {
+        await  fetch("http://localhost:3000/api/book/getpricebookexhibition", {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
                  "auth-token": token,
                  },
               
-               body: JSON.stringify({bookid: getbook[i].book_id}),
+               body: JSON.stringify({bookid: getbook[i].exhibition_booking_id}),
             })
             .then((res) => res.json())
             .then((data) => {
@@ -95,8 +95,8 @@ export default async function getRoomBookById(req, res) {
 
             })
 
-            getbook[i].room = getbook[i].room[0]
-            getbook[i].roomtype = getbook[i].roomtype[0]
+            getbook[i].exhibition_room = getbook[i].exhibition_room[0]
+            getbook[i].type_of_exhibition = getbook[i].type_of_exhibition[0]
             // console.log("summary = ", getbook[i].price_summary)
             
         }
@@ -127,9 +127,6 @@ export default async function getRoomBookById(req, res) {
     
 
    
-     
-     
-        
 
         //add user role in message
 
@@ -150,6 +147,6 @@ export default async function getRoomBookById(req, res) {
         await client.close();
       }
 
-      
+
 
 }
