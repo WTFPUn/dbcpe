@@ -43,6 +43,10 @@ export default async function addBookingExhibition(req, res) {
   
     }
 
+    if(!participant){
+      return res.status(400).json({ message: "No participant", success: false });
+    }
+
     
     try {
         await client.connect();
@@ -82,8 +86,8 @@ export default async function addBookingExhibition(req, res) {
 
       //set time  right now 
 
-      const tzOffset = 7; // Offset for Indochina Time (GMT+7)
-      const bookDate = new Date(Date.now() + tzOffset * 3600000).toISOString().split('T')[0];
+      // const tzOffset = 7; // Offset for Indochina Time (GMT+7)
+      // const bookDate = new Date(Date.now() + tzOffset * 3600000).toISOString().split('T')[0];
 
     const checkroomid =  await book.aggregate( [
       {
@@ -131,7 +135,7 @@ export default async function addBookingExhibition(req, res) {
             account_id: account_id,
             exhibition_id: exhibition_id,
             bookstatus_id: 1,
-            book_date: bookDate,   
+            book_date: new Date(),   
             checkin_date: checkin_date,
             checkout_date: checkout_date,
             participant_count: participant,

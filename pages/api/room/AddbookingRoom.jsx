@@ -112,16 +112,12 @@ export default async function addBookingRoom(req, res) {
         return res.status(400).json({ message: 'No room number', success: false });
       }
 
-      
-
       //set time  right now 
 
-      const tzOffset = 7; // Offset for Indochina Time (GMT+7)
-      const bookDate = new Date(Date.now() + tzOffset * 3600000).toISOString().split('T')[0];
+      // const tzOffset = 7; // Offset for Indochina Time (GMT+7)
+      // const bookDate = new Date(Date.now() + tzOffset * 3600000).toISOString().split('T')[0];
 
      
-
-
     const checkroomid =  await book.aggregate( [
       {
           $match: {
@@ -167,7 +163,7 @@ export default async function addBookingRoom(req, res) {
             book_id: count,
             account_id: account_id,
             room_id: room_id,
-            book_date: bookDate,
+            book_date: new Date(),
             bookstatus_id: 1,
             checkin_date: checkin_date,
             checkout_date:  checkout_date,
