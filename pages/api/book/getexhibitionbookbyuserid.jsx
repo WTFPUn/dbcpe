@@ -64,7 +64,7 @@ export default async function getExhibitionBookById(req, res) {
             foreignField: "exhibition_type_id",
             as: "type_of_exhibition"
             }
-        },{$project:{"_id":0,"exhibition_booking_id":1,"account_id":1,"exhibition_id":1,"book_date":1,"bookstatus_id":1,"checkin_date":1,"checkout_date":1,
+        },{$project:{"_id":0,"exhibition_booking_id":1,"account_id":1,"exhibition_id":1,"book_date":1,"bookstatus_id":1,"checkin_date":1,"checkout_date":1,"participant_count":1,
         "exhibition_room.name":1, "type_of_exhibition.type_name":1, "type_of_exhibition.have_microphone":1, "type_of_exhibition.have_projector":1,
         "type_of_exhibition.have_wifi":1, "type_of_exhibition.have_wifi":1,  "type_of_exhibition.have_whiteboard":1,  "type_of_exhibition.sound_system":1, 
         "type_of_exhibition.catering_service":1,  "type_of_exhibition.Seating_arrangements":1, "type_of_exhibition.image":1,  }}
