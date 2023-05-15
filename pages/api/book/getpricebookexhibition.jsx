@@ -68,7 +68,7 @@ try {
          }else {
             countexhibition =   countBookEx[0].myCount
          }
-         console.log("countEx = ",countexhibition )
+         
 
 
 
