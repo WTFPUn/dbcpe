@@ -30,6 +30,20 @@ export default async function getcode(req, res) {
 
         const getcode = await code.findOne({"code_name": code_name},{projection:{"_id":0}}) 
 
+         //set time  right now 
+
+      const tzOffset = 7; // Offset for Indochina Time (GMT+7)
+      const bookDate = new Date(Date.now() + tzOffset * 3600000).toISOString().split('T')[0];
+
+
+        if(getcode.temp === getcode.count_limit){
+            return res.status(400).json({ message: 'This code is over limit', success: false });
+        
+        }
+        if(bookDate === getcode.expired_date){
+            return res.status(400).json({ message: 'This code is out of range', success: false });
+        }
+
         if(getcode){
             return ( res.status(200).json({ getcode:getcode ,message: 'Get code success', success: true}))
         }
