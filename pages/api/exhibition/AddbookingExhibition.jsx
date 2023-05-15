@@ -123,7 +123,7 @@ export default async function addBookingExhibition(req, res) {
     }
 
       
-      console.log("bookdate  ",bookDate)
+     
 
       console.log("checkIn : ",checkin_date)
       console.log("checkout : ",checkout_date)

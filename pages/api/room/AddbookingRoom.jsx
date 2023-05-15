@@ -151,11 +151,6 @@ export default async function addBookingRoom(req, res) {
       return res.status(400).json({ message: 'Room is not available', success: false });
     }
 
-      
-      console.log("bookdate  ",bookDate)
-
-      console.log("checkIn : ",checkin_date)
-      console.log("checkout : ",checkout_date)
 
       
        const result = await book.insertOne({
