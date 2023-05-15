@@ -58,7 +58,10 @@ export default function ConfirmRoomBookBox({data}) {
           }
           <div className="flex justify-between">
               <p className="font-semibold">Price: </p> 
-              <div className="font-semibold line-through">{data.roomtype.room_price}</div>
+              <div className="font-semibold text-sm flex flex-row gap-2 place-items-center">
+                <p className="text-xs strikediag withpadding">{data.price_summary.total_price}</p>
+                <p className="text-green-500">{Math.round(data.price_summary.discounted_total_price * 100) / 100}</p>
+              </div>
             </div>
         </div>
 

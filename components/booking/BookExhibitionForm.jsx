@@ -26,7 +26,7 @@ export default function BookExhibitionForm({exhibition_id, guestInRoom, room_nam
     exhibition_id: "0",
     checkin_date: "",
     checkout_date: "",
-    participantt: 0,
+    participant: 0,
   });
   
   // set room_id, guestInRoom
@@ -106,7 +106,7 @@ export default function BookExhibitionForm({exhibition_id, guestInRoom, room_nam
         <div className="absolute top-0 left-0 px-4 py-2 text-sm">Max Guest</div>
         <select
           type="number"
-          name="Guest"
+          name="participant"
           className="bg-transparent w-full h-full px-4 py-2 rounded-md text-center"
           onChange={updateFormData}
           >

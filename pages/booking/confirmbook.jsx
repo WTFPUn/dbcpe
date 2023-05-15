@@ -35,15 +35,35 @@ export default function confirmbook() {
       })
       .then((res) => res.json())
       .then((data) => {
-        setBookRoom(data.getbook);
+        setBookRoom(data.book.getbook);
         let roomTick = [];
         bookRoom?.map((book) => {
           roomTick.push({ book_id: book.book_id, tick: false, book_type: 0 });
         });
         setBookRoomkTick(roomTick);
-        setRoomCount(data.getbook.length);
+        setRoomCount(data.book.getbook.length);
       }
     );
+
+    fetch("/api/book/getexhibitionbookbyuserid", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": token,
+        },
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        setBookExhibition(data.book.getbook);
+        let exhibitionTick = [];
+        bookExhibition?.map((book) => {
+          exhibitionTick.push({ book_id: book.book_id, tick: false, book_type: 1 });
+        });
+        setBookExhibitionTick(exhibitionTick);
+        setExhibitionCount(data.book.getbook.length);
+      }
+    );
+
     
   }, []);
 
@@ -95,6 +115,21 @@ export default function confirmbook() {
             </div>
             <div className="w-[50%] px-4">
               <div className="text-xl font-semibold">{"Exhibition"}</div>
+              <div className="flex flex-col w-full  overflow-y-scroll snap-y h-[80%] ">
+                {bookExhibition?.map((book, index) => (
+                  <div key={index+"book"} className="flex flex-row w-full h-max rounded-md shadow-md gap-2 snap-center">
+                    <div className="w-full flex place-items-center gap-4 py-2">
+                      <input
+                        type="checkbox"
+                        className="w-4"
+                        checked={bookExhibitionTick[index]?.tick}
+                        onChange={() => handleExhibitionTick(index)}
+                      />
+                      <ConfirmBookBox roomtype={"exhibition"} data={book}/>
+                      </div>
+                      </div>
+                    ))}
+                </div>
             </div>
           </div>
           <div className="ml-auto w-96 h-[11.25rem]  bg-[#ECF1F4] rounded-md mt-8 py-4 px-8 flex flex-col">
