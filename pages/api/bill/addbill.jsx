@@ -21,8 +21,6 @@ export default async function addBill(req, res) {
 
     let book_list = req.body?.book_list;
     let code_id = req.body?.code_id;
-    let payment_method = req.body?.payment_method;
-    let  paid_status =  req.body?.paid_status;
     let getprice = 0
     
 
@@ -32,13 +30,6 @@ export default async function addBill(req, res) {
       }
 
 
-    if(!paid_status){
-        return res.status(400).json({ message: 'Do not have paid Status', success: false });
-    }
-
-    if(!payment_method){
-        return res.status(400).json({ message: 'Do not have payment_method', success: false });
-    }
 
 
 
@@ -171,8 +162,6 @@ export default async function addBill(req, res) {
             book_list: book_list,
             code_id: code_id,
             paid_date: new Date(),
-            paid_status: paid_status,
-            payment_method: payment_method,
             total_bill: getprice,
            
       
