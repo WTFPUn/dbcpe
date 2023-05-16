@@ -1,5 +1,6 @@
 import { MongoClient, ServerApiVersion  } from 'mongodb';
 import { jwtdecode } from "@/utils/verify";
+import { v4 as uuidv4 } from 'uuid';
 
 export default async function addBill(req, res) {
 
@@ -144,17 +145,7 @@ export default async function addBill(req, res) {
 
 
         
-        let count
-        const countBill = await bill.aggregate( [
-            { $count: "myCount" }
-         ] ).toArray();
-         if(countBill.length === 0){
-            count = 0
-         }else {
-            count =   countBill[0].myCount
-         }
-  
-         console.log("count = ",count )
+         let count = uuidv4();
 
 
          const result = await bill.insertOne({
@@ -204,7 +195,7 @@ export default async function addBill(req, res) {
 
                 
 
-             return( res.status(200).json({ message: 'Add bill success', success: true}))
+             return( res.status(200).json({ bill_id : count ,message: 'Add bill success', success: true}))
         }
         else {
             return( res.status(400).json({ message: 'Add bill Failed', success: false}))
