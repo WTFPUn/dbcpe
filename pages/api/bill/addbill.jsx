@@ -100,6 +100,8 @@ export default async function addBill(req, res) {
         // const roomquery =  client.db('HotelManage').collection('room');
         const bill = client.db('HotelManage').collection('bill');
         const code = client.db('HotelManage').collection('code');
+        const bookEx = client.db('HotelManage').collection('exhibition_booking');
+        const bookRoom = client.db('HotelManage').collection('room_booking');
 
          //set time  right now 
 
@@ -172,7 +174,36 @@ export default async function addBill(req, res) {
 
 
 
+
         if(result){
+                    for (const values of book_list){
+
+                        if(values.book_type === 0){
+                            const updateBookRoom = await bookRoom.updateOne(
+            
+                                { "book_id": values.book_id },
+                            { $set:  { bookstatus_id: 0 } }
+                                
+                            );
+
+                        }
+
+                        else if(values.book_type === 1){
+                            const updateBookEx = await bookEx.updateOne(
+            
+                                { "exhibition_booking_id": values.book_id },
+                            { $set:  { bookstatus_id: 0 } }
+                                
+                            );
+
+                        }
+
+
+                    }
+
+
+                
+
              return( res.status(200).json({ message: 'Add bill success', success: true}))
         }
         else {
