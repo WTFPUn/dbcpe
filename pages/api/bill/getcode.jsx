@@ -48,7 +48,7 @@ export default async function getcode(req, res) {
             return ( res.status(200).json({ getcode:getcode ,message: 'Get code success', success: true}))
         }
         else{
-            return( res.status(200).json({ message: 'Do not have this code', success: true}))
+            return( res.status(200).json({ message: 'Do not have this code', success: false }))
         }
 
 
