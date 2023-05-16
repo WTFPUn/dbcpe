@@ -154,7 +154,7 @@ export default async function addBill(req, res) {
             bill_id: count,
             book_list: book_list,
             code_id: code_id,
-            paid_date: new Date(),
+            create_date: new Date(),
             total_bill: getprice,
            
       
