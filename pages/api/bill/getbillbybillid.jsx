@@ -46,7 +46,7 @@ export default async function getBill(req, res) {
             return res.status(400).json({ message: 'Bill is not found', success: false });
         }
 
-        
+        let sum = 0
         let bookList = getbill.book_list
         let objectbook = []
         console.log("book_id getbill = ", bookList[0].book_id )
@@ -108,7 +108,7 @@ export default async function getBill(req, res) {
                     .then((data) => {
                         
                       objectbook.push(  {book_id: values.book_id,book_type: "room",description: getType[0].type_of_room.roomtype_name, amount : data.discounted_total_price } ) ;
-                     
+                     sum = sum + data.discounted_total_price
         
                     })
 
@@ -170,7 +170,7 @@ export default async function getBill(req, res) {
                         
 
                       objectbook.push(  {book_id: values.book_id,book_type: "exhibition",description: getType[0].type_of_room.type_name, amount : data.discounted_total_price } ) ;
-                     
+                      sum = sum + data.discounted_total_price
         
                     })
 
@@ -192,7 +192,8 @@ export default async function getBill(req, res) {
         getperson ["code_name"]  =   getcode?.code_name| ""
         getperson ["code_type"] = getcode?.code_type | ""
         getperson ["discount_factor"] = getcode?.discount_factor | ""
-
+        getperson["price"] = sum
+        getperson["discounted_price"] = getbill.total_bill
        
 
     
