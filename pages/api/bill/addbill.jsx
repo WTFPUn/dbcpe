@@ -142,8 +142,37 @@ export default async function addBill(req, res) {
          }
 
          console.log("getprice after = ",getprice)
+         let pay_due_date
+
+         for (const values of book_list){
+            if(values.book_type === 0){
+                const getbookRoom = await bookRoom.findOne({"book_id": values.book_id },{projection:{"_id":0}}) 
+                if(!pay_due_date){
+                   pay_due_date   = getbookRoom.checkout_date 
+                }
+                else if(pay_due_date){
+                    if(pay_due_date < getbookRoom.checkout_date){
+                        pay_due_date = getbookRoom.checkout_date 
+                    }
+                }
+
+            }
+
+            else if(values.book_type === 1){
+                const getbookEx =  await  bookEx.findOne({"exhibition_booking_id": values.book_id },{projection:{"_id":0}}) 
+                if(!pay_due_date){
+                    pay_due_date   = getbookEx.checkout_date 
+                 }
+                 else if(pay_due_date){
+                     if(pay_due_date < getbookEx.checkout_date){
+                         pay_due_date = getbookEx.checkout_date 
+                     }
+                 }
+
+            }
 
 
+         }
         
          let count = uuidv4();
 
@@ -155,6 +184,7 @@ export default async function addBill(req, res) {
             book_list: book_list,
             code_id: code_id,
             create_date: new Date(),
+            pay_due_date: pay_due_date,
             total_bill: getprice,
            
       
