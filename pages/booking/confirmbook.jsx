@@ -4,6 +4,7 @@
 import Template from "@/components/Template";
 import ConfirmBookBox from "@/components/booking/ConfirmBookBox";
 import Section from "@/components/booking/Section";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export default function confirmbook() {
@@ -26,7 +27,12 @@ export default function confirmbook() {
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalPriceWithCoupon, setTotalPriceWithCoupon] = useState(0);
 
+  const [modal, setModal] = useState(false);
+
+  const router = useRouter();
+  
   const setRoomAfterFetch = async (data) => {
+
     setBookRoom(data.book.getbook);
     let roomTick = [];
     data.book.getbook?.map((book) => {
@@ -174,8 +180,11 @@ export default function confirmbook() {
     });
     const data = await res.json();
     if (data.success) {
+      // alert to ask move to bill page
       alert("Order success");
-      window.location.reload();
+      // push to bill page and send bill_id to bill page
+      router.push("/booking/bill/" + data.bill_id);
+
     }
     else {
       alert("Order fail");

@@ -189,9 +189,9 @@ export default async function getBill(req, res) {
         getperson ["array_book"] = objectbook
         getperson ["create_date"] = getbill.create_date
         getperson ["pay_due_date"] = getbill.pay_due_date
-        getperson ["code_name"]  =   getcode.code_name
-        getperson ["code_type"] = getcode.code_type
-        getperson ["discount_factor"] = getcode.discount_factor
+        getperson ["code_name"]  =   getcode?.code_name| ""
+        getperson ["code_type"] = getcode?.code_type | ""
+        getperson ["discount_factor"] = getcode?.discount_factor | ""
 
        
 
