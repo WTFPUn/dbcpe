@@ -18,6 +18,10 @@ export default async function getRoomQuery(req, res) {
     let roomType = req.query?.roomType;
     let arrayRoomType = [];
     // roomType change [Object Object] to array
+
+    console.log("checkIn = ",checkIn)
+    console.log("checkout = ",checkOut)
+
     
     if(roomType){
       let roomTypeArr = roomType.split(",");
@@ -63,10 +67,43 @@ export default async function getRoomQuery(req, res) {
         console.log('Connected to database');
         const room = client.db('HotelManage').collection('room_booking');
         const roomquery =  client.db('HotelManage').collection('room');
-        
+
+    
+
         let aggregate = []
         if(checkIn && checkOut){
-            aggregate.push({
+            aggregate.push(           
+              {
+                '$match': {
+                  '$or': [
+                    {
+                      'bookstatus_id': 0
+                        
+                      
+                    },
+                    {
+                      'bookstatus_id': 1
+                        
+                      
+                    },
+                    {
+                      'bookstatus_id': 2
+                        
+                      
+                    },
+                    {
+                      'bookstatus_id': 3
+                        
+                      
+                    }
+                  ]
+                }
+        
+        
+              },    
+             
+              
+              {
                 '$match': {
                   '$or': [
                     {
@@ -83,7 +120,9 @@ export default async function getRoomQuery(req, res) {
                     }
                   ]
                 }
-              })
+              }
+              
+              )
         }
         aggregate.push({
             '$lookup': {
@@ -109,8 +148,12 @@ export default async function getRoomQuery(req, res) {
 
        if(checkIn && checkOut){
 
+        
+
+
           query.push({$match: {
                 'room_id': { $nin: idRoom }}})
+
 
           if(arrayRoomType.length != 0){
             query.push({$match: {
@@ -142,7 +185,12 @@ export default async function getRoomQuery(req, res) {
        }
 
        else{
-        console.log("roomtype",roomType)
+        console.log("roomtype ",roomType)
+
+        // query.push({$match: {
+        //   'room_id': { $in: roomPass }}})
+
+
           if(arrayRoomType.length != 0){
             query.push({$match: {
               '$expr': {
@@ -152,6 +200,9 @@ export default async function getRoomQuery(req, res) {
               }
             }})
           }
+
+
+        
 
             query.push({
               $lookup: {
