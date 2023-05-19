@@ -203,7 +203,7 @@ export default async function addBill(req, res) {
                             const updateBookRoom = await bookRoom.updateOne(
             
                                 { "book_id": values.book_id },
-                            { $set:  { bookstatus_id: 0 } }
+                            { $set:  { bookstatus_id: 1 } }
                                 
                             );
 
@@ -213,7 +213,7 @@ export default async function addBill(req, res) {
                             const updateBookEx = await bookEx.updateOne(
             
                                 { "exhibition_booking_id": values.book_id },
-                            { $set:  { bookstatus_id: 0 } }
+                            { $set:  { bookstatus_id: 1 } }
                                 
                             );
 

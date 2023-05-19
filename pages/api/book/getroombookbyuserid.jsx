@@ -39,7 +39,7 @@ export default async function getRoomBookById(req, res) {
                 $match: {
                  $and: [
                     {'account_id': account_id},
-                    {'bookstatus_id': 1}
+                    {'bookstatus_id': 0}
 
                  ]
 
@@ -109,7 +109,7 @@ export default async function getRoomBookById(req, res) {
      //check tier 
 
      let tierId = -1
-         if(count>= 5 && count< 10){
+         if(count>= 0 && count< 10){
             tierId = 0
          }
          else if(count>= 10 && count< 15){
