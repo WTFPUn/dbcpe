@@ -11,6 +11,7 @@ dotenv.config();
 export default function Header() {
   // get token from localstorage and client side
   const [token, setToken] = useState("");
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     setToken(token);
@@ -18,7 +19,8 @@ export default function Header() {
   
   // console.log("token is first:  ", token);
   const decoded = jwtdecode(token);
-  const { account_id, email, role, sub_role, user_name } = decoded || {};  
+  const { account_id, email, user_name, role, sub_role } = decoded || {};  
+  console.log("decoded: ", decoded)
   
   const LinkValue = token ? { href: `/profile/`, text: user_name } : { href: "/users/Signup", text: "Sign up Now" };
 
@@ -27,27 +29,113 @@ export default function Header() {
     localStorage.removeItem("token");
     window.location.reload();
   };
-  
+
+  const pageRole = {
+      'guest': [
+      {
+        name: "ACCOMODATION",
+        link: "/accommodation",
+      },
+      {
+        name: "MEETING",
+        link: "/meeting",
+      },
+      {
+        name: "BOOKING",
+        link: "/booking",
+      },
+      {
+        name: "CONFIRM BOOKING",
+        link: "/booking/confirmbook",
+      }
+  ],
+      'manager': [
+        {
+          name: "DASHBOARD",
+          link: "/admin/dashboard",
+        },
+        {
+          name: "Analytics",
+          link: "/admin/analytics",
+        },
+        {
+          name: "Coupon",
+          link: "/admin/coupon",
+        },
+        {
+          name: "Role Management",
+          link: "/admin/role",
+        },
+        {
+          name: "Assign Cleaning",
+          link: "/admin/assigncleaning",
+        }
+      ],
+      'Recepter': [
+        {
+          name: "DASHBOARD",
+          link: "/admin/dashboard",
+        },
+        {
+          name: "Bill's Guest",
+          link: "/admin/billcontrol",
+        },
+      ],
+      'Chef': [
+        {
+        name: "DASHBOARD",
+        link: "/admin/dashboard",
+        },
+      ],
+      'HallPorter': [
+        {
+          name: "DASHBOARD",
+          link: "/admin/dashboard",
+        },
+      ],
+      'HouseKeeper': [
+        {
+          name: "DASHBOARD",
+          link: "/admin/dashboard",
+        },
+        {
+          name: 'Accommodation Assignment',
+          link: '/admin/accommodationassignment'
+        },
+        {
+          name: 'Exhibition Assignment',
+          link: '/admin/exhibitionassignment'
+        }
+      ],
+    }
+
+    const pageRender = (role, sub_role) => {
+      if (role == 0) {
+        return pageRole.guest
+      }
+      if (sub_role == 0) {
+        return pageRole.manager
+      }
+      if (sub_role == 1) {
+        return pageRole.HouseKeeper
+      }
+      if (sub_role == 2) {
+        return pageRole.Recepter
+      }
+      if (sub_role == 3) {
+        return pageRole.HallPorter
+      }
+      if (sub_role == 4) {
+        return pageRole.Chef
+      }
+    }
+
 
   // console.log(LinkValue);
-  const pageList = [
-    {
-      name: "THE HOTEL",
-      link: "/",
-    },
-    {
-      name: "ACCOMODATION",
-      link: "/accommodation",
-    },
-    {
-      name: "MEETING",
-      link: "/meeting",
-    },
-    {
-      name: "BOOKING",
-      link: "/booking",
-    },
-  ]
+  console.log("role: ", role);
+  // check role and sub_role is exist then render page
+  const pageList = ((role === 0 || role === 1)) ? pageRender(role, sub_role) : [];
+  console.log("pageList", pageList);
   
   return(
     <div className="w-full bg-[#4A4A68] text-white px-[15%] py-3 flex justify-between place-items-center">
@@ -62,7 +150,7 @@ export default function Header() {
           <Link
             key={index}
             href={page.link}
-            className=" hover:text-[#F3D9DA] px-4"
+            className=" hover:text-[#F3D9DA] px-4 uppercase"
           >
             {page.name}
           </Link>
