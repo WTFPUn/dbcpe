@@ -99,12 +99,8 @@ export default async function getExhibitionQuery(req, res) {
                       'bookstatus_id': 2
                         
                       
-                    },
-                    {
-                      'bookstatus_id': 3
-                        
-                      
                     }
+                    
                   ]
                 }
         
