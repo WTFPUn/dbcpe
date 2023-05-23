@@ -81,7 +81,34 @@ export default async function getExhibitionQuery(req, res) {
         
         let aggregate = []
         if(checkIn && checkOut){
-            aggregate.push({
+            aggregate.push(
+              {
+                '$match': {
+                  '$or': [
+                    {
+                      'bookstatus_id': 0
+                        
+                      
+                    },
+                    {
+                      'bookstatus_id': 1
+                        
+                      
+                    },
+                    {
+                      'bookstatus_id': 2
+                        
+                      
+                    }
+                    
+                  ]
+                }
+        
+        
+              },
+              
+              
+              {
                 '$match': {
                   '$or': [
                     {
@@ -158,6 +185,8 @@ export default async function getExhibitionQuery(req, res) {
             })
           }
 
+          
+
          
        }
 
@@ -191,6 +220,8 @@ export default async function getExhibitionQuery(req, res) {
   
               })
             }
+          
+
 
         }
 

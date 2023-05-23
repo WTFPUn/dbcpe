@@ -128,6 +128,31 @@ export default async function addBookingRoom(req, res) {
         '$match': {
           '$or': [
             {
+              'bookstatus_id': 0
+                
+              
+            },
+            {
+              'bookstatus_id': 1
+                
+              
+            },
+            {
+              'bookstatus_id': 2
+                
+              
+            }
+          ]
+        }
+
+
+      },
+
+
+      {
+        '$match': {
+          '$or': [
+            {
               'checkin_date': {
                 $gte: checkin_date,
                 $lte: checkout_date
@@ -159,7 +184,7 @@ export default async function addBookingRoom(req, res) {
             account_id: account_id,
             room_id: room_id,
             book_date: new Date(),
-            bookstatus_id: 1,
+            bookstatus_id: 0,
             checkin_date: checkin_date,
             checkout_date:  checkout_date,
             breakfast_status: breakfast,

@@ -122,7 +122,7 @@ export default async function addBill(req, res) {
             }
 
 
-            if(getcode.code_type === "persen"){
+            if(getcode.code_type === "percent"){
                 getprice = getprice * (1-getcode.discount_factor)
             }
             else if(getcode.code_type === "fixed"){
@@ -203,7 +203,7 @@ export default async function addBill(req, res) {
                             const updateBookRoom = await bookRoom.updateOne(
             
                                 { "book_id": values.book_id },
-                            { $set:  { bookstatus_id: 0 } }
+                            { $set:  { bookstatus_id: 1 } }
                                 
                             );
 
@@ -213,7 +213,7 @@ export default async function addBill(req, res) {
                             const updateBookEx = await bookEx.updateOne(
             
                                 { "exhibition_booking_id": values.book_id },
-                            { $set:  { bookstatus_id: 0 } }
+                            { $set:  { bookstatus_id: 1 } }
                                 
                             );
 

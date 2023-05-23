@@ -95,6 +95,33 @@ export default async function addBookingExhibition(req, res) {
               'exhibition_id': exhibition_id
             }
       },
+
+      {
+        '$match': {
+          '$or': [
+            {
+              'bookstatus_id': 0
+                
+              
+            },
+            {
+              'bookstatus_id': 1
+                
+              
+            },
+            {
+              'bookstatus_id': 2
+                
+              
+            }
+
+
+          ]
+        }
+
+
+      },
+
       {
         '$match': {
           '$or': [
@@ -134,7 +161,7 @@ export default async function addBookingExhibition(req, res) {
             exhibition_booking_id: count,
             account_id: account_id,
             exhibition_id: exhibition_id,
-            bookstatus_id: 1,
+            bookstatus_id: 0,
             book_date: new Date(),   
             checkin_date: checkin_date,
             checkout_date: checkout_date,
