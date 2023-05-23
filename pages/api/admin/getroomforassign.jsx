@@ -111,7 +111,7 @@ export default async function getroombycleanstatus(req, res) {
 
         }
 
-        return( res.status(200).json({getroom  , message: 'Get bill success', success: true}))
+        return( res.status(200).json({getroom  , message: 'Get room for assign success', success: true}))
 
 
     }catch (error) {
