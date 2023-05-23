@@ -122,7 +122,7 @@ export default async function addBill(req, res) {
             }
 
 
-            if(getcode.code_type === "persen"){
+            if(getcode.code_type === "percent"){
                 getprice = getprice * (1-getcode.discount_factor)
             }
             else if(getcode.code_type === "fixed"){
