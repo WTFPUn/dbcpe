@@ -90,11 +90,6 @@ export default async function getRoomQuery(req, res) {
                       'bookstatus_id': 2
                         
                       
-                    },
-                    {
-                      'bookstatus_id': 3
-                        
-                      
                     }
                   ]
                 }

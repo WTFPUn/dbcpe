@@ -141,11 +141,6 @@ export default async function addBookingRoom(req, res) {
               'bookstatus_id': 2
                 
               
-            },
-            {
-              'bookstatus_id': 3
-                
-              
             }
           ]
         }
