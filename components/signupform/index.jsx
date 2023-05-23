@@ -152,7 +152,7 @@ export default function SignupForm() {
             </div>
             <div className="flex flex-col">
               <label htmlFor="Gender">Gender *</label>
-              <select name="Gender" id="Gender" onChange={changeHandler} className="border border-[#8C8CA1] rounded-md text-base font-light">
+              <select name="gender" id="gender" onChange={changeHandler} className="border border-[#8C8CA1] rounded-md text-base font-light">
                 <option value="Male" >Male</option>
                 <option value="Female">Female</option>
                 <option value="Other">Other</option>
