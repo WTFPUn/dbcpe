@@ -57,7 +57,7 @@ try {
         const countBookEx = await bookExhibition.aggregate( [
             {$match:{
                 'account_id': account_id,
-                'bookstatus_id': 3
+                'bookstatus_id': 2
 
             } }
             ,{ $count: "myCount" }
@@ -78,7 +78,7 @@ try {
          const countBookRoom = await bookRoom.aggregate( [
             {$match:{
                 'account_id': account_id,
-                'bookstatus_id': 3
+                'bookstatus_id': 2
 
             } }
             ,{ $count: "myCount" }
