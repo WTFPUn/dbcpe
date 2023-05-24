@@ -2,7 +2,7 @@ import { MongoClient, ServerApiVersion  } from 'mongodb';
 import { jwtdecode } from "@/utils/verify";
 
 
-export default async function getroombycleanstatus(req, res) {
+export default async function getroomforassign(req, res) {
 
     const uri = process.env.MONGO_URI;
     const client = new MongoClient(uri, {
