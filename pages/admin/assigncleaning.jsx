@@ -290,7 +290,7 @@ export default function assigncleaning() {
                   return(
                     <div className="flex font-medium text-[#8C8CA1] py-4" key={"exhibition_"+data.exhibition_id}>
                       <div className=" w-[10%] text-center">
-                        <input type="checkbox" className="h-4 w-4" onClick={() => {setRoom([...room.map((room) => {
+                        <input type="checkbox" className="h-4 w-4" onClick={() => {setExhibition([...exhibition.map((room) => {
                           if(room.exhibition_id === data.exhibition_id){
                             room.selected = !room.selected;
                           }
