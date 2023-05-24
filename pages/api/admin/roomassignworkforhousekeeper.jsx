@@ -13,10 +13,11 @@ export default async function roomAssignWorkForHouseKeeper(req, res) {
     }
     );
 
-    let   account_id  = req.body?.account_id;
-    let  room_id =   (req.body?.room_id);
+    // parse string body to object
+    var body = JSON.parse(req.body);
 
-
+    const { room_id, account_id } = body;
+    console.log(room_id, account_id)
     
 
     if (req.method !== 'PUT') {

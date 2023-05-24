@@ -174,8 +174,8 @@ export default function assigncleaning() {
        fetch("/api/admin/roomassignworkforhousekeeper",{
         method: "PUT",
         body: JSON.stringify({
-        account_id: selectHousekeeper,
-        room_id: room,  
+          account_id: selectHousekeeper,
+          room_id: room,  
        })
     }
     )
@@ -188,6 +188,9 @@ export default function assigncleaning() {
     } else {
       fetch("/api/admin/exhibitionassignworkforhousekeeper",{
         method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
         account_id: selectHousekeeper,
         room_id: exhibition,  
