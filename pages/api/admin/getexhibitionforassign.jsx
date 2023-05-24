@@ -110,7 +110,7 @@ export default async function getroombycleanstatus(req, res) {
 
       const tzOffset = 7; // Offset for Indochina Time (GMT+7)
       const dateNow = new Date(Date.now() + tzOffset * 3600000).toISOString().split('T')[0];
-      console.log(dateNow)
+      
 
 
         for (let i=0 ; i< getroom.length; i++){
@@ -128,7 +128,7 @@ export default async function getroombycleanstatus(req, res) {
 
 
             if(getroom[i].housekeeper.length){
-                console.log("hoouseid = ",getroom[i].housekeeper )
+               
                 const gethousekeeper = await person.findOne({"account_id":getroom[i].housekeeper },{"_id":0});
 
                 getroom[i]["housekeeper_fullname"] = `${gethousekeeper.first_name} ${gethousekeeper.last_name}`

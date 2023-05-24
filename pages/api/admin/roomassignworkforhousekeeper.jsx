@@ -17,8 +17,7 @@ export default async function roomAssignWorkForHouseKeeper(req, res) {
     let  room_id = parseInt(req.body?.room_id);
 
 
-    console.log("account_id = ",account_id)
-    console.log("room_id = ", room_id)
+    
 
     if (req.method !== 'PUT') {
         return res.status(405).json({ message: 'Method not allowed', success: false });
