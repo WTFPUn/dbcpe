@@ -14,7 +14,9 @@ export default async function exhibitionAssignWorkForHouseKeeper(req, res) {
     );
 
     let   account_id  = req.body?.account_id;
-    let  room_id = parseInt(req.body?.room_id);
+    let room_id = req.body?.room_id 
+
+
 
 
     if (req.method !== 'PUT') {
@@ -26,23 +28,30 @@ export default async function exhibitionAssignWorkForHouseKeeper(req, res) {
         await client.connect();
 
         const room  = client.db('HotelManage').collection('exhibition_room');
+        let result
+        for(let i=0 ; i < room_id.length ; i++ ){
 
-        const result = await room.updateOne(
-          
-            { "exhibition_id" : room_id },
-           { $set:  { housekeeper : account_id   }}
-            
-          );
+            if(room_id[i].selected === 1){
+                 result = await room.updateOne(
+                
+                    { "exhibition_id" : room_id[i].exhibition_id },
+                { $set:  { housekeeper : account_id   }}
+                    
+                );
 
-        
+
+            }
+        }
+
         if(result){  
-                return( res.status(200).json({ message: 'Assign work success', success: true}))
+            return( res.status(200).json({ message: 'Assign work success', success: true}))
         }
         else{
             return( res.status(200).json({ message: 'Assign work invalid', success: false}))
         }
 
-
+        
+       
 
     }catch (error) {
         console.log(error);
