@@ -17,10 +17,8 @@ export default function Header() {
     setToken(token);
   }, []);
   
-  // console.log("token is first:  ", token);
   const decoded = jwtdecode(token);
   const { account_id, email, user_name, role, sub_role } = decoded || {};  
-  console.log("decoded: ", decoded)
   
   const LinkValue = token ? { href: `/profile/`, text: user_name } : { href: "/users/Signup", text: "Sign up Now" };
 
@@ -77,7 +75,7 @@ export default function Header() {
           link: "/admin/dashboard",
         },
         {
-          name: "Bill's Guest",
+          name: "Guest Bill's",
           link: "/admin/billcontrol",
         },
       ],
@@ -131,11 +129,8 @@ export default function Header() {
     }
 
 
-  // console.log(LinkValue);
-  console.log("role: ", role);
   // check role and sub_role is exist then render page
   const pageList = ((role === 0 || role === 1)) ? pageRender(role, sub_role) : [];
-  console.log("pageList", pageList);
   
   return(
     <div className="w-full bg-[#4A4A68] text-white px-[15%] py-3 flex justify-between place-items-center">
