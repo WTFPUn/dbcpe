@@ -34,6 +34,7 @@ export default async function getroomforassign(req, res) {
         const room = client.db('HotelManage').collection('room');
         const roomtype = client.db('HotelManage').collection('type_of_room')
         const book = client.db('HotelManage').collection('room_booking')
+        const person = client.db('HotelManage').collection('personal_information')
        
 
         let aggregate = []
@@ -108,6 +109,11 @@ export default async function getroomforassign(req, res) {
         const getroom  = await room.aggregate(aggregate).toArray();
 
 
+
+        
+
+
+
          //set time  right now 
 
       const tzOffset = 7; // Offset for Indochina Time (GMT+7)
@@ -126,6 +132,16 @@ export default async function getroomforassign(req, res) {
                     getroom[i]["availability"] = "Available"
                  }
                 
+            }
+
+            if(getroom[i].housekeeper.length){
+                console.log("hoouseid = ",getroom[i].housekeeper )
+                const gethousekeeper = await person.findOne({"account_id":getroom[i].housekeeper },{"_id":0});
+
+                getroom[i]["housekeeper_fullname"] = `${gethousekeeper.first_name} ${gethousekeeper.last_name}`
+            }
+            else{
+                getroom[i]["housekeeper_fullname"] = "";
             }
 
             getroom[i].room_type = getroom[i].room_type[0]
