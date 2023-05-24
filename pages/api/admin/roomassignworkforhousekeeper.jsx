@@ -1,7 +1,7 @@
 import { MongoClient, ServerApiVersion  } from 'mongodb';
 import { jwtdecode } from "@/utils/verify";
 
-export default async function assignworkforhousekeeper(req, res) {
+export default async function roomAssignWorkForHouseKeeper(req, res) {
 
     const uri = process.env.MONGO_URI;
     const client = new MongoClient(uri, {
