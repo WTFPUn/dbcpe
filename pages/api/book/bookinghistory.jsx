@@ -40,22 +40,27 @@ export default async function bookinghistory(req, res) {
         for (let i=0 ; i< getbill.length; i++){
             let arraybook = []
             for (let j=0 ; j < getbill[i].book_list.length; j++){
+                getbill[i]["pay_status"] = 0
               
                 if(getbill[i].book_list[j].book_type === 0 ){
-                    console.log("Room")
-                    console.log("bookid55555 = ",getbill[i].book_list[j].book_id )
-                   
+                    //room
                     const getbook = await bookRoom.findOne({"book_id": parseInt(getbill[i].book_list[j].book_id) },{projection:{"_id":0,"book_id":1,"room_id":1,"book_date":1
-                    ,"checkin_date":1,"checkout_date":1}})
+                    ,"checkin_date":1,"checkout_date":1,"bookstatus_id":1}})
                     getbook["roomtype"] = "room"
                     arraybook.push(getbook)  
+                    if(getbook.bookstatus_id === 2){
+                        getbill[i]["pay_status"] = 1
+                    }
                 }
                 else if(getbill[i].book_list[j].book_type === 1){
-                    console.log("Ex")
+                    //exhibition
                     const getEx = await bookEx.findOne({"exhibition_booking_id": parseInt(getbill[i].book_list[j].book_id)},{projection:{"_id":0,"exhibition_booking_id":1,"exhibition_id":1
-                    ,"book_date":1,"checkin_date":1, "checkout_date":1}})
+                    ,"book_date":1,"checkin_date":1, "checkout_date":1,"bookstatus_id":1}})
                     getEx["roomtype"] = "exhibition"
                     arraybook.push(getEx)
+                    if(getEx.bookstatus_id === 2){
+                        getbill[i]["pay_status"] = 1
+                    }
                 }
                 
 
