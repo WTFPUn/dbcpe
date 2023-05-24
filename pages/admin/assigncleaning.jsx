@@ -183,6 +183,8 @@ export default function assigncleaning() {
     .then((data) => {
       setMessage(data.message)
       setSubmitStatus(data.success)
+      window.location.reload();
+
     }
     );
     } else {
@@ -201,6 +203,8 @@ export default function assigncleaning() {
     .then((data) => {
       setMessage(data.message)
       setSubmitStatus(data.success)
+      // reload page
+      window.location.reload();
     }
     );
   }
