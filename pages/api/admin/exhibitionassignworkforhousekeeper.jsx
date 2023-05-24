@@ -31,7 +31,7 @@ export default async function exhibitionAssignWorkForHouseKeeper(req, res) {
         let result
         for(let i=0 ; i < room_id.length ; i++ ){
 
-            if(room_id[i].selected === 1){
+            if(room_id[i].selected === true){
                  result = await room.updateOne(
                 
                     { "exhibition_id" : room_id[i].exhibition_id },
