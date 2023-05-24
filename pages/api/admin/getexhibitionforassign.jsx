@@ -75,7 +75,7 @@ export default async function getroombycleanstatus(req, res) {
                 }
 
                 aggregate.push(
-
+                    { $sort : { exhibition_id : 1 } },
                                            
                         {
                             $project:{"_id":0,"exhibition_id":1,"name":1,"clean_status":1,"housekeeper":1,"exhibition_type_id":1,"room_type.type_name":1}
@@ -94,6 +94,8 @@ export default async function getroombycleanstatus(req, res) {
                         as: "room_type"
                     }
                 },
+                { $sort : { exhibition_id : 1 } }
+                ,
                 {
                     $project:{"_id":0,"exhibition_id":1,"name":1,"clean_status":1,"housekeeper":1,"exhibition_type_id":1,"room_type.type_name":1}
                 }
