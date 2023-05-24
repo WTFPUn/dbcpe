@@ -1,6 +1,7 @@
 import { MongoClient, ServerApiVersion  } from 'mongodb';
 import { jwtdecode } from "@/utils/verify";
 
+
 export default async function getroombycleanstatus(req, res) {
 
     const uri = process.env.MONGO_URI;
@@ -32,6 +33,8 @@ export default async function getroombycleanstatus(req, res) {
 
         const room = client.db('HotelManage').collection('room');
         const roomtype = client.db('HotelManage').collection('type_of_room')
+        const book = client.db('HotelManage').collection('room_booking')
+       
 
         let aggregate = []
 
@@ -105,7 +108,25 @@ export default async function getroombycleanstatus(req, res) {
         const getroom  = await room.aggregate(aggregate).toArray();
 
 
+         //set time  right now 
+
+      const tzOffset = 7; // Offset for Indochina Time (GMT+7)
+      const dateNow = new Date(Date.now() + tzOffset * 3600000).toISOString().split('T')[0];
+      console.log(dateNow)
+
+
         for (let i=0 ; i< getroom.length; i++){
+
+
+            const getbook  = await book.find({"room_id": getroom[i].room_id},{$project:{"_id":0}}).toArray()
+            getroom[i]["availability"] = "Occupied"
+
+            for(let j=0 ; j< getbook.length; j++){
+                 if(dateNow >= getbook[j].checkin_date && dateNow <= getbook[j].checkout_date ){
+                    getroom[i]["availability"] = "Available"
+                 }
+                
+            }
 
             getroom[i].room_type = getroom[i].room_type[0]
 
