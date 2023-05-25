@@ -46,9 +46,9 @@ export default async function exhibitionAssignWorkForHouseKeeper(req, res) {
 
 
         for(let j=0 ; j < room_id.length ; j++ ){
-            console.log("true eiei")
+           
             if(room_id[j].selected === true){
-                        console.log("true")
+                       
                     result = await room.updateOne(
                     
                         { "exhibition_id" : room_id[j].exhibition_id },
