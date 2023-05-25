@@ -15,7 +15,10 @@ export default async function gethousekeeper(req, res) {
 
     let paid_status  = parseInt(req.query?.paid_status);
     let name = req.query?.name
-    let split = name.split(" ")
+    let split
+    if(name){
+         split = name.split(" ")
+    }
    
     
 
@@ -48,11 +51,14 @@ export default async function gethousekeeper(req, res) {
             }
 
 
+            if(!keyname){
+                return( res.status(400).json({ getbill : [], message: 'key name not found', success: true}))
+            }
+
+
         }
         
-        if(!keyname){
-            return( res.status(400).json({ getbill : [], message: 'key name not found', success: true}))
-        }
+       
 
 
 
