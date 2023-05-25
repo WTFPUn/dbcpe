@@ -13,10 +13,12 @@ export default async function roomUpdateWorkForHouseKeeper(req, res) {
         }
     }
     );
-
+    const token = req.headers["auth-token"];
+    const decoded = jwtdecode(token);
+    const { account_id } = decoded || {};
     
 
-    let  account_id  = (req.body?.account_id);
+    
     let  room_id = (req.body?.room_id);
 
 
