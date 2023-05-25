@@ -101,7 +101,7 @@ export default function Header() {
           link: '/admin/accommodationassignment'
         },
         {
-          name: 'Exhibition Assignment',
+          name: 'Meeting Assignment',
           link: '/admin/exhibitionassignment'
         }
       ],
