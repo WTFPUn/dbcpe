@@ -89,15 +89,20 @@ export default async function gethousekeeper(req, res) {
 
             }
 
+
+            query.push(
+                    {
+                        $lookup: {
+                    from: "personal_information",
+                    localField: "account_id",
+                    foreignField: "account_id",
+                    as: "person"
+                }
+            }
+            )
+
             if(name){
-                query.push({
-                    $lookup: {
-                 from: "personal_information",
-                 localField: "account_id",
-                 foreignField: "account_id",
-                 as: "person"
-               }
-           },
+                query.push(
            {
             $match: {
                 "person.account_id": keyname.account_id
@@ -109,7 +114,7 @@ export default async function gethousekeeper(req, res) {
             }
 
             query.push( {
-                $project:{"_id":0,"account_id":1,"bill_id":1,"book_list":1,"code_id":1,"create_date":1,"pay_due_date":1,"total_bill":1,"payment_method":1}
+                $project:{"_id":0,"account_id":1,"bill_id":1,"book_list":1,"code_id":1,"create_date":1,"pay_due_date":1,"total_bill":1,"payment_method":1,"person.first_name":1,"person.last_name":1}
             })
 
 
@@ -119,10 +124,33 @@ export default async function gethousekeeper(req, res) {
              getbill = await bill.aggregate(query).toArray();
         }
         else{
-            getbill = await bill.find({},{"_id":0}).toArray();
+            getbill = await bill.aggregate([
+                {
+                    $lookup: {
+                from: "personal_information",
+                localField: "account_id",
+                foreignField: "account_id",
+                as: "person"
+            }
+        },{
+            $project:{"_id":0,"account_id":1,"bill_id":1,"book_list":1,"code_id":1,"create_date":1,"pay_due_date":1,"total_bill":1,"payment_method":1,"person.first_name":1,"person.last_name":1}
         }
 
 
+
+            ]).toArray();
+        }
+
+
+
+        for(let i = 0 ;i < getbill.length; i++){
+            
+               getbill[i].person = getbill[i].person[0]
+            getbill[i]["full_name"] =  `${getbill[i].person.first_name} ${getbill[i].person.last_name}`
+
+        }
+
+        
 
          
 
