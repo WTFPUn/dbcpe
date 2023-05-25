@@ -17,10 +17,11 @@ export default async function billConfirm(req, res) {
     const decoded = jwtdecode(token);
     const { account_id } = decoded || {};
 
-    let  bill_id  = (req.query?.bill_id);
-    let payment_method =  req.query?.payment_method
+    let  bill_id  = (req.body?.bill_id);
+    let payment_method =  req.body?.payment_method
+    
 
-    if (req.method !== 'GET') {
+    if (req.method !== 'PUT') {
         return res.status(405).json({ message: 'Method not allowed', success: false });
         
       }
@@ -42,6 +43,10 @@ export default async function billConfirm(req, res) {
 
         const getbill = await bill.findOne({"bill_id": bill_id },{"_id":0});
 
+        if(!getbill){
+            return( res.status(400).json({ message: 'Not found this bill', success: false}))
+        }
+
         //update payment 
         const updatepayment = await bill.updateOne(
                         
@@ -50,9 +55,12 @@ export default async function billConfirm(req, res) {
             
         );
 
-        if(!updatepayment){
+        if(!(updatepayment)){
             return( res.status(400).json({ message: 'Update payment method invalid ', success: false}))
         }
+
+
+
         console.log(getbill.book_list[0].book_type)
        
         console.log("helllo")
