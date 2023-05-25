@@ -120,6 +120,8 @@ export default function exhibitionassignment() {
         .then((res) => res.json())
         .then((data) => {
           alert(data.message + " " + data.success);
+          window.location.reload();
+
         });
     }
   }
