@@ -16,6 +16,8 @@ export default async function exhibitionAssignWorkForHouseKeeper(req, res) {
     let account_id  = req.body?.account_id;
     let room_id = req.body?.room_id 
 
+    
+
     // var body = JSON.parse(req.body);
 
     // const { room_id, account_id } = body;
@@ -34,21 +36,26 @@ export default async function exhibitionAssignWorkForHouseKeeper(req, res) {
         
         let result
         for(let i=0 ; i < room_id.length ; i++ ){
-
-
             if(room_id[i].selected === true){
-
                     const getroom = await  room.findOne({ "exhibition_id":room_id[i].exhibition_id },{$project:{"_id":0}});
+                    if(getroom.clean_status === 1 ){
+                        return (res.status(400).json({ message: 'This room you selected is clean', success: false}))
+                    }
+                }
+        }
 
-            if(getroom.clean_status === 0 ){
+
+        for(let j=0 ; j < room_id.length ; j++ ){
+            console.log("true eiei")
+            if(room_id[j].selected === true){
+                        console.log("true")
                     result = await room.updateOne(
                     
-                        { "exhibition_id" : room_id[i].exhibition_id },
+                        { "exhibition_id" : room_id[j].exhibition_id },
                     { $set:  { housekeeper : account_id   }}
                         
                     );
-             }
-
+             
             }
         }
 
