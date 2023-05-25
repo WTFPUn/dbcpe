@@ -45,6 +45,14 @@ export default async function roomUpdateWorkForHouseKeeper(req, res) {
          }
   
          console.log("count = ",count )
+
+
+         //set time  right now 
+
+      const tzOffset = 7; // Offset for Indochina Time (GMT+7)
+      const dateNow = new Date(Date.now() + tzOffset * 3600000);
+
+
          let result
 
          for(let i=0 ; i < room_id.length ; i++ ){
@@ -52,7 +60,7 @@ export default async function roomUpdateWorkForHouseKeeper(req, res) {
                  result = await work.insertOne({
 
                     account_id: account_id,
-                    cleaned_time: new Date(),
+                    cleaned_time: dateNow,
                     room_id: room_id[i].room_id,
                     work_id: count,
                 });
