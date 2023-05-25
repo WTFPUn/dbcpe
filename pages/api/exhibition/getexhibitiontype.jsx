@@ -18,7 +18,6 @@ export default async function getExhibitionType(req, res) {
 
     try {
         await client.connect();
-        console.log('Connected to database');
         const collection = client.db('HotelManage').collection('type_of_exhibition');
     
         // const existingAccount = await collection.findOne({email: email});
