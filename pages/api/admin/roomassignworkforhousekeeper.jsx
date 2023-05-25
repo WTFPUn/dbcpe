@@ -17,7 +17,7 @@ export default async function roomAssignWorkForHouseKeeper(req, res) {
     var body = JSON.parse(req.body);
 
     const { room_id, account_id } = body;
-    console.log(room_id, account_id)
+    
     
 
     if (req.method !== 'PUT') {
@@ -34,6 +34,9 @@ export default async function roomAssignWorkForHouseKeeper(req, res) {
         for(let i=0 ; i < room_id.length ; i++ ){
 
             if(room_id[i].selected === true){
+                const getroom = await  room.findOne({ "room_id":room_id[i].room_id },{$project:{"_id":0}});
+
+    if(getroom.clean_status === 0 ){
                         
                 result = await room.updateOne(
                 
@@ -41,6 +44,7 @@ export default async function roomAssignWorkForHouseKeeper(req, res) {
                 { $set:  { housekeeper : account_id   }}
                     
                 );
+                }
          }
         
         }
