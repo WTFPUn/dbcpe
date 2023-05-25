@@ -32,19 +32,25 @@ export default async function roomAssignWorkForHouseKeeper(req, res) {
 
         let result
         for(let i=0 ; i < room_id.length ; i++ ){
-
             if(room_id[i].selected === true){
                 const getroom = await  room.findOne({ "room_id":room_id[i].room_id },{$project:{"_id":0}});
+                if(getroom.clean_status === 1 ){
+                    return (res.status(400).json({ message: 'This room you selected is clean', success: false}))
+                }
+            }
+        }
 
-    if(getroom.clean_status === 0 ){
-                        
+        for(let i=0 ; i < room_id.length ; i++ ){
+
+            if(room_id[i].selected === true){
+                
                 result = await room.updateOne(
                 
                     { "room_id" : room_id[i].room_id },
                 { $set:  { housekeeper : account_id   }}
                     
                 );
-                }
+                
          }
         
         }
