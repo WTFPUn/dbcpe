@@ -25,8 +25,7 @@ export default async function login(req, res) {
         const allroomtype = await collection.find( {},{projection:{"_id": 0,"roomtype_id": 1,"roomtype_name": 1}}).sort({ "roomtype_id": 1 }).toArray();
         
         //  allroomtype.sort(allroomtype)
-         console.log("before sort = ",allroomtype)
-         console.log("after sort ",allroomtype)
+        
 
         return( res.status(200).json({ allroomtype ,message: 'Get room type success', success: true}))
 
