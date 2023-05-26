@@ -196,7 +196,7 @@ export default function confirmbook() {
       <div className="bg-white w-3/4 rounded-t-md flex flex-col place-items-center py-2 h-full ">
         <Section/>
         <div className="flex flex-col py-4 w-[85%] h-full">
-          <div className="text-2xl font-semibold">{"Booking(" + roomCount + ")"}</div>
+          <div className="text-2xl font-semibold">{"Booking(" + (parseInt(roomCount) + parseInt(exhibitionCount)) + ")"}</div>
           <div className="flex w-full h-[18rem] gap-4 divide-x-2">
             <div className="w-[50%]  h-full">
               <div className="text-xl font-semibold h-[20%]">{"Room"}</div>
