@@ -34,7 +34,7 @@ export default async function verifycode(req, res) {
             return( res.status(200).json({ status : 1 ,message: 'Found this code name success ', success: true}))
         }
         else{
-            return( res.status(400).json({ status: 0 ,message: 'Not found this code invalid ', success: false}))
+            return( res.status(200).json({ status: 0 ,message: 'Not found this code invalid ', success: true}))
         }
 
 
