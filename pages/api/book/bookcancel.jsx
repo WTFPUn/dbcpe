@@ -15,8 +15,11 @@ export default async function bookCancel(req, res) {
     //book_type = 0 ; room
     //book_type = 1 ; exhibition
 
-    let book_type = parseInt(req.body?.roomtype)
+    let book_type = parseInt(req.body?.book_type)
     let book_id = parseInt(req.body?.book_id)
+
+    console.log("book_type = ",book_type)
+    console.log("book_id = ", book_id)
 
 
 
