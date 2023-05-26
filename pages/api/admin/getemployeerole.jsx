@@ -22,7 +22,9 @@ export default async function getEmployeeRole(req, res) {
 
         const role  = client.db('HotelManage').collection('role');
         
-        const getrole = await role.find({"role": 1},{projection:{"_id":0,"sub_role":1,"sub_name":1}}).toArray() 
+        let getrole = await role.find({"role": 1},{projection:{"_id":0,"sub_role":1,"sub_name":1}}).toArray() 
+
+        getrole = getrole.concat([{"sub_role": 99,"sub_name": "Guest"}])
         
 
     
