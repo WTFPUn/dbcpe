@@ -66,7 +66,7 @@ export default async function updaterole(req, res) {
 
 
        if(updaterole){
-            return res.status(200).json({ message: 'Update role success', success: false });
+            return res.status(200).json({ message: 'Update role success', success: true });
        }
        else{
         return res.status(400).json({ message: 'Update role invalid', success: false });
