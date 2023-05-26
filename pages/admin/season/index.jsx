@@ -72,7 +72,7 @@ export default function coupon() {
           </div>
         </div>
         <div className="w-full flex place-content-center">
-          <Link className="mt-4 w-full text-center underline font-semibold text-[#1890FF]" href="/admin/coupon/addseason">{"We get a new Season >"}</Link>
+          <Link className="mt-4 w-full text-center underline font-semibold text-[#1890FF]" href="/admin/season/addseason">{"We get a new Season >"}</Link>
         </div>
       </div>
     </Template>
