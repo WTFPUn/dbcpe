@@ -60,14 +60,29 @@ export default async function getEmployee(req, res) {
 
         if((sub_role === 0 || sub_role) || (name)){
 
-            query.push({
-                $match: {
-                    "role": 1
-                }
-
-            })
+            
 
             if((sub_role === 0 || sub_role)){
+
+               if(sub_role !== 99) {
+                    query.push({
+                        $match: {
+                            "role": 1
+                        }
+        
+                    })
+                }
+
+                if(sub_role === 99) {
+                    query.push({
+                        $match: {
+                            "role": 0
+                        }
+        
+                    })
+                }
+
+
                 
                 if(sub_role === 0){
                     //manager
@@ -151,7 +166,7 @@ export default async function getEmployee(req, res) {
         }
 
         else{
-            getperson = await personal.find({"role": 1},{projection:{"_id":0,"account_id":1,"first_name":1,"last_name":1,"user_name":1,"role":1,"sub_role":1 }}).sort({ "user_name": 1 }).toArray();
+            getperson = await personal.find({},{projection:{"_id":0,"account_id":1,"first_name":1,"last_name":1,"user_name":1,"role":1,"sub_role":1 }}).sort({ "user_name": 1 }).toArray();
         }
 
 
@@ -170,6 +185,10 @@ export default async function getEmployee(req, res) {
             }
             else if(getperson[i].role === 1 && getperson[i].sub_role === 4){
                 getperson[i]["sub_name"] = "Chef"
+            }
+            else if(getperson[i].role === 0){
+                getperson[i].sub_role = 99
+                getperson[i]["sub_name"] = "Guest"
             }
         }
 
