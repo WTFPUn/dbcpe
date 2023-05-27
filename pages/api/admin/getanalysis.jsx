@@ -30,6 +30,8 @@ export default async function getAnalysis(req, res) {
         const exType  = client.db('HotelManage').collection('type_of_exhibition');
         const per = client.db('HotelManage').collection('personal_information');
         const role = client.db('HotelManage').collection('role');
+        const houseRoom = client.db('HotelManage').collection('house_keeping_work_room');
+        const houseEx = client.db('HotelManage').collection('house_keeping_work_exhibion_room');
 
         const getbookRoom = await bookRoom.aggregate([
 
@@ -246,24 +248,24 @@ export default async function getAnalysis(req, res) {
        let accommodationLine = []
        let ExhibitionLine = []
 
-       accommodationLine[0] = {label:"Standard",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#6C6EF2"}
-       accommodationLine[1] = {label:"King",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#1890FF"}
-       accommodationLine[2] = {label:"Queen",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#4BD4FF"}
-       accommodationLine[3] = {label:"Deluxe",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#FF9F9F"}
-       accommodationLine[4] = {label:"Loft",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#FF6B4A"}
-       accommodationLine[5] = {label:"Suite",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#FFA030"}
-       accommodationLine[6] = {label:"Honeymoon",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#FAB248"}
-       accommodationLine[7] = {label:"Executive",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#ACE89D"}
-       accommodationLine[8] = {label:"Penthouse",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#3AB25C"}
+       accommodationLine[0] = {label:"Standard",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#6C6EF2",borderColor:"#6C6EF2"}
+       accommodationLine[1] = {label:"King",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#1890FF",borderColor:"#1890FF"}
+       accommodationLine[2] = {label:"Queen",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#4BD4FF",borderColor:"#4BD4FF" }
+       accommodationLine[3] = {label:"Deluxe",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#FF9F9F",borderColor:"#FF9F9F"}
+       accommodationLine[4] = {label:"Loft",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#FF6B4A",borderColor:"#FF6B4A"}
+       accommodationLine[5] = {label:"Suite",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#FFA030",borderColor:"#FFA030"}
+       accommodationLine[6] = {label:"Honeymoon",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#FAB248",borderColor:"#FAB248"}
+       accommodationLine[7] = {label:"Executive",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#ACE89D",borderColor:"#ACE89D"}
+       accommodationLine[8] = {label:"Penthouse",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#3AB25C",borderColor:"#3AB25C"}
 
     
 
-       ExhibitionLine[0]  = {label:"Board",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#6C6EF2"}
-       ExhibitionLine[1]  = {label:"Exhibition",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#1890FF"}
-       ExhibitionLine[2]  = {label:"Ball",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#4BD4FF"}
-       ExhibitionLine[3]  = {label:"Conference",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#FF6B4A"}
-       ExhibitionLine[4]  = {label:"Meeting",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#FFA030"}
-       ExhibitionLine[5]  = {label:"Training",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#3AB25C"}
+       ExhibitionLine[0]  = {label:"Board",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#6C6EF2",borderColor:"#6C6EF2"}
+       ExhibitionLine[1]  = {label:"Exhibition",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#1890FF",borderColor:"#1890FF"}
+       ExhibitionLine[2]  = {label:"Ball",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#4BD4FF",borderColor:"#4BD4FF"}
+       ExhibitionLine[3]  = {label:"Conference",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#FF6B4A",borderColor: "#FF6B4A"}
+       ExhibitionLine[4]  = {label:"Meeting",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#FFA030",borderColor:"#FFA030"}
+       ExhibitionLine[5]  = {label:"Training",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#3AB25C",borderColor:"#3AB25C"}
        
  //Accommodation
 
@@ -342,6 +344,19 @@ for(let i = 0 ; i < getbookExline.length ; i++){
     }
     
 }
+
+
+
+// pies
+
+
+
+
+
+
+
+
+
 
 
 
