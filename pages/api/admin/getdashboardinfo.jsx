@@ -139,21 +139,21 @@ export default async function addSeasons(req, res) {
         ]).toArray();
 
        
-       
-            
 
         let halal_food = 0
         let regular_food = 0 
 
-        let count = 0
-        if(exCheckin){
-            count = exCheckin.length
-        }
+        
         
         
 
         let tmpcheckin = 0
-        tmpcheckin = tmpcheckin +  count
+      
+        for(let i = 0; i < exCheckin.length ; i++ ){
+            tmpcheckin = tmpcheckin + exCheckin[i].participant_count
+
+        }
+
         for(let i = 0; i < roomCheckin.length ; i++ ){
             tmpcheckin = tmpcheckin + roomCheckin[i].guests 
              
@@ -275,16 +275,15 @@ export default async function addSeasons(req, res) {
 
         ]).toArray();
 
-        // console.log( "roomCheckout = ",roomCheckout)
-        // console.log( "exCheckout = ",exCheckout)
-
-        let countout = 0
-        if(exCheckout){
-            countout = exCheckin.length
-        }    
+      
 
         let tmpcheckout = 0
-        tmpcheckout = tmpcheckout +  countout
+        
+        for(let i = 0; i < exCheckout.length ; i++ ){
+            tmpcheckout = tmpcheckout + exCheckout[i].participant_count
+            
+        }
+
         for(let i = 0; i < roomCheckout.length ; i++ ){
             tmpcheckout = tmpcheckout + roomCheckout[i].guests 
         }
