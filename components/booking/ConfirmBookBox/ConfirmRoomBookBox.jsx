@@ -39,7 +39,7 @@ export default function ConfirmRoomBookBox({data}) {
         </div>
         <div className="h-full w-[70%] flex flex-col">
           <div className="font-semibold">
-            {"room number: " + data.room.room_no}
+            {data.roomtype.roomtype_name + ": " + data.room.room_no}
           </div>
         </div>
         {!visible ? <div className="ml-auto" onClick={() => {setVisible(!visible)}}><DownIcon/></div>: <div className="ml-auto" onClick={() => {setVisible(!visible)}}><UpIcon/></div>}

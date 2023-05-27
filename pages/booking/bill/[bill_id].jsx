@@ -142,7 +142,7 @@ export default function bill() {
                       {bill.array_book.map((book, i) => (
                         <tr className="text-[#8C8CA1] text-base h-16 w-full">
                             <td className=" w-2/12 text-center">{book.book_id}</td>
-                            <td className=" w-8/12 text-center">{book.booktype === "room" ? book.description : (book.description + "Exhibition")}</td>
+                            <td className=" w-8/12 text-center">{book.description}</td>
                             <td className=" w-2/12 text-center">{book.amount.toFixed(2)}</td>
                         </tr>
                       ))
