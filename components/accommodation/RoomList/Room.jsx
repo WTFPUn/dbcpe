@@ -45,7 +45,7 @@ function JustRoom({room}) {
         <div className="w-full text-right flex flex-row gap-2 place-content-between">
           <Link href={`/booking/room/${room_id}`} className=" underline text-[#6C6EF2]">Book now</Link>
           <div className="flex flex-row">
-            <p className=" text-xl font-[#550]">$ {price}</p>
+            <p className=" text-xl font-[#550]">$ {price + " "} </p>
             per night
 
           </div>
