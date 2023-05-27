@@ -137,6 +137,8 @@ export default async function addSeasons(req, res) {
             
 
         ]).toArray();
+
+       
        
             
 
@@ -148,7 +150,7 @@ export default async function addSeasons(req, res) {
             count = exCheckin.length
         }
         
-       
+        
 
         let tmpcheckin = 0
         tmpcheckin = tmpcheckin +  count
@@ -156,10 +158,11 @@ export default async function addSeasons(req, res) {
             tmpcheckin = tmpcheckin + roomCheckin[i].guests 
              
             if(roomCheckin[i].halal_need === true){
-                halal_food ++
+                halal_food = halal_food + roomCheckin[i].guests
+                
             }
             else if(roomCheckin[i].halal_need === false){
-                regular_food ++
+                regular_food = regular_food  + roomCheckin[i].guests
             }
         }
         
