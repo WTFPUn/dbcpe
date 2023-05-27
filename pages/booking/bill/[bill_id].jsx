@@ -3,6 +3,7 @@ import Section from "@/components/booking/Section";
 import InfoIcon from "@/components/icons/InfoIcon";
 import { jwtdecode } from "@/utils/verify";
 import { useRouter } from "next/router"
+
 import { useEffect, useState } from "react"
 
 
@@ -10,6 +11,8 @@ export default function bill() {
   // get bill_id from url
   const router = useRouter();
   const [bill_id, setBill_id] = useState();
+
+  const [decodeToken, setDecodeToken] = useState();
 
   const [bill, setBill] = useState();
 
@@ -45,6 +48,7 @@ export default function bill() {
     const decoded = jwtdecode(token);
     return decoded.role == 1 ? false : true;
   }
+  
 
   const [discountExVisible, setDiscountExVisible] = useState(false);
   const [paymentmethod, setPaymentmethod] = useState("")
@@ -180,36 +184,37 @@ export default function bill() {
                 </div>
             </div>
         </div>
+        {!sectionShow() &&
         <div className="w-[50%] py-4 flex flex-col place-items-center mt-8 gap-4">
-          <select
-            className="w-full bg-[#6C6EF2] text-white text-left px-8 py-4 rounded-md appearance-none"
-            onChange={(e) => setPaymentmethod(e.target.value)}
-          >
-            {paymentMethod.map((type, i) => (
-              <option 
-                className="bg-[#C4C4C4]"
-                key={i} 
-                value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
-          <div className="w-full flex  gap-4">
-            <div 
-              className="border-[#6C6EF2] border text-[#6C6EF2] w-1/2 py-4 uppercase text-center rounded-md font-semibold cursor-pointer"
-              onClick={() => {handleConfirm("cancel")}}
-              >
-              Cancel bill
-            </div>
-            <div
-              className="bg-[#6C6EF2] text-white w-1/2 py-4 uppercase text-center rounded-md font-semibold cursor-pointer"
-              onClick={() => {handleConfirm("confirm")}}
-              >
-              Confirm
+        <select
+          className="w-full bg-[#6C6EF2] text-white text-left px-8 py-4 rounded-md appearance-none"
+          onChange={(e) => setPaymentmethod(e.target.value)}
+        >
+          {paymentMethod.map((type, i) => (
+            <option 
+              className="bg-[#C4C4C4]"
+              key={i} 
+              value={type}>
+              {type}
+            </option>
+          ))}
+        </select>
+        <div className="w-full flex  gap-4">
+          <div 
+            className="border-[#6C6EF2] border text-[#6C6EF2] w-1/2 py-4 uppercase text-center rounded-md font-semibold cursor-pointer"
+            onClick={() => {handleConfirm("cancel")}}
+            >
+            Cancel bill
           </div>
-
-          </div>
+          <div
+            className="bg-[#6C6EF2] text-white w-1/2 py-4 uppercase text-center rounded-md font-semibold cursor-pointer"
+            onClick={() => {handleConfirm("confirm")}}
+            >
+            Confirm
         </div>
+
+        </div>
+      </div>}
       </div>
     </Template> 
   )
