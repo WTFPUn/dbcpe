@@ -251,7 +251,7 @@ export default function confirmbook() {
               />
               {!couponUse ? (
               <button
-              className="absolute right-0 w-20 rounded-md  text-[#6C6EF2] border-[#6C6EF2] border mr-2"
+              className="absolute right-0 w-20 rounded-md  text-[#6C6EF2] border-[#6C6EF2] border mr-2 cursor-pointer"
               onClick={handleCouponVerify}
             >
               Verify
@@ -276,7 +276,7 @@ export default function confirmbook() {
             )
               }
             </div>
-            <div className="mt-auto w-full rounded-md bg-[#6C6EF2] text-white text-center py-2 text-sm uppercase"
+            <div className="mt-auto w-full rounded-md bg-[#6C6EF2] text-white text-center py-2 text-sm uppercase cursor-pointer"
             onClick={handleConfirmOrder}
             >Confirm order NOW</div>
           </div>
