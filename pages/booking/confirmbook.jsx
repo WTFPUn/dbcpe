@@ -240,7 +240,7 @@ export default function confirmbook() {
               <p className="font-semibold">Total price</p>
               <p className="font-semibold">{totalPriceWithCoupon}</p>
             </div>
-            <p className="text-[#8C8CA1] text-sm">2 blablabla</p>
+            <p className="text-[#8C8CA1] text-sm">Includes taxes & fees</p>
             <div className="mt-4 rounded-md bg-white text-black h-8 relative py-2 place-items-center flex px-2">
               <input
                 type="text"

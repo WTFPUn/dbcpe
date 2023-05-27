@@ -39,7 +39,7 @@ export default function ConfirmExhBookBox({data}) {
         </div>
         <div className="h-full w-[70%] flex flex-col">
           <div className="font-semibold">
-            {"room name: " + data.exhibition_room.name}
+            {data.type_of_exhibition.type_name + ": " + data.exhibition_room.name}
           </div>
         </div>
         {!visible ? <div className="ml-auto" onClick={() => {setVisible(!visible)}}><DownIcon/></div>: <div className="ml-auto" onClick={() => {setVisible(!visible)}}><UpIcon/></div>}
