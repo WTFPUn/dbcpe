@@ -74,7 +74,7 @@ export default function accommodation() {
     );
   }
   return (
-    <Template title="Accommodation">
+    <Template title="Meeting">
       <FilterBar setAccommodationList={setAccommodationList} accommodationList={accommodationList} roomType={roomType} handleSearch={handleSearch}/>
       <RoomList roomList={queriedRoom} roomtype={"exhibition"} />
     </Template>
