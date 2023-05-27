@@ -19,6 +19,9 @@ export default async function getAnalysis(req, res) {
       }
 
 
+
+
+
     try {
         await client.connect();
 
@@ -32,6 +35,22 @@ export default async function getAnalysis(req, res) {
         const role = client.db('HotelManage').collection('role');
         const houseRoom = client.db('HotelManage').collection('house_keeping_work_room');
         const houseEx = client.db('HotelManage').collection('house_keeping_work_exhibion_room');
+
+
+        // const count = (val) =>{
+
+        //     let count = val.reduce((acc, curr) => {
+        //         if (typeof acc[curr] == 'undefined') {
+        //           acc[curr] = 1
+        //         } else {
+        //           acc[curr] += 1
+        //         }
+              
+        //         return acc
+        //       }
+        //       return count
+        
+        // }
 
         const getbookRoom = await bookRoom.aggregate([
 
@@ -349,21 +368,218 @@ for(let i = 0 ; i < getbookExline.length ; i++){
 
 // pies
 
+const getHouseRoom  = await houseRoom.aggregate([
+   
+    {
+        $lookup: {
+            from: "room",
+            localField: "room_id",
+            foreignField: "room_id",
+            as: "room"
+        }
+
+    },
+    {
+        $project:{"_id":0,"account_id":1,"cleaned_time":1,"room_id":1,"work_id":1,"room.roomtype_id":1}
+    }
+
+
+   ]).toArray()
+
+
+
+   const getHouseEx  = await houseEx.aggregate([
+   
+    {
+        $lookup: {
+            from: "exhibition_room",
+            localField: "exhibition_id",
+            foreignField: "exhibition_id",
+            as: "room"
+        }
+
+    },
+    {
+        $project:{"_id":0,"account_id":1,"cleaned_time":1,"exhibition_id":1,"room.exhibition_type_id": 1}
+    }
+
+
+   ]).toArray()
+
+   console.log(getHouseEx)
+   console.log("hello")
+
+
+   let accommodationPies = []
+   let ExhibitionPies = []
+
+   accommodationPies[0] = {["Standard"] : {labels:[],data:[0,0,0,0,0,0],backgroundColor:['#6C6EF2', '#1890FF', '#4BD4FF', '#FF6B4A', '#ACE89D', '#3AB25C']}}
+   accommodationPies[1] = {["King"] : {labels:[],data:[0,0,0,0,0,0],backgroundColor:['#6C6EF2', '#1890FF', '#4BD4FF', '#FF6B4A', '#ACE89D', '#3AB25C']}}
+   accommodationPies[2] = {["Queen"] : {labels:[],data:[0,0,0,0,0,0],backgroundColor:['#6C6EF2', '#1890FF', '#4BD4FF', '#FF6B4A', '#ACE89D', '#3AB25C']} }
+   accommodationPies[3] = {["Deluxe"] : {labels:[],data:[0,0,0,0,0,0],backgroundColor:['#6C6EF2', '#1890FF', '#4BD4FF', '#FF6B4A', '#ACE89D', '#3AB25C']} }
+   accommodationPies[4] = {["Loft"] : {labels:[],data:[0,0,0,0,0,0],backgroundColor:['#6C6EF2', '#1890FF', '#4BD4FF', '#FF6B4A', '#ACE89D', '#3AB25C']}}
+   accommodationPies[5] = {["Suite"] : {labels:[],data:[0,0,0,0,0,0],backgroundColor:['#6C6EF2', '#1890FF', '#4BD4FF', '#FF6B4A', '#ACE89D', '#3AB25C']}}
+   accommodationPies[6] = {["Honeymoon"] : {labels:[],data:[0,0,0,0,0,0],backgroundColor:['#6C6EF2', '#1890FF', '#4BD4FF', '#FF6B4A', '#ACE89D', '#3AB25C']}}
+   accommodationPies[7] = {["Executive"] : {labels:[],data:[0,0,0,0,0,0],backgroundColor:['#6C6EF2', '#1890FF', '#4BD4FF', '#FF6B4A', '#ACE89D', '#3AB25C']}}
+   accommodationPies[8] = {["Penthouse"] : {labels:[],data:[0,0,0,0,0,0],backgroundColor:['#6C6EF2', '#1890FF', '#4BD4FF', '#FF6B4A', '#ACE89D', '#3AB25C']}}
+
+
+
+   ExhibitionPies[0]  = {["Board"]: {labels:[],data:[0,0,0,0,0,0],backgroundColor:['#6C6EF2', '#1890FF', '#4BD4FF', '#FF6B4A', '#ACE89D', '#3AB25C']}}
+   ExhibitionPies[1]  = {["Exhibition"]: {labels:[],data:[0,0,0,0,0,0],backgroundColor:['#6C6EF2', '#1890FF', '#4BD4FF', '#FF6B4A', '#ACE89D', '#3AB25C']}}
+   ExhibitionPies[2] = {["Ball"] : {labels:[],data:[0,0,0,0,0,0],backgroundColor:['#6C6EF2', '#1890FF', '#4BD4FF', '#FF6B4A', '#ACE89D', '#3AB25C']}}
+   ExhibitionPies[3] = {["Conference"] : {labels:[],data:[0,0,0,0,0,0],backgroundColor:['#6C6EF2', '#1890FF', '#4BD4FF', '#FF6B4A', '#ACE89D', '#3AB25C']}}
+   ExhibitionPies[4]  = {["Meeting"] : {labels:[],data:[0,0,0,0,0,0],backgroundColor:['#6C6EF2', '#1890FF', '#4BD4FF', '#FF6B4A', '#ACE89D', '#3AB25C']}}
+   ExhibitionPies[5]  = {["Training"] : {labels:[],data:[0,0,0,0,0,0],backgroundColor:['#6C6EF2', '#1890FF', '#4BD4FF', '#FF6B4A', '#ACE89D', '#3AB25C']}}
+
+
+ 
+
+
+const accType = ["Standard","King","Queen","Deluxe","Loft","Suite","Honeymoon","Executive","Penthouse"]
+
+ //Accommodation
+ let object = {}
+ object["Standard"] = []
+ object["King"] = []
+ object["Queen"] = []
+ object["Deluxe"] = []
+ object["Loft"] = []
+ object["Suite"] = []
+ object["Honeymoon"] = []
+ object["Executive"] = []
+ object["Penthouse"] = []
 
 
 
 
 
+let objectEx = {}
+objectEx["Board"] = []
+objectEx["Exhibition"] = []
+objectEx["Ball"] = []
+objectEx["Conference"] = []
+objectEx["Meeting"] = []
+objectEx["Training"] = []
+
+
+const getPieResult = (val) => {
+      // count value in array
+      let count = val.reduce((acc, curr) => {
+        if (typeof acc[curr] == 'undefined') {
+          acc[curr] = 1
+        } else {
+          acc[curr] += 1
+        }
+      
+        return acc
+      }
+      , {}
+      )
+      
+      // sort value in array
+      let sort = Object.keys(count).sort((a, b) => {
+        return count[b] - count[a]
+        }
+      )
+
+        // get top 5 value in array
+        let top5 = sort.slice(0, 5)
+        let top5Count = top5.map((val) => {
+            return count[val]
+            }
+        )
+        let top5Label = top5.map((val) => {
+            return val
+            }
+        )
+        return {top5Count,top5Label}
+}
+ 
+ 
+
+ for(let i = 0 ; i < getHouseRoom.length ; i++){
+
+    let date =  getHouseRoom[i].cleaned_time.toISOString().split('T')[0].split("-")
+
+    if(date[0] === now[0]){
+        const getType =  await roomType.findOne({ "roomtype_id": getHouseRoom[i].room[0].roomtype_id },{}) 
+        const getperson = await per.findOne({"account_id":getHouseRoom[i].account_id },{})
+
+        
+        // if(getperson){
+        // console.log(getperson.first_name)
+        
+        // }
+        // console.log(`${getperson.first_name} ${getperson.last_name}`)
+
+        if(getType.roomtype_name === "Standard Room"){
+                // accommodationPies[0].Standard.labels.push(`${getperson.first_name} ${getperson.last_name}`) 
+                object.Standard.push(`${getperson.first_name} ${getperson.last_name}`)    
+            
+        }
+        else if(getType.roomtype_name === "King Room"){
+            object.King.push(`${getperson.first_name} ${getperson.last_name}`)  
+        }
+        else if(getType.roomtype_name === "Queen Room"){
+            object.Queen.push(`${getperson.first_name} ${getperson.last_name}`)  
+        }
+        else if(getType.roomtype_name === "Deluxe Room"){
+            object.Deluxe.push(`${getperson.first_name} ${getperson.last_name}`)  
+        }
+        else if(getType.roomtype_name === "Loft Room"){
+            object.Loft.push(`${getperson.first_name} ${getperson.last_name}`)  
+        }
+        else if(getType.roomtype_name === "Suite"){
+            object.Suite.push(`${getperson.first_name} ${getperson.last_name}`)  
+        }
+        else if(getType.roomtype_name === "Honeymoon Suite"){
+            object.Honeymoon.push(`${getperson.first_name} ${getperson.last_name}`)  
+        }
+        else if(getType.roomtype_name === "Executive Suite"){
+            object.Executive.push(`${getperson.first_name} ${getperson.last_name}`)  
+        }
+        else if(getType.roomtype_name === "Penthouse Suite"){
+            object.Penthouse.push(`${getperson.first_name} ${getperson.last_name}`)  
+        }
+
+    }
+    
+}
 
 
 
+// console.log(getHouseEx)
 
+// for(let i = 0 ; i < getHouseEx.length ; i++){
+    
+//     let date = getHouseEx[i].cleaned_time.toISOString().split('T')[0].split("-")
 
+//     if(date[0] === now[0]){
+//         const getType =  await exType.findOne({ "exhibition_type_id": getHouseEx[i].room[0].exhibition_type_id },{}) 
+//         const getperson = await per.findOne({"account_id":getHouseEx[i].account_id },{})
 
-
-
-
-
+//         // console.log(getperson.first_name)
+//         if(getType.roomtype_name === "Boardroom"){
+//                 objectEx.Board.push(`${getperson.first_name} ${getperson.last_name}`)    
+//         }
+//         else if(getType.roomtype_name === "Exhibition Hall"){
+//             objectEx.Exhibition.push(`${getperson.first_name} ${getperson.last_name}`)  
+//         }
+//         else if(getType.roomtype_name === "Ballroom"){
+//             objectEx.Ball.push(`${getperson.first_name} ${getperson.last_name}`)  
+//         }
+//         else if(getType.roomtype_name === "Conference Room"){
+//             objectEx.Conference.push(`${getperson.first_name} ${getperson.last_name}`)  
+//         }
+//         else if(getType.roomtype_name === "Meeting Room"){
+//             objectEx.Meeting.push(`${getperson.first_name} ${getperson.last_name}`)  
+//         }
+//         else if(getType.roomtype_name === "Training Room"){
+//             objectEx.Training.push(`${getperson.first_name} ${getperson.last_name}`)  
+//         }
+//     }
+// }
 
 
         let  bars = {}
@@ -373,10 +589,15 @@ for(let i = 0 ; i < getbookExline.length ; i++){
         lines['accommodation'] = accommodationLine
         lines['exhibition'] = ExhibitionLine
 
+        // console.log(object)
+        // console.log(objectEx)
+
+        // console.log(getPieResult(object.King))
 
 
 
-        return res.status(200).json({  bars,lines ,message: 'success', success: true});
+
+        return res.status(200).json({  bars,lines,accommodationPies,ExhibitionPies ,message: 'success', success: true});
 
 
     }catch (error) {
