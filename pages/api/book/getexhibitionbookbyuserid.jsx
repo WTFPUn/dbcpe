@@ -29,6 +29,7 @@ export default async function getExhibitionBookById(req, res) {
         const book = client.db('HotelManage').collection('exhibition_booking');
         const tier = client.db('HotelManage').collection('guess_tier');
         const role = client.db('HotelManage').collection('role');
+        const per = client.db('HotelManage').collection('personal_information');
        
 
         
@@ -122,6 +123,16 @@ export default async function getExhibitionBookById(req, res) {
          }
        
      const getRole = await role.findOne( {"role":0,"sub_role": tierId},{projection:{"_id": 0}});
+
+     if(getRole){
+      const getper = await per.updateOne(
+                        
+        { "account_id" : account_id },
+        { $set:  { sub_role : tierId   }}
+        
+    );
+
+     }
 
         //add user role in message
 
