@@ -31,10 +31,13 @@ export default async function getRoomBookById(req, res) {
         const tier = client.db('HotelManage').collection('guess_tier');
         const role = client.db('HotelManage').collection('role');
         const per = client.db('HotelManage').collection('personal_information');
-       
 
-        
-        
+
+        //set time  right now 
+
+    const tzOffset = 7; // Offset for Indochina Time (GMT+7)
+    const dateNow = new Date(Date.now() + tzOffset * 3600000).toISOString().split('T')[0];
+       
         const getbook  =  await book.aggregate( [
             {
                 $match: {
@@ -46,6 +49,14 @@ export default async function getRoomBookById(req, res) {
 
 
                    }
+            },
+            {
+              $match: {
+                'checkin_date': {
+                  $gte: dateNow
+                  
+                }
+              }
             },
 
             
