@@ -137,6 +137,30 @@ export default function Header() {
 
   // check role and sub_role is exist then render page
   const pageList = ((role === 0 || role === 1)) ? pageRender(role, sub_role) : [];
+
+
+  const imgRoleLink = () => {
+    const localpath = "/images/tier/"
+    console.log(role, sub_role)
+    if (role == 1) {
+      return localpath + "Admin.svg"
+    }
+    else if (role == 0 && sub_role == 0) {
+      return localpath + "Bronze.svg"
+    }
+    else if (role == 0 && sub_role == 1) {
+      return localpath + "Silver.svg"
+    }
+    else if (role == 0 && sub_role == 2) {
+      return localpath + "Gold.svg"
+    }
+    else if (role == 0 && sub_role == 3) {
+      return localpath + "Platinum.svg"
+    }
+    else if (role == 0 && sub_role == 4) {
+      return localpath + "Diamond.svg"
+    }
+  }
   
   return(
     <div className="w-full bg-[#4A4A68] text-white px-[15%] py-3 flex justify-between place-items-center">
@@ -167,17 +191,17 @@ export default function Header() {
           {LinkValue.text}
           <div 
             className={`rounded-md bg-[#FAFCFE] z-10 text-[#] ${ visible ? 'block' : 'hidden' } absolute top-10 h-max -bottom-2 w-[20rem] flex flex-col divide-y py-2 px-8`}>
-            <div className="flex gap-2 py-3">
-              <img src="/images/tier/Bronze.svg" alt="" className="w-12 h-12 rounded-full bg-[#0E0E2C] px-2"/>
+            {token && <div className="flex gap-2 py-3">
+              <img src={imgRoleLink()} alt="" className="w-12 h-12 rounded-full bg-[#0E0E2C] px-2"/>
               <div className="flex flex-col text-sm gap-2 text-black px-4 h-max">
                 <div className="truncate">{email}</div>
                 <div className="truncate">{"@"+user_name}</div>
               </div>
-            </div>
-            <div className="flex flex-col py-3 text-[#4A4A68]">
+            </div>}
+            {token && <div className="flex flex-col py-3 text-[#4A4A68]">
               <Link href="/profile">Profile</Link>
               <Link href="/profile/history">Booking History</Link>
-            </div>
+            </div>}
             <div className="flex py-3 text-[#4A4A68]">
               {token ? (
                 <div onClick={logout} className="flex gap-2 cursor-pointer">Sign Out <Logout /></div>

@@ -24,8 +24,6 @@ export default async function bookinghistory(req, res) {
         
       }
     
-
-
       try {
         await client.connect();
 
@@ -46,7 +44,7 @@ export default async function bookinghistory(req, res) {
                     //room
                     const getbook = await bookRoom.findOne({"book_id": parseInt(getbill[i].book_list[j].book_id) },{projection:{"_id":0,"book_id":1,"room_id":1,"book_date":1
                     ,"checkin_date":1,"checkout_date":1,"bookstatus_id":1}})
-                    getbook["roomtype"] = "room"
+                    Object.assign(getbook, {"roomtype": "room"})
                     arraybook.push(getbook)  
                     if(getbook.bookstatus_id === 2){
                         getbill[i]["pay_status"] = 1
@@ -56,7 +54,7 @@ export default async function bookinghistory(req, res) {
                     //exhibition
                     const getEx = await bookEx.findOne({"exhibition_booking_id": parseInt(getbill[i].book_list[j].book_id)},{projection:{"_id":0,"exhibition_booking_id":1,"exhibition_id":1
                     ,"book_date":1,"checkin_date":1, "checkout_date":1,"bookstatus_id":1}})
-                    getEx["roomtype"] = "exhibition"
+                    Object.assign(getEx, {"roomtype": "exhibition"})
                     arraybook.push(getEx)
                     if(getEx.bookstatus_id === 2){
                         getbill[i]["pay_status"] = 1
