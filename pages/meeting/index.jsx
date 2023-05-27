@@ -92,7 +92,7 @@ function FilterBar({setAccommodationList, accommodationList, roomType, handleSea
       <div className=" flex flex-wrap">
         <RoomTypeFilter setAccommodationList={setAccommodationList} accommodationList={accommodationList} roomType={roomType} />
       </div>
-      <div className="rounded-md bg-[#6C6EF2] text-white w-[40%] text-center py-2 self-center" onClick={handleSearch}> Search </div>
+      <div className="rounded-md bg-[#6C6EF2] text-white w-[40%] text-center py-2 self-center cursor-pointer" onClick={handleSearch}> Search </div>
 
     </div>
   )
