@@ -134,8 +134,7 @@ try {
 
             
 
-            roomfac = roomfac-1
-            servicefac = servicefac -1
+           
            
 
                 if(getTier){
