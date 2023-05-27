@@ -14,9 +14,11 @@ export default async function addSeasons(req, res) {
     );
 
 
-    // const token = req.headers["auth-token"];
-    // const decoded = jwtdecode(token);
-    // const { account_id } = decoded || {};
+    const token = req.headers["auth-token"];
+    const decoded = jwtdecode(token);
+    const { account_id,role,sub_role } = decoded || {};
+
+    
     
 
 
@@ -34,6 +36,23 @@ export default async function addSeasons(req, res) {
         const exhibition = client.db('HotelManage').collection('exhibition_room');
         const roomType  = client.db('HotelManage').collection('type_of_room');
         const exType  = client.db('HotelManage').collection('type_of_exhibition');
+        const per = client.db('HotelManage').collection('personal_information');
+        const role = client.db('HotelManage').collection('role');
+
+
+        const getper = await per.findOne({"account_id": account_id},{})
+        
+
+        console.log("role = ",getper.role )
+        console.log("sub_role = ",getper.sub_role )
+        
+
+        if(getper.role === 0){
+            return res.status(400).json({ message: 'You are not employee', success: false });
+        }
+
+        const getRole = await role.findOne({"role":getper.role, "sub_role":getper.sub_role},{})
+        console.log("getrolename = ",getRole.sub_name)
 
       
 
@@ -147,6 +166,7 @@ export default async function addSeasons(req, res) {
 
         
         let global = {}
+        let local = {}
         let guest_coming = []
         for(let i = 0 ; i < roomCheckin.length ; i++){
                 const getroom = await room.findOne({"room_id":roomCheckin[i].room_id },{})
@@ -365,20 +385,45 @@ export default async function addSeasons(req, res) {
 
 }})
 
-    //query food 
-
-
-
     
 
 
+    if(getRole.sub_name === "Manager" || getRole.sub_name === "Recepter" || getRole.sub_name === "Housekeeping"  ){
+         //manager,Receptor,housekeeper
+         global['count_checkin'] =  tmpcheckin
+         global['count_checkout'] = tmpcheckout
+         global['guest_coming'] =  guest_coming
+
+         return res.status(200).json({    global,role: getRole.sub_name ,message: 'Get dashboard success', success: true });
+    }
 
 
-
+    else if(getRole.sub_name === "Chef"){
+        // cheft
         
         global['count_checkin'] =  tmpcheckin
         global['count_checkout'] = tmpcheckout
         global['guest_coming'] =  guest_coming
+        local['halal_food'] = halal_food
+        local['regular_food'] = regular_food
+
+        return res.status(200).json({    global,local,role: getRole.sub_name ,message: 'Get dashboard success', success: true });
+
+
+    }
+    else if(getRole.sub_name === "Hall porter"){
+        // Hall Porter
+
+        global['count_checkin'] =  tmpcheckin
+        global['count_checkout'] = tmpcheckout
+        global['guest_coming'] =  guest_coming
+        local['guest_checkout'] =  guest_checkout
+        local['count_checkin_accom'] = count_checkin_accom 
+        local['count_checkout_accom'] = count_checkout_accom
+
+        return res.status(200).json({    global,local,role: getRole.sub_name ,message: 'Get dashboard success', success: true });
+    }
+        
 
 
         // global['guest_checkout'] =  guest_checkout
@@ -391,23 +436,12 @@ export default async function addSeasons(req, res) {
 
         
 
-        
-
-
-
-
-        
-        return res.status(200).json({    global ,message: 'success', success: true });
-
     }catch (error) {
         console.log(error);
          return res.status(500).json({ message: error.message, success: false });
      } finally {
         await client.close();
      }
-
-
-
 
 
 
