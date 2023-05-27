@@ -103,7 +103,7 @@ function JustExhibition({room}) {
           <Link href={`/booking/meet/${room_id}`} className=" underline text-[#6C6EF2]">Book now</Link>
           <div className="flex flex-row">
             <p className=" text-xl font-[#550]">$ {price}</p>
-            per night
+            /night
 
           </div>
 
