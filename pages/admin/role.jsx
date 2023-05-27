@@ -155,7 +155,7 @@ export default function role() {
           </div>
           <div className="flex flex-col w-full h-[90%] text-lg font-semibold text-[#8C8CA1] overflow-y-auto">
             {employee.map((item, index) => (
-              <div key={index} className="flex w-full h-[10%] text-lg font-medium text-[#8C8CA1] overflow-y-auto">
+              <div key={index} className="flex w-full h-[10%] text-lg font-medium text-[#8C8CA1]">
                 <div className="w-[25%] text-center">{item.user_name}</div>
                 <div className="w-[25%] text-center">{item.first_name}</div>
                 <div className="w-[25%] text-center">{item.last_name}</div>
