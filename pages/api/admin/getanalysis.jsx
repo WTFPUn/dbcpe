@@ -92,24 +92,24 @@ export default async function getAnalysis(req, res) {
         let accommodation = []
         let Exhibition = []
 
-        accommodation[0] = {label:"Standard",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"6C6EF2"}
-        accommodation[1] = {label:"King",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"61890FF"}
-        accommodation[2] = {label:"Queen",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"4BD4FF"}
-        accommodation[3] = {label:"Deluxe",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"FF9F9F"}
-        accommodation[4] = {label:"Loft",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"FF6B4A"}
-        accommodation[5] = {label:"Suite",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"FFA030"}
-        accommodation[6] = {label:"Honeymoon",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"FAB248"}
-        accommodation[7] = {label:"Executive",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"ACE89D"}
-        accommodation[8] = {label:"Penthouse",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"3AB25C"}
+        accommodation[0] = {label:"Standard",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#6C6EF2"}
+        accommodation[1] = {label:"King",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#61890FF"}
+        accommodation[2] = {label:"Queen",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#4BD4FF"}
+        accommodation[3] = {label:"Deluxe",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#FF9F9F"}
+        accommodation[4] = {label:"Loft",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#FF6B4A"}
+        accommodation[5] = {label:"Suite",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#FFA030"}
+        accommodation[6] = {label:"Honeymoon",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#FAB248"}
+        accommodation[7] = {label:"Executive",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#ACE89D"}
+        accommodation[8] = {label:"Penthouse",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#3AB25C"}
 
      
 
-        Exhibition[0]  = {label:"Board",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"6C6EF2"}
-        Exhibition[1]  = {label:"Exhibition",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"1890FF"}
-        Exhibition[2]  = {label:"Ball",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"4BD4FF"}
-        Exhibition[3]  = {label:"Conference",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"FF6B4A"}
-        Exhibition[4]  = {label:"Meeting",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"FFA030"}
-        Exhibition[5]  = {label:"Training",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"3AB25C"}
+        Exhibition[0]  = {label:"Board",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#6C6EF2"}
+        Exhibition[1]  = {label:"Exhibition",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#1890FF"}
+        Exhibition[2]  = {label:"Ball",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#4BD4FF"}
+        Exhibition[3]  = {label:"Conference",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#FF6B4A"}
+        Exhibition[4]  = {label:"Meeting",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#FFA030"}
+        Exhibition[5]  = {label:"Training",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#3AB25C"}
         
 
        //Accommodation
@@ -190,57 +190,157 @@ export default async function getAnalysis(req, res) {
         }
 
 
-        //line
+        // line
 
 
-    //     const getbookRoomline = await bookRoom.aggregate([
+//         const getbookRoomline = await bookRoom.aggregate([
 
-    //         {
-    //             $match: {
-    //                 "bookstatus_id":  2 
-    //             }
-    //         },
-    //         {
-    //             $lookup: {
-    //                 from: "room",
-    //                 localField: "room_id",
-    //                 foreignField: "room_id",
-    //                 as: "room"
-    //             }
+//             {
+//                 $match: {
+//                     "bookstatus_id":  2 
+//                 }
+//             },
+//             {
+//                 $lookup: {
+//                     from: "room",
+//                     localField: "room_id",
+//                     foreignField: "room_id",
+//                     as: "room"
+//                 }
 
-    //         },
-    //         {
-    //             $project:{"_id":0,"account_id":1,"book_id":1,"room_id":1,"checkin_date":1,"checkout_date":1,"guests":1,"room.roomtype_id": 1}
-    //         }
-
-
+//             },
+//             {
+//                 $project:{"_id":0,"account_id":1,"book_id":1,"room_id":1,"checkin_date":1,"checkout_date":1,"guests":1,"room.roomtype_id": 1}
+//             }
 
 
 
-    //     ]).toArray()
-    //    const getbookExline  = await bookEx.aggregate([
-    //     {
-    //         $match: {
-    //             "bookstatus_id":  2 
-    //         }
-    //     },
-
-    //     {
-    //         $lookup: {
-    //             from: "exhibition_room",
-    //             localField: "exhibition_id",
-    //             foreignField: "exhibition_id",
-    //             as: "room"
-    //         }
-
-    //     },
-    //     {
-    //         $project:{"_id":0,"account_id":1,"exhibition_booking_id":1,"exhibition_id":1,"checkin_date":1,"checkout_date":1,"participant_count":1,"room.exhibition_type_id": 1}
-    //     }
 
 
-    //    ]).toArray()
+//         ]).toArray()
+//        const getbookExline  = await bookEx.aggregate([
+//         {
+//             $match: {
+//                 "bookstatus_id":  2 
+//             }
+//         },
 
+//         {
+//             $lookup: {
+//                 from: "exhibition_room",
+//                 localField: "exhibition_id",
+//                 foreignField: "exhibition_id",
+//                 as: "room"
+//             }
+
+//         },
+//         {
+//             $project:{"_id":0,"account_id":1,"exhibition_booking_id":1,"exhibition_id":1,"checkin_date":1,"checkout_date":1,"participant_count":1,"room.exhibition_type_id": 1}
+//         }
+
+
+//        ]).toArray()
+
+
+
+//        let accommodationLine = []
+//        let ExhibitionLine = []
+
+//        accommodationLine[0] = {label:"Standard",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"6C6EF2"}
+//        accommodationLine[1] = {label:"King",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"61890FF"}
+//        accommodationLine[2] = {label:"Queen",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"4BD4FF"}
+//        accommodationLine[3] = {label:"Deluxe",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"FF9F9F"}
+//        accommodationLine[4] = {label:"Loft",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"FF6B4A"}
+//        accommodationLine[5] = {label:"Suite",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"FFA030"}
+//        accommodationLine[6] = {label:"Honeymoon",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"FAB248"}
+//        accommodationLine[7] = {label:"Executive",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"ACE89D"}
+//        accommodationLine[8] = {label:"Penthouse",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"3AB25C"}
+
+    
+
+//        ExhibitionLine[0]  = {label:"Board",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"6C6EF2"}
+//        ExhibitionLine[1]  = {label:"Exhibition",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"1890FF"}
+//        ExhibitionLine[2]  = {label:"Ball",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"4BD4FF"}
+//        ExhibitionLine[3]  = {label:"Conference",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"FF6B4A"}
+//        ExhibitionLine[4]  = {label:"Meeting",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"FFA030"}
+//        ExhibitionLine[5]  = {label:"Training",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"3AB25C"}
+       
+//  //Accommodation
+
+//  for(let i = 0 ; i < getbookRoomline.length ; i++){
+//     let date = getbookRoomline[i].checkin_date.split("-")
+//     console.log("date = ",date[0])
+//     if(date[0] === now[0]){
+//         const getType =  await roomType.findOne({ "roomtype_id": getbookRoomline[i].room[0].roomtype_id },{}) 
+//         let month = date[1]
+//         console.log(getType.roomtype_name )
+
+//         if(getType.roomtype_name === "Standard Room"){
+//             accommodationLine[0].data[parseInt(month)] =  accommodation[0].data[parseInt(month)] + getbookRoom[i].guests
+//         }
+//         else if(getType.roomtype_name === "King Room"){
+//             accommodationLine[1].data[parseInt(month)] =  accommodation[1].data[parseInt(month)] + getbookRoom[i].guests
+//         }
+//         else if(getType.roomtype_name === "Queen Room"){
+//             accommodation[2].data[parseInt(month)] =  accommodation[2].data[parseInt(month)] + getbookRoom[i].guests
+//         }
+//         else if(getType.roomtype_name === "Deluxe Room"){
+//             accommodation[3].data[parseInt(month)] =  accommodation[3].data[parseInt(month)] + getbookRoom[i].guests
+//         }
+//         else if(getType.roomtype_name === "Loft Room"){
+//             accommodation[4].data[parseInt(month)] =  accommodation[4].data[parseInt(month)] + getbookRoom[i].guests
+//         }
+//         else if(getType.roomtype_name === "Suite"){
+//             accommodation[5].data[parseInt(month)] =  accommodation[5].data[parseInt(month)] + getbookRoom[i].guests
+//         }
+//         else if(getType.roomtype_name === "Honeymoon Suite"){
+//             accommodation[6].data[parseInt(month)] =  accommodation[6].data[parseInt(month)] + getbookRoom[i].guests
+//         }
+//         else if(getType.roomtype_name === "Executive Suite"){
+//             accommodation[7].data[parseInt(month)] =  accommodation[7].data[parseInt(month)] + getbookRoom[i].guests
+//         }
+//         else if(getType.roomtype_name === "Penthouse Suite"){
+//             accommodation[8].data[parseInt(month)] =  accommodation[8].data[parseInt(month)] + getbookRoom[i].guests
+//         }
+
+//     }
+    
+// }
+
+// // Exhibition
+
+
+// for(let i = 0 ; i < getbookEx.length ; i++){
+//     let date = getbookEx[i].checkin_date.split("-")
+//     console.log("date = ",date[0])
+//     if(date[0] === now[0]){
+//         const getType = await  exType.findOne({ "exhibition_type_id": getbookEx[i].room[0].exhibition_type_id },{}) 
+//         let month = date[1]
+//         console.log(getType.type_name)
+
+//         if(getType.type_name === "Boardroom"){
+//             Exhibition[0].data[parseInt(month)] =   Exhibition[0].data[parseInt(month)] + getbookEx[i].participant_count
+//         }
+//         else if(getType.type_name === "Exhibition Hall"){
+//             Exhibition[1].data[parseInt(month)] =   Exhibition[1].data[parseInt(month)] + getbookEx[i].participant_count
+//         }
+//         else if(getType.type_name === "Ballroom"){
+//             Exhibition[2].data[parseInt(month)] =   Exhibition[2].data[parseInt(month)] + getbookEx[i].participant_count
+//         }
+//         else if(getType.type_name === "Conference Room"){
+//             Exhibition[3].data[parseInt(month)] =   Exhibition[3].data[parseInt(month)] + getbookEx[i].participant_count
+//         }
+//         else if(getType.type_name === "Meeting Room"){
+//             Exhibition[4].data[parseInt(month)] =   Exhibition[4].data[parseInt(month)] + getbookEx[i].participant_count
+//         }
+//         else if(getType.type_name === "Training Room"){
+//             Exhibition[5].data[parseInt(month)] =   Exhibition[5].data[parseInt(month)] + getbookEx[i].participant_count
+//         }
+        
+
+//     }
+    
+// }
 
 
 
