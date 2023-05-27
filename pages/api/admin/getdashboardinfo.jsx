@@ -366,7 +366,7 @@ export default async function addSeasons(req, res) {
 
     // assign Room in ,Exhibition in
     count_checkin_accom = count_checkin_accom.concat({"Accommodation": {"Standard_Room" : Standard_Room_in,"Queen_Room": Queen_Room_in
-        ,"King_Room":King_Room_in,"Deluxe Room":Deluxe_Room_in, "Loft_Room": Loft_Room_in , "Suite" : Suite_in
+        ,"King_Room":King_Room_in,"Deluxe_Room":Deluxe_Room_in, "Loft_Room": Loft_Room_in , "Suite" : Suite_in
         ,"Honeymoon_Suite":Honeymoon_Suite_in, "Executive_Suite":Executive_Suite_in , "Penthouse_Suite": Penthouse_Suite_in
 
     }})
@@ -378,7 +378,7 @@ export default async function addSeasons(req, res) {
     // assign Room out ,Exhibition out
 
     count_checkout_accom = count_checkout_accom.concat({"Accommodation": {"Standard_Room" : Standard_Room_out,"Queen_Room": Queen_Room_out
-    ,"King_Room":King_Room_out,"Deluxe Room":Deluxe_Room_out, "Loft_Room": Loft_Room_out , "Suite" : Suite_out
+    ,"King_Room":King_Room_out,"Deluxe_Room":Deluxe_Room_out, "Loft_Room": Loft_Room_out , "Suite" : Suite_out
     ,"Honeymoon_Suite":Honeymoon_Suite_out, "Executive_Suite":Executive_Suite_out , "Penthouse_Suite": Penthouse_Suite_out
 
     }})
