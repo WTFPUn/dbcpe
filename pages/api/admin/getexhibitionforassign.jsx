@@ -129,7 +129,7 @@ export default async function getroombycleanstatus(req, res) {
             }
 
 
-            if(getroom[i].housekeeper.length){
+            if(getroom[i]?.housekeeper){
                
                 const gethousekeeper = await person.findOne({"account_id":getroom[i].housekeeper },{"_id":0});
 
