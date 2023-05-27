@@ -140,8 +140,8 @@ export default function role() {
             </div>
           </div>
           <div 
-            className="w-[10%] rounded-md text-center font-semibold text-white bg-[#6C6EF2] py-2 uppercase"
-            
+            className="w-[10%] rounded-md text-center font-semibold text-white bg-[#6C6EF2] py-2 uppercase cursor-pointer"
+            onClick={submitFilter}
             >
             Search
           </div>
