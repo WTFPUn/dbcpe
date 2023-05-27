@@ -93,7 +93,7 @@ export default async function getAnalysis(req, res) {
         let Exhibition = []
 
         accommodation[0] = {label:"Standard",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#6C6EF2"}
-        accommodation[1] = {label:"King",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#61890FF"}
+        accommodation[1] = {label:"King",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#1890FF"}
         accommodation[2] = {label:"Queen",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#4BD4FF"}
         accommodation[3] = {label:"Deluxe",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#FF9F9F"}
         accommodation[4] = {label:"Loft",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#FF6B4A"}
@@ -247,7 +247,7 @@ export default async function getAnalysis(req, res) {
        let ExhibitionLine = []
 
        accommodationLine[0] = {label:"Standard",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#6C6EF2"}
-       accommodationLine[1] = {label:"King",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#61890FF"}
+       accommodationLine[1] = {label:"King",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#1890FF"}
        accommodationLine[2] = {label:"Queen",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#4BD4FF"}
        accommodationLine[3] = {label:"Deluxe",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#FF9F9F"}
        accommodationLine[4] = {label:"Loft",data:[0,0,0,0,0,0,0,0,0,0,0,0],backgroundColor:"#FF6B4A"}
