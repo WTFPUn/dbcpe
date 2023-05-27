@@ -215,12 +215,12 @@ export default function assigncleaning() {
       <div className="bg-[#F5F5F5] w-[60%] h-full mt-16 rounded-t-md px-[10rem] pt-8">
         <div className="w-full text-4xl font-semibold text-center h-[15%] pt-4">House Keeping</div>
         <div className="h-[80%] w-full flex flex-col gap-4">
-          <div className="w-full rounded-md drop-shadow px-8 flex  divide-x bg-[#FAFCFE] h-[10%]">
-            <select className="text-[#C4C4C4] text-xl font-medium py-4 w-[90%] px-4 rounded-l-md appearance-none bg-[#FAFCFE]" onChange={(e) => {setRoomType(e.target.value)}}>
+          <div className="w-full rounded-md drop-shadow px-8 flex  divide-x bg-[#FAFCFE] h-[8%]">
+            <select className="text-[#C4C4C4] text-xl font-medium py-2 w-[90%] px-4 rounded-l-md appearance-none bg-[#FAFCFE]" onChange={(e) => {setRoomType(e.target.value)}}>
               <option value="Accommodation">Accommodation</option>
               <option value="Exhibition">Exhibition</option>
             </select>
-            <select className="text-[#C4C4C4] text-xl font-medium py-4 w-[10%] px-4 rounded-r-md appearance-none bg-[#FAFCFE]" onChange={(e) => {handleClickFilter(e, "room_type")}}>
+            <select className="text-[#C4C4C4] text-xl font-medium py-2 w-[10%] px-4 rounded-r-md appearance-none bg-[#FAFCFE]" onChange={(e) => {handleClickFilter(e, "room_type")}}>
               <option value="">All</option>
               {roomType == "Accommodation" ? accomodationSub.map((data) => {
                 return(
@@ -262,7 +262,7 @@ export default function assigncleaning() {
                 </div>
               </div>
           </div>
-          <div className="w-full h-[24rem] bg-[#FAFCFE] flex flex-col px-8 py-4">
+          <div className="w-full h-[24rem] bg-[#FAFCFE] flex flex-col px-8 py-4 drop-shadow">
               <div className="flex font-semibold text-black h-[10%]">
                 <div className=" w-[10%] text-center">Selected</div>
                 <div className=" w-[10%] text-center">Room</div>

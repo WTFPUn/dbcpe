@@ -11,6 +11,7 @@ dotenv.config();
 export default function Header() {
   // get token from localstorage and client side
   const [token, setToken] = useState("");
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -60,6 +61,11 @@ export default function Header() {
           name: "Coupon",
           link: "/admin/coupon",
         },
+        {
+          name: "Season",
+          link: "/admin/season",
+        },
+
         {
           name: "Role Management",
           link: "/admin/role",
@@ -153,17 +159,35 @@ export default function Header() {
         
     </div>
     <div className="flex place-items-center gap-2">
-      <Link
-          href={LinkValue.href}
-          className=" bg-[#6C6EF2] px-6 py-1 rounded-md"
+      <div
+          // href={LinkValue.href}
+          className=" bg-[#6C6EF2] px-6 py-1 rounded-md relative"
+          onClick={() => setVisible(!visible)}
         >
           {LinkValue.text}
-      </Link>
-      {token && (
-        <div onClick={logout}>
-          <Logout/>
-        </div>
-      )}
+          <div 
+            className={`rounded-md bg-[#FAFCFE] z-10 text-[#] ${ visible ? 'block' : 'hidden' } absolute top-10 h-max -bottom-2 w-[20rem] flex flex-col divide-y py-2 px-8`}>
+            <div className="flex gap-2 py-3">
+              <img src="/images/tier/Bronze.svg" alt="" className="w-12 h-12 rounded-full bg-[#0E0E2C] px-2"/>
+              <div className="flex flex-col text-sm gap-2 text-black px-4 h-max">
+                <div className="truncate">{email}</div>
+                <div className="truncate">{"@"+user_name}</div>
+              </div>
+            </div>
+            <div className="flex flex-col py-3 text-[#4A4A68]">
+              <Link href="/profile">Profile</Link>
+              <Link href="/profile/history">Booking History</Link>
+            </div>
+            <div className="flex py-3 text-[#4A4A68]">
+              {token ? (
+                <div onClick={logout} className="flex gap-2 cursor-pointer">Sign Out <Logout /></div>
+              ) : (
+                <Link href="/users/Signup">Sign Up/Sign In</Link>
+              )}
+            </div>
+          </div>
+      </div>
+      
     </div>
     </div>
   )
