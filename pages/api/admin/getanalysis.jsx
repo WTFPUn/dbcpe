@@ -190,10 +190,72 @@ export default async function getAnalysis(req, res) {
         }
 
 
+        //line
+
+
+    //     const getbookRoomline = await bookRoom.aggregate([
+
+    //         {
+    //             $match: {
+    //                 "bookstatus_id":  2 
+    //             }
+    //         },
+    //         {
+    //             $lookup: {
+    //                 from: "room",
+    //                 localField: "room_id",
+    //                 foreignField: "room_id",
+    //                 as: "room"
+    //             }
+
+    //         },
+    //         {
+    //             $project:{"_id":0,"account_id":1,"book_id":1,"room_id":1,"checkin_date":1,"checkout_date":1,"guests":1,"room.roomtype_id": 1}
+    //         }
 
 
 
-        return res.status(200).json({ accommodation,Exhibition ,message: 'success', success: true});
+
+
+    //     ]).toArray()
+    //    const getbookExline  = await bookEx.aggregate([
+    //     {
+    //         $match: {
+    //             "bookstatus_id":  2 
+    //         }
+    //     },
+
+    //     {
+    //         $lookup: {
+    //             from: "exhibition_room",
+    //             localField: "exhibition_id",
+    //             foreignField: "exhibition_id",
+    //             as: "room"
+    //         }
+
+    //     },
+    //     {
+    //         $project:{"_id":0,"account_id":1,"exhibition_booking_id":1,"exhibition_id":1,"checkin_date":1,"checkout_date":1,"participant_count":1,"room.exhibition_type_id": 1}
+    //     }
+
+
+    //    ]).toArray()
+
+
+
+
+
+
+
+        let  bars = {}
+        bars['accommodation'] = accommodation
+        bars[' Exhibition'] = Exhibition
+
+
+
+
+
+        return res.status(200).json({  bars ,message: 'success', success: true});
 
 
     }catch (error) {
