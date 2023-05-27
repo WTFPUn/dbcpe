@@ -32,6 +32,10 @@ export default async function addBookingExhibition(req, res) {
     }
   
     if(checkin_date && checkout_date){
+      //set time  right now 
+
+      const tzOffset = 7; // Offset for Indochina Time (GMT+7)
+      const dateNow = new Date(Date.now() + tzOffset * 3600000).toISOString().split('T')[0];
 
       checkin_date = new Date(checkin_date).toISOString().split("T")[0];
       checkout_date = new Date(checkout_date).toISOString().split("T")[0];
@@ -39,6 +43,12 @@ export default async function addBookingExhibition(req, res) {
 
       if(checkin_date > checkout_date){
         return res.status(400).json({ message: "Date pattern is invalid", success: false });
+      }
+      if(checkin_date < dateNow ){
+        return res.status(400).json({ message: "check in date too long  ", success: false });
+      }
+      if(checkout_date < dateNow ){
+        return res.status(400).json({ message: "check out date too long ", success: false });
       }
   
     }
