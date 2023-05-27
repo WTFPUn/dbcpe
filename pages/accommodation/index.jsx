@@ -181,7 +181,7 @@ function RoomTypeFilter({setAccommodationList, accommodationList, roomType}) {
 
       return(
         <div 
-          className={`border-2 px-2 py-1 bg-transparent rounded-full ${roomtype.selected ? "border-[#6C6EF2] text-[#6C6EF2]" : "border-[#8C8CA1] text-[#8C8CA1]"} font-medium`}
+          className={`border-2 px-2 py-1 bg-transparent rounded-full ${roomtype.selected ? "border-[#6C6EF2] text-[#6C6EF2]" : "border-[#8C8CA1] text-[#8C8CA1]"} font-medium cursor-pointer`}
           key={index}
           onClick={() => {
             let newRoomType = [...roomType];
