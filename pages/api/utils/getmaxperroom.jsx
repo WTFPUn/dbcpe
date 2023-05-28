@@ -15,7 +15,7 @@ export default async function getmaxperroom(req, res) {
     const query = req.query
     // const adult = query?.minperson
     const adult = query?.minperson;
-    console.log("query: ",query)
+   
     
     
 
@@ -25,11 +25,11 @@ export default async function getmaxperroom(req, res) {
 
     try {
         await client.connect();
-        console.log('Connected to database');
+        
         const collection = client.db('HotelManage').collection('type_of_room');
     if(adult){
         const adultOfRoom = await collection.find({ "num_people_stay": { $gt: adult-1 } }, {projection:{"roomtype_id": 1,"num_people_stay": 1}}).toArray();
-        console.log(adultOfRoom)
+        
         return( res.status(200).json({ adultOfRoom ,message: 'Get adult of room success', success: true}))
     }
     else{

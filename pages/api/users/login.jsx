@@ -36,7 +36,7 @@ export default async function login(req, res) {
     await client.connect();
     const collection = client.db('HotelManage').collection('personal_information');
 
-    console.log("email: ",inpemail)
+    
     const result = await collection.findOne({email: inpemail});
     
     if (!result) {

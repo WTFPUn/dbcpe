@@ -84,7 +84,7 @@ export default async function register(req, res) {
   // check if username is already taken in the database, if so, return error
   try {
     await client.connect();
-    console.log('Connected to database');
+    
     const collection = client.db('HotelManage').collection('personal_information');
 
     const existingAccount = await collection.findOne({email: email});
@@ -92,7 +92,7 @@ export default async function register(req, res) {
     if (existingAccount) {
       return res.status(400).json({ message: 'Email already taken', success: false });
     }
-    console.log('Email is available', existingAccount);
+    
 
     // username is value of email before @
     const user_name = email.split('@')[0];

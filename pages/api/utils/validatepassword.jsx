@@ -1,7 +1,7 @@
 export default  function validatePassword(req, res) {
 
 const {checkPassword} = req.body
-console.log("checkpass",checkPassword);
+
 
 const regexPassword =   /^(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
 

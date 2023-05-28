@@ -20,9 +20,7 @@ export default async function updatePassword(req, res) {
   const decoded = jwtdecode(token);
   const { account_id } = decoded || {};
   
-  console.log("decode: ", decoded);
-  console.log("clientpass : ", current_password);
-  console.log("clientNew :  ", new_password);
+ 
 
   if (req.method !== "PUT") {
     return res
@@ -43,7 +41,7 @@ export default async function updatePassword(req, res) {
 
   try {
     await client.connect();
-    console.log("Connected to database");
+   
     const collection = client
       .db("HotelManage")
       .collection("personal_information");
@@ -52,9 +50,7 @@ export default async function updatePassword(req, res) {
       { account_id: account_id },
       { projection: { password: 1 } }
     );
-    console.log("profile : ", profile);
-    console.log("profile.password", profile.password);
-    console.log("cryptClientPassword", cryptClientPassword);
+   
 
     if (profile.password === cryptClientPassword) {
       const cryptClientNewPassword = SHA256(

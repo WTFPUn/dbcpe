@@ -19,8 +19,7 @@ export default async function getRoomQuery(req, res) {
     let arrayRoomType = [];
     // roomType change [Object Object] to array
 
-    console.log("checkIn = ",checkIn)
-    console.log("checkout = ",checkOut)
+   
 
     
     if(roomType){
@@ -64,7 +63,7 @@ export default async function getRoomQuery(req, res) {
 
       try {
         await client.connect();
-        console.log('Connected to database');
+        
         const room = client.db('HotelManage').collection('room_booking');
         const roomquery =  client.db('HotelManage').collection('room');
 
@@ -136,7 +135,7 @@ export default async function getRoomQuery(req, res) {
         allroom.forEach((val) => {
             idRoom.push(val.room_id)
         })
-        console.log("idRoom",idRoom)
+        
       }
         // idRoom is array
         let query = [] ;
@@ -209,7 +208,7 @@ export default async function getRoomQuery(req, res) {
             })
 
           if(minPerson){
-            console.log("minPerson",minPerson)
+            
             query.push({
               $match: {
                     'roomtype.num_people_stay': { $gte: minPerson }
