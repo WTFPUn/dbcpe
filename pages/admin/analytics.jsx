@@ -148,10 +148,10 @@ export default function analytics() {
     return (
       <div className="w-full flex flex-col mt-4 h-max gap-4">
         <div className="bg-[#0E0E2C] rounded-md w-full text-white font-medium text-lg py-4 px-2">{"Monthly Workload of Housekeepers Over Year " + new Date().getFullYear()}</div>
-        <div className="w-full flex overflow-x-auto gap-3">
+        <div className="w-full flex overflow-x-auto gap-3 snap-x scroll-auto">
           {pieDatas.map((pieData, index) => {
             return (
-              <div className="w-1/3 flex flex-col place-items-center bg-[#FAFCFE] rounded-md p-4 h-[24rem] px-4" key={index}>
+              <div className="w-1/3 flex flex-col snap-center place-items-center bg-[#FAFCFE] rounded-md p-4 h-[24rem] px-4" key={index}>
                 <div className="text-lg  mb-4 text-black font-semibold">{pieData.datasets[0].label}</div>
                 <Pie data={pieData} options={returnOption} />
               </div>
