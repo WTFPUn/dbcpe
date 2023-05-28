@@ -44,7 +44,7 @@ export default async function getExhibitionQuery(req, res) {
       })
     }
 
-    console.log("arrayRoomtype ",arrayRoomType)
+   
 
     if(minPerson){   
       minPerson = parseInt(minPerson);
@@ -75,7 +75,7 @@ export default async function getExhibitionQuery(req, res) {
 
       try {
         await client.connect();
-        console.log('Connected to database');
+        
         const exhibition = client.db('HotelManage').collection('exhibition_booking');
         const exhibitionQuery =  client.db('HotelManage').collection('exhibition_room');
         
@@ -144,7 +144,7 @@ export default async function getExhibitionQuery(req, res) {
         allroom.forEach((val) => {
             idRoom.push(val.exhibition_id)
         })
-        console.log("exhibition idRoom",idRoom)
+       
       }
         // idRoom is array
         let query = [] ;

@@ -31,7 +31,7 @@ export default async function login(req, res) {
          
     try {
         await client.connect();
-        console.log('Connected to database');
+        
         const collection = client.db('HotelManage').collection('personal_information');
 
     

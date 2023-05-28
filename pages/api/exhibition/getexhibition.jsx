@@ -19,7 +19,7 @@ export default async function getexhibition(req, res) {
     
     try {
         await client.connect();
-        console.log('Connected to database');
+        
         const exhibition = client.db('HotelManage').collection('exhibition_room');
         
         const allroom = await exhibition.aggregate( [
@@ -33,7 +33,7 @@ export default async function getexhibition(req, res) {
               }
          }
        ] ).toArray();
-       console.log("allroom ",allroom)
+       
         
         return( res.status(200).json({  allroom ,message: 'Get exhibition room success', success: true}))
 
