@@ -185,7 +185,7 @@ export default function Header() {
     <div className="flex place-items-center gap-2">
       <div
           // href={LinkValue.href}
-          className=" bg-[#6C6EF2] px-6 py-1 rounded-md relative"
+          className=" bg-[#6C6EF2] px-6 py-1 rounded-md relative cursor-pointer"
           onClick={() => setVisible(!visible)}
         >
           {LinkValue.text}
