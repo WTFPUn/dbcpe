@@ -33,6 +33,7 @@ export default async function roomUpdateWorkForHouseKeeper(req, res) {
 
         
         const work = client.db('HotelManage').collection('house_keeping_work_room')
+        const room = client.db('HotelManage').collection('room')
 
         let count
         const countWork = await work.aggregate( [
@@ -44,7 +45,7 @@ export default async function roomUpdateWorkForHouseKeeper(req, res) {
             count =   countWork[0].myCount
          }
   
-         console.log("count = ",count )
+         
 
 
          //set time  right now 
@@ -54,6 +55,7 @@ export default async function roomUpdateWorkForHouseKeeper(req, res) {
 
 
          let result
+         let resultroom
 
          for(let i=0 ; i < room_id.length ; i++ ){
             if(room_id[i].selected === true){  
@@ -64,8 +66,20 @@ export default async function roomUpdateWorkForHouseKeeper(req, res) {
                     room_id: room_id[i].room_id,
                     work_id: count,
                 });
+                resultroom = await room.updateOne(
+                        
+                    { "room_id" : room_id[i].room_id },
+                    { $set:  { clean_status : 1  }}
+                    
+                );
+
             }
+
+
          }
+
+
+
 
 
 
