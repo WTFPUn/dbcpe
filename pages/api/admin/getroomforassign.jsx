@@ -120,7 +120,7 @@ export default async function getroomforassign(req, res) {
       const dateNow = new Date(Date.now() + tzOffset * 3600000).toISOString().split('T')[0];
     
 
-        console.log(getroom)
+        
         for (let i=0 ; i< getroom.length; i++){
 
             const getbook  = await book.find({"room_id": getroom[i].room_id},{$project:{"_id":0}}).toArray() || [];
@@ -134,7 +134,7 @@ export default async function getroomforassign(req, res) {
             }
             if(getroom[i]?.housekeeper){
 
-                console.log(getbook.length)
+                
                 const gethousekeeper = await person.findOne({"account_id":getroom[i].housekeeper },{"_id":0});
 
                 getroom[i]["housekeeper_fullname"] = `${gethousekeeper.first_name} ${gethousekeeper.last_name}`
