@@ -8,8 +8,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'oxygen': ['Oxygen', 'sans-serif'],
         'dmserif': ['DM Serif Display', 'serif'],
+        'fira': ['Fira Sans', 'sans-serif'],
+        'prompt': ['Prompt', 'sans-serif'],
       }
     },
   },

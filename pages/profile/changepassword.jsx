@@ -83,7 +83,7 @@ export default function changepassword() {
 
   return (
     <Template title="Change Password" hscreen>
-      <div className="w-[80%] bg-white self-center rounded-md my-4 place-items-center flex flex-row overflow-y-auto font-oxygen h-full  ">
+      <div className="w-[80%] bg-white self-center rounded-md my-4 place-items-center flex flex-row overflow-y-auto font-fira h-full  ">
         <div className="w-4/12 flex flex-col bg-[#ECF1F4] h-full place-items-center place-content-center">
           <p className="mb-8">{Name}</p>
           {link.map((item, index) => {
