@@ -89,7 +89,7 @@ export default async function addBookingRoom(req, res) {
     
     try {
         await client.connect();
-        console.log('Connected to database');
+        
         const book = client.db('HotelManage').collection('room_booking');
         const room = client.db('HotelManage').collection('room');
 
@@ -104,7 +104,7 @@ export default async function addBookingRoom(req, res) {
             count =   countBook[0].myCount
          }
   
-         console.log("count = ",count )
+        
 
 
          // find match between numberroom with id room

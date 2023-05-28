@@ -24,7 +24,7 @@ export default async function addBookingRoom(req, res) {
     
       try {
         await client.connect();
-        console.log('Connected to database');
+        
         const room = client.db('HotelManage').collection('room');
 
 

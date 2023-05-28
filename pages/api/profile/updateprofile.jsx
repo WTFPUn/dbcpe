@@ -33,7 +33,7 @@ export default async function updateProfile(req, res) {
     
     const decoded = jwtdecode(token);
     const { account_id, email, role, sub_role, user_name} = decoded || {};
-    console.log(`account_id: ${account_id} email: ${email} user_name: ${user_name}  role: ${role}  sub_role: ${sub_role}`)
+    
 
 
     if (req.method !== 'PUT') {
@@ -70,7 +70,7 @@ if(!validateGender(gender)){
      
     try {
         await client.connect();
-        console.log('Connected to database');
+        
         const collection = client.db('HotelManage').collection('personal_information');
     
         const person = await collection.findOne({account_id: account_id})

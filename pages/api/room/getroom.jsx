@@ -19,7 +19,7 @@ export default async function getroom(req, res) {
     
     try {
         await client.connect();
-        console.log('Connected to database');
+        
         const room = client.db('HotelManage').collection('room');
         const type = client.db('HotelManage').collection('type_of_room')
 
@@ -36,7 +36,7 @@ export default async function getroom(req, res) {
               }
          }
        ] ).toArray();
-       console.log("allroom ",allroom)
+       
         
 
         return( res.status(200).json({  allroom ,message: 'get room success', success: true}))
