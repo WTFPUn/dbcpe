@@ -163,7 +163,7 @@ export default function Header() {
   }
   
   return(
-    <div className="w-full bg-[#4A4A68] text-white px-[15%] py-3 flex justify-between place-items-center">
+    <div className=" w-full bg-[#4A4A68] text-white px-[15%] py-3 flex justify-between place-items-center">
       <Link
         href="/"
         className="text-[#F2F2F2] font-bold text-2xl font-dmserif "
