@@ -546,7 +546,6 @@ for(let i = 0 ; i < getHouseEx.length ; i++){
         const getType =  await exType.findOne({ "exhibition_type_id": getHouseEx[i].room[0].exhibition_type_id },{}) 
         const getperson = await per.findOne({"account_id":getHouseEx[i].account_id },{})
 
-        console.log(getperson.first_name)
         if(getType.type_name === "Boardroom"){
                 objectEx.Board.push(`${getperson.first_name} ${getperson.last_name}`)    
         }

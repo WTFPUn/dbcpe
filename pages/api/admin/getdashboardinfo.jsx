@@ -43,8 +43,7 @@ export default async function addSeasons(req, res) {
         const getper = await per.findOne({"account_id": account_id},{})
         
 
-        console.log("role = ",getper.role )
-        console.log("sub_role = ",getper.sub_role )
+       
         
 
         if(getper.role === 0){
@@ -52,7 +51,7 @@ export default async function addSeasons(req, res) {
         }
 
         const getRole = await role.findOne({"role":getper.role, "sub_role":getper.sub_role},{})
-        console.log("getrolename = ",getRole.sub_name)
+        
 
       
 
@@ -428,15 +427,6 @@ export default async function addSeasons(req, res) {
         
 
 
-        // global['guest_checkout'] =  guest_checkout
-        // global['count_checkin_accom'] = count_checkin_accom 
-        // global['count_checkout_accom'] = count_checkout_accom
-        // global["halal_food"] = halal_food
-        // global["regular_food"] = regular_food
-
-
-
-        
 
     }catch (error) {
         console.log(error);

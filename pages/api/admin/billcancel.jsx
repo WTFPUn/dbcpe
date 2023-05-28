@@ -60,7 +60,7 @@ export default async function billCancel(req, res) {
 
             if(getbill.book_list[i].book_type === 0 ){
                 //room
-                console.log("room")
+                
                 const updatestatusroom = await bookRoom.updateOne(
                         
                     { "book_id" : getbill.book_list[i].book_id },
@@ -72,7 +72,7 @@ export default async function billCancel(req, res) {
             }
             else if(getbill.book_list[i].book_type === 1 ){
                 //exhibition
-                console.log("ex")
+                
                 const updatestatusexhibition = await bookEx.updateOne(
                         
                     { "exhibition_booking_id" : getbill.book_list[i].book_id },

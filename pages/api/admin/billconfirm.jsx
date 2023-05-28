@@ -61,14 +61,12 @@ export default async function billConfirm(req, res) {
 
 
 
-        console.log(getbill.book_list[0].book_type)
-       
-        console.log("helllo")
+        
         for ( let i=0  ; i < getbill.book_list.length; i++ ){
 
             if(getbill.book_list[i].book_type === 0 ){
                 //room
-                console.log("room")
+                
                 const updatestatusroom = await bookRoom.updateOne(
                         
                     { "book_id" : getbill.book_list[i].book_id },
@@ -80,7 +78,7 @@ export default async function billConfirm(req, res) {
             }
             else if(getbill.book_list[i].book_type === 1 ){
                 //exhibition
-                console.log("ex")
+                
                 const updatestatusexhibition = await bookEx.updateOne(
                         
                     { "exhibition_booking_id" : getbill.book_list[i].book_id },
