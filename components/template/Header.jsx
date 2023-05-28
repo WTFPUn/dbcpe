@@ -141,7 +141,6 @@ export default function Header() {
 
   const imgRoleLink = () => {
     const localpath = "/images/tier/"
-    console.log(role, sub_role)
     if (role == 1) {
       return localpath + "Admin.svg"
     }

@@ -44,7 +44,7 @@ export default function billcontrol() {
 
   const handleFilterSubmit = () => {
     const token = localStorage.getItem("token");
-    fetch(`/api/admin/getallbill?bill_id=${filter.bill_id}&paid_status=${filter.paid_status}`,
+    fetch(`/api/admin/getallbill?bill_id=${filter.bill_id}&paid_status=${filter.paid_status == 0 ? 1 : 0}`,
       {
         method: "GET",
         headers: {

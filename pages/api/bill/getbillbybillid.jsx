@@ -39,8 +39,8 @@ export default async function getBill(req, res) {
         const code = client.db('HotelManage').collection('code');
 
         const getperson = await person.findOne({"account_id": account_id  },{projection:{"_id":0,"status":0,"password":0,"role":0,"sub_role":0,"date_of_birth":0,"account_id":0}}) 
-        const getbill = await bill.findOne({"bill_id": bill_id,"account_id": account_id  },{projection:{"_id":0}}) 
-        const getcode = await code.findOne({"code_id": getbill.code_id  },{projection:{"_id":0}})
+        const getbill = await bill.findOne({"bill_id": bill_id  },{projection:{"_id":0}}) 
+        const getcode = await code.findOne({"code_id": getbill?.code_id  },{projection:{"_id":0}})
 
         if(!getbill){
             return res.status(400).json({ message: 'Bill is not found', success: false });

@@ -193,7 +193,7 @@ export default function dashboard() {
 
       return(
           <div className="h-[36rem] py-8 flex flex-col place-items-center bg-[#FAFCFE] rounded-md mt-8 w-1/2">
-            <div className="text-xl font-semibold mb-4">Our guests check-in to the accommodation</div>
+            <div className="text-xl font-semibold mb-4">{"Our guests " + (checkType == 0 ? "check-in" : "check-out") + " to the " + (roomType == 1 ? "Exhibition" : "Accommodation")}</div>
             <div className="h-3/4">
               <Doughnut data={graphData}/>
             </div>

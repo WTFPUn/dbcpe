@@ -19,7 +19,7 @@ export default function BookHistoryBox({data, idx}) {
       {visible && (
         <div className="w-full rounded-b-md drop-shadow py-4 px-8 flex flex-col gap-4 font-semibold text-sm">
             {data.book.map((book, idx) => (
-              <div>
+              <div key={idx}>
                 <div className="flex justify-between">
                   <div>Book ID:</div>
                   <div className="text-[#6C6EF2]">{book?.book_id ? book?.book_id : book?.exhibition_booking_id}</div>

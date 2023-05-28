@@ -80,6 +80,8 @@ export default function accommodationassignment() {
     }
 
     const clean_status = clean === dirty ? "" : clean ? 1 : 0;
+
+    console.log(clean_status, roomtype)
     const token = localStorage.getItem("token");
     if (token) {
     fetch(`/api/admin/getroomforupdate?${"clean_status=" + clean_status + "&roomtype_id=" + roomtype}`,
@@ -120,6 +122,8 @@ export default function accommodationassignment() {
         .then((res) => res.json())
         .then((data) => {
           alert(data.message + " " + data.success);
+          // reload page
+          window.location.reload();
         });
     }
   }

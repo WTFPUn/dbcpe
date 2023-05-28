@@ -71,6 +71,11 @@ export default function bill() {
         },
         body: JSON.stringify(payload)
         });
+
+      alert("Confirmed")
+      // move to /admin/billcontrol
+
+      router.push("/admin/billcontrol")
   }
   else if (caller == "cancel") {
     const payload = {

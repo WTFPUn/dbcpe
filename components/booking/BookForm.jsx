@@ -142,16 +142,7 @@ export default function BookForm({room_id, guestInRoom, room_number}) {
             />
             <p className="text-black text-opacity-40">I would like to have extra bed</p>
         </div>
-        <div className="w-full flex gap-2">
-          <input
-            type="checkbox"
-            name="cleaning"
-            className="bg-transparent w-4 px-4 py-2 rounded-md text-center"
-            onClick={() => setFormData({...formData, cleaning: !formData.cleaning})}
-            />
-            <p className="text-black text-opacity-40">I would like to have cleaning service</p>
-        </div>
-        <div className="w-full flex gap-2">
+        <div className="w-full flex gap-2 mb-4">
           <input
             type="checkbox"
             name="laundry"
