@@ -47,9 +47,10 @@ export default async function exhibitionUpdateWorkForHouseKeeper(req, res) {
       const tzOffset = 7; // Offset for Indochina Time (GMT+7)
       const dateNow = new Date(Date.now() + tzOffset * 3600000);
   
-         console.log("count = ",count )
+         
 
          let result
+         let resultEx
          for(let i=0 ; i < room_id.length ; i++ ){
             if(room_id[i].selected === true){  
                 result = await work.insertOne({
@@ -59,6 +60,14 @@ export default async function exhibitionUpdateWorkForHouseKeeper(req, res) {
                         exhibition_id: room_id[i].exhibition_id,
                         work_id: count,
                 });
+                resultEx = await room.updateOne(
+                        
+                    { "exhibition_id" : room_id[i].exhibition_id },
+                    { $set:  { clean_status : 1  }}
+                    
+                );
+
+
             }
 
          }
