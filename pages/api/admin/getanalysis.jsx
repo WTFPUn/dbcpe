@@ -756,12 +756,6 @@ for(let i = 0 ; i < getHouseEx.length ; i++){
         pies['accommodationPies'] = accommodationPies
         pies['ExhibitionPies'] = ExhibitionPies
 
-
-        
-
-
-
-
         return res.status(200).json({  bars,lines,pies ,message: 'success', success: true});
 
 
