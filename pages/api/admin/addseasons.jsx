@@ -60,7 +60,7 @@ export default async function addSeasons(req, res) {
             count =   countSeason[0].myCount
          }
   
-         console.log("count = ",count )
+         
 
 
          const result = await season.insertOne({

@@ -27,7 +27,7 @@ export default async function getRoomQuery(req, res) {
 
       try {
         await client.connect();
-        console.log('Connected to database');
+        
         const room = client.db('HotelManage').collection('room_booking');
         const roomquery =  client.db('HotelManage').collection('room');
         
@@ -69,7 +69,7 @@ export default async function getRoomQuery(req, res) {
             idRoom.push(val.room_id)
         })
 
-        console.log("idRoom",idRoom)
+        
         // idRoom is array
       const  successRoom = await roomquery.find({ 'room_id': { $nin: idRoom } }).toArray()
 

@@ -74,7 +74,7 @@ export default async function verifycode(req, res) {
             count =   countCode[0].myCount
          }
   
-         console.log("count = ",count )
+         
 
         const result = await code.insertOne({
 
