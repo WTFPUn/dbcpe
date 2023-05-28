@@ -21,7 +21,7 @@ export default async function getSeasonSetup(req, res) {
 
     try {
         await client.connect();
-        console.log('Connected to database');
+        
        
         const season = client.db('HotelManage').collection('season_setup');
 
@@ -31,7 +31,7 @@ export default async function getSeasonSetup(req, res) {
 
       const tzOffset = 7; // Offset for Indochina Time (GMT+7)
       const bookDate = new Date(Date.now() + tzOffset * 3600000).toISOString().split('T')[0];
-      console.log(bookDate)
+      
 
 
       const seasonFactor =  await season.aggregate( [

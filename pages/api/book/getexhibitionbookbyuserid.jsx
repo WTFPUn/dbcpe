@@ -25,7 +25,7 @@ export default async function getExhibitionBookById(req, res) {
 
  try {
         await client.connect();
-        console.log('Connected to database');
+        
         const book = client.db('HotelManage').collection('exhibition_booking');
         const tier = client.db('HotelManage').collection('guess_tier');
         const role = client.db('HotelManage').collection('role');

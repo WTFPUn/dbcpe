@@ -29,7 +29,7 @@ export default async function getpricebookexhibition(req, res) {
 
 try {
         await client.connect();
-        console.log('Connected to database');
+        
         const bookExhibition = client.db('HotelManage').collection('exhibition_booking');
         const bookRoom = client.db('HotelManage').collection('room_booking');
         const tier = client.db('HotelManage').collection('guess_tier');

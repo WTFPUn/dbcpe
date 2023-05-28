@@ -26,7 +26,7 @@ export default async function getRoomBookById(req, res) {
 
  try {
         await client.connect();
-        console.log('Connected to database');
+        
         const book = client.db('HotelManage').collection('room_booking');
         const tier = client.db('HotelManage').collection('guess_tier');
         const role = client.db('HotelManage').collection('role');
@@ -109,7 +109,7 @@ export default async function getRoomBookById(req, res) {
 
             getbook[i].room = getbook[i].room[0]
             getbook[i].roomtype = getbook[i].roomtype[0]
-            // console.log("summary = ", getbook[i].price_summary)
+            
             
         }
 
