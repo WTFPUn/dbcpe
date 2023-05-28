@@ -37,9 +37,9 @@ export default async function addBill(req, res) {
           
     const  looplenght = async () => {   
             for (const values of book_list){
-                console.log("in forEach = ", values)
+               
                  if(values.book_type === 0){
-                    console.log("room")
+                    
                     
                     await  fetch("http://localhost:3000/api/book/getpricebookroom", {
                         method: "POST",
@@ -55,7 +55,7 @@ export default async function addBill(req, res) {
 
                         
                       getprice = data.discounted_total_price + getprice;
-                      console.log("getprice = ", getprice)
+                     
         
                     })
                      
@@ -64,7 +64,7 @@ export default async function addBill(req, res) {
                        
                
                 else if(values.book_type === 1){
-                    console.log("Exhibition")
+                    
 
                     await  fetch("http://localhost:3000/api/book/getpricebookexhibition", {
                         method: "POST",
@@ -80,7 +80,7 @@ export default async function addBill(req, res) {
 
                         
                       getprice = data.discounted_total_price + getprice;
-                      console.log("getprice = ", getprice)
+                      
         
                     })
                 }
@@ -96,7 +96,7 @@ export default async function addBill(req, res) {
         
     try {
         await client.connect();
-        console.log('Connected to database');
+        
         const book = client.db('HotelManage').collection('room_booking');
         // const roomquery =  client.db('HotelManage').collection('room');
         const bill = client.db('HotelManage').collection('bill');
@@ -126,7 +126,7 @@ export default async function addBill(req, res) {
                 getprice = getprice * (1-getcode.discount_factor)
             }
             else if(getcode.code_type === "fixed"){
-                console.log("fixed")
+                
                 getprice = getprice - getcode.discount_factor
             }
 
@@ -141,7 +141,7 @@ export default async function addBill(req, res) {
 
          }
 
-         console.log("getprice after = ",getprice)
+         
          let pay_due_date
 
          for (const values of book_list){

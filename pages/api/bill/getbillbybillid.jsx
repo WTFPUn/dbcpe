@@ -49,13 +49,13 @@ export default async function getBill(req, res) {
         let sum = 0
         let bookList = getbill.book_list
         let objectbook = []
-        console.log("book_id getbill = ", bookList[0].book_id )
+        
 
         const  looplenght = async () => {   
             for (const values of bookList){
-                console.log("in forEach = ", values)
+                
                 if(values.book_type === 0){
-                    console.log("room")
+                   
 
                     const getType = await bookRoom.aggregate( [
                         {
@@ -93,7 +93,7 @@ export default async function getBill(req, res) {
                         getType[i].type_of_room = getType[i].type_of_room[0]
                         
                     }
-                    console.log("getType = ",getType[0].type_of_room.roomtype_name)
+                    
 
                     await  fetch("http://localhost:3000/api/book/getpricebookroom", {
                         method: "POST",
@@ -115,7 +115,7 @@ export default async function getBill(req, res) {
 
                 }
                 else if(values.book_type === 1){
-                    console.log("Exhibition")
+                    
 
                     const getType = await  bookExhibition.aggregate( [
                         {
@@ -153,7 +153,7 @@ export default async function getBill(req, res) {
                         getType[i].type_of_room = getType[i].type_of_room[0]
                         
                     }
-                    console.log("getType = ",getType[0].type_of_room.type_name)
+                   
 
                     await  fetch("http://localhost:3000/api/book/getpricebookexhibition", {
                         method: "POST",

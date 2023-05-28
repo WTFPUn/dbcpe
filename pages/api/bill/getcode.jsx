@@ -24,7 +24,7 @@ export default async function getcode(req, res) {
 
       try {
         await client.connect();
-        console.log('Connected to database');
+        
        
         const code = client.db('HotelManage').collection('code');
 

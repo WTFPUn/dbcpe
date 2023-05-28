@@ -55,16 +55,17 @@ export default async function getroomforupdate(req, res) {
             
 
                 if(clean_status === 0 || clean_status){
-        
-                    aggregate.push({
-                        $match: {
-                            "clean_status": clean_status
-                        }                       
-                    }
                     
-                    
-
-                    )
+                  
+                        aggregate.push({
+                            $match: {
+                                "clean_status": clean_status
+                            }                       
+                        }
+                        
+                        )
+                 
+                 
                 }
 
                 aggregate.push(
@@ -130,6 +131,8 @@ export default async function getroomforupdate(req, res) {
         //  set time  right now 
       const tzOffset = 7; // Offset for Indochina Time (GMT+7)
       const dateNow = new Date(Date.now() + tzOffset * 3600000).toISOString().split('T')[0];
+
+      console.log(getroom)
     
 
 
@@ -141,18 +144,21 @@ export default async function getroomforupdate(req, res) {
 
             const getwork = await work.find({ "room_id":getroom[i].room_id },{$project:{"_id":0}}).toArray()
             if(getwork){
-                 console.log("now",dateNow)
+                 
                 for (let j=0 ; j< getwork.length; j++){
                      if(getwork[j].cleaned_time.toISOString().split('T')[0] === dateNow ){
-                            console.log("hello")
+                            
                             getroom[i]["completed_time"] = getwork[j].cleaned_time
+                            
                             const updatestatus = await room.updateOne(
                         
-                                { "room_id" : 0 },
+                                { "room_id" : getroom[i].room_id },
                             { $set:  { clean_status : 1   }}
                                 
                             );
-                            getroom[i].clean_status = 1
+                            const getclean = await room.findOne({"room_id":getroom[i].room_id},{})
+
+                            getroom[i].clean_status = getclean.clean_status
                     
 
                      }

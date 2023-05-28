@@ -145,7 +145,7 @@ export default async function getexhibitionforupdate(req, res) {
             if(getwork){
                 for (let j=0 ; j< getwork.length; j++){
                         if(getwork[j].cleaned_time.toISOString().split('T')[0] === dateNow ){
-                            console.log("hello")
+                            
                             getroom[i]["completed_time"] = getwork[j].cleaned_time
                         const updatestatus = await room.updateOne(
                             
