@@ -57,9 +57,6 @@ export default async function gethousekeeper(req, res) {
 
 
         }
-        
-       
-
 
             
         if((paid_status === 0 || paid_status) || (name)){

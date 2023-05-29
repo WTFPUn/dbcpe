@@ -111,7 +111,7 @@ export default function billcontrol() {
                     <div className="w-[15%] text-center py-2">{item.bill_id}</div>
                     <div className="w-[15%] text-center py-2">{item.full_name}</div>
                     <div className="w-[15%] text-center py-2">{ new Date(item.create_date).getMonth() + new Date(item.create_date).getDay() + new Date(item.create_date).getFullYear()}</div>
-                    <div className="w-[15%] text-center py-2">{item.paid_status == 1 ? "Paid" : "Unpaid"}</div>
+                    <div className="w-[15%] text-center py-2">{item?.payment_method?  "Paid" : "Unpaid"}</div>
                     <div className="w-[30%] text-center py-2 text-[#1890FF]"><Link href={"/booking/bill/" + item.bill_id}>View The bill</Link></div>
                   </div>
                 </div>
